@@ -1,2 +1,2 @@
 # twitter-trends
-Copy dan Paste! Browser aja.
+Browser aja. Copy dan Paste!
