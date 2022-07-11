@@ -31,42 +31,5 @@ Motor
         placeholder="Aksi Cepat Tanggap . Axelsen . Desta . Oknum . Motor ..."></textarea>
     
     <script type="text/javascript" src="script.js"></script>
-    <!-- <script type="text/javascript">
-        function copydanpaste() {
-            trends = '';
-
-            const regex = new RegExp(/(Sedang tren dalam topik Indonesia|Trending in Indonesia|Populer|Trending)\n(.*)\n([\d,.]+.*)?/gm);
-            
-            // TODO: pindah index.html
-            const str = document.getElementById('copy').value;
-            
-            let m;
-
-            while ((m = regex.exec(str)) !== null) {
-                // This is necessary to avoid infinite loops with zero-width matches
-                if (m.index === regex.lastIndex) {
-                    regex.lastIndex++;
-                }
-                
-                // The result can be accessed through the `m`-variable.
-                m.forEach((match, groupIndex) => {
-                    if (groupIndex === 2) {
-                        trends += `${match} . `;
-                    }
-                });
-            }
-
-            // TODO: 'Oknum . Motor .' to 'Oknum . Motor'
-            //                     ---
-            document.getElementById('paste').innerHTML = trends;
-            // return trends
-        }
-    </script> -->
-
-    <script type="text/javascript">
-        window.onload = function trends() {
-            // ?
-        }
-    </script>
 </body>
 </html>
