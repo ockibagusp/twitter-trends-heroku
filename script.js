@@ -20,13 +20,16 @@ function copydanpaste() {
         // The result can be accessed through the `m`-variable.
         m.forEach((match, groupIndex) => {
             if (groupIndex === 2) {
-                trends += `${match} . `;
+                trends += `${match}, `;
             }
         });
     }
 
-    // TODO: 'Oknum . Motor .' to 'Oknum . Motor'
-    //                     ---
+    // 'Oknum, Motor, ' ke 'Oknum, Motor'
+    if (trends != '') {
+        trends = trends.substr(0, trends.length-2);
+    }
+
     document.getElementById('paste').innerHTML = trends;
     // return trends
 }
