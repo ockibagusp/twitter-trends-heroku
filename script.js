@@ -2,7 +2,7 @@
 
 // function copydanpaste(str) {
 function copydanpaste() {
-    trends = '';
+    trends = 'Tags: ';
 
     const regex = new RegExp(/(Sedang tren dalam topik Indonesia|Trending in Indonesia|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm);
     
