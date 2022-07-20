@@ -1,10 +1,9 @@
-// regex101.com
-
 function copydanpaste(event) {
     event.preventDefault();
     
     trends = '';
 
+    // regex101.com
     const regex = new RegExp(/(Sedang tren dalam topik Indonesia|Trending in Indonesia|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm);
     
     const str = document.getElementById('copy').value;
@@ -49,6 +48,7 @@ function getdaytrends(event) {
     
     trends = '';
 
+    // regex101.com
     const regex = new RegExp(`<a href="[^"]+">(.*)<\/a>`);
 
     const str = `<tr>
@@ -99,6 +99,6 @@ function getdaytrends(event) {
     const form = document.getElementById('copy');
     form.addEventListener('change', copydanpaste);
 
-    const reset = document.getElementById('reset');
-    reset.addEventListener('click', btnReset);
+    // const reset = document.getElementById('reset');
+    // reset.addEventListener('click', btnReset);
 })();
