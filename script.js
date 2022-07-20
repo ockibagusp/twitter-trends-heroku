@@ -36,11 +36,13 @@ function copydanpaste(event) {
 }
 
 function btnReset(event) {
+    event.preventDefault();
+
     const textareaCopy = document.getElementById('copy');
     textareaCopy.value = null;
 
     const textareaHasil = document.getElementById('hasil');
-    textareaHasil.value = null;
+    textareaHasil.innerHTML = null;
 }
 
 function getdaytrends(event) {
@@ -99,6 +101,6 @@ function getdaytrends(event) {
     const form = document.getElementById('copy');
     form.addEventListener('change', copydanpaste);
 
-    // const reset = document.getElementById('reset');
-    // reset.addEventListener('click', btnReset);
+    const reset = document.getElementById('reset');
+    reset.addEventListener('click', btnReset);
 })();
