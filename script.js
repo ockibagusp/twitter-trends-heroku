@@ -1,12 +1,12 @@
 // regex101.com
 
-// function copydanpaste(str) {
-function copydanpaste() {
-    trends = 'Tags: ';
+function copydanpaste(event) {
+    event.preventDefault();
+    
+    trends = '';
 
     const regex = new RegExp(/(Sedang tren dalam topik Indonesia|Trending in Indonesia|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm);
     
-    // TODO: pindah index.html
     const str = document.getElementById('copy').value;
     
     let m;
@@ -28,13 +28,16 @@ function copydanpaste() {
     // 'Oknum, Motor, ' ke 'Oknum, Motor'
     if (trends != '') {
         trends = trends.substr(0, trends.length-2);
+    } else {
+        trends = 'Tidak ada hasil'
     }
 
-    document.getElementById('paste').innerHTML = trends;
-    // return trends
+    document.getElementById('hasil').innerHTML = trends;
 }
 
-function getdaytrends() {
+function getdaytrends(event) {
+    event.preventDefault();
+    
     trends = '';
 
     const regex = new RegExp(`<a href="[^"]+">(.*)<\/a>`);
@@ -79,5 +82,10 @@ function getdaytrends() {
         });
     }
 
-    document.getElementById('paste').innerHTML = trends;
+    document.getElementById('hasil').innerHTML = trends;
 }
+
+(function main() {
+    const form = document.getElementById('copy');
+    form.addEventListener('change', copydanpaste);
+})();

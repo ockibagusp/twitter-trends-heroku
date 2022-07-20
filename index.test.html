@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trending Topic Twitter Test</title>
+    <title>Trending Topic Twitter di indonesia Test</title>
 </head>
 <body>
-    <h2>Trending Topic Twitter Test</h2>
+    <h2>Trending Topic Twitter di indonesia Test</h2>
 
     <h3>Copy Test</h3>
     <textarea name="copy" id="copy" rows="10" cols="50">
@@ -60,13 +60,15 @@ Lainnya
     <strong>6 matches</strong>
 
     <h3>Paste Test</h3>
-    <textarea name="paste" id="paste" rows="5" cols="50"></textarea>
+    <textarea name="hasil" id="hasil" rows="5" cols="50"></textarea>
     <br>
     <strong>Benar</strong>
 
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript">
-        copydanpaste();
+        window.onload = function(event){ 
+            copydanpaste(event);
+        };
     </script>
 </body>
 </html>
