@@ -32,7 +32,16 @@ function copydanpaste(event) {
         trends = 'Tidak ada hasil'
     }
 
-    document.getElementById('hasil').innerHTML = trends;
+    const textareaHasil = document.getElementById('hasil');
+    textareaHasil.innerHTML = trends;
+}
+
+function btnReset(event) {
+    const textareaCopy = document.getElementById('copy');
+    textareaCopy.value = null;
+
+    const textareaHasil = document.getElementById('hasil');
+    textareaHasil.value = null;
 }
 
 function getdaytrends(event) {
@@ -82,10 +91,14 @@ function getdaytrends(event) {
         });
     }
 
-    document.getElementById('hasil').innerHTML = trends;
+    const textareaHasil = document.getElementById('hasil');
+    textareaHasil.innerHTML = trends;
 }
 
 (function main() {
     const form = document.getElementById('copy');
     form.addEventListener('change', copydanpaste);
+
+    const reset = document.getElementById('reset');
+    reset.addEventListener('click', btnReset);
 })();
