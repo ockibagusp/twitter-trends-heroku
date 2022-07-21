@@ -26,7 +26,7 @@ function copydanpaste(event) {
 
     // 'Oknum, Motor, ' ke 'Oknum, Motor'
     if (trends != '') {
-        trends = trends.substr(0, trends.length-2);
+        trends = 'Tags: ' + trends.substr(0, trends.length-2);
     } else {
         trends = 'Tidak ada hasil'
     }
@@ -35,14 +35,27 @@ function copydanpaste(event) {
     textareaHasil.innerHTML = trends;
 }
 
-function btnReset(event) {
-    event.preventDefault();
-
+function btnReset() {
     const textareaCopy = document.getElementById('copy');
+    textareaCopy.select();
     textareaCopy.value = null;
 
     const textareaHasil = document.getElementById('hasil');
     textareaHasil.innerHTML = null;
+}
+
+function btnCopy() {
+    const textareaHasil = document.getElementById('hasil');
+    
+    if (textareaHasil.value == '' || textareaHasil.value == 'Tidak ada hasil') {
+        return;
+    }
+    
+    textareaHasil.select();
+    // Untuk perangkat seluler
+    textareaHasil.setSelectionRange(0, 99999);
+  
+    navigator.clipboard.writeText(textareaHasil.value);
 }
 
 function getdaytrends(event) {
@@ -101,6 +114,10 @@ function getdaytrends(event) {
     const form = document.getElementById('copy');
     form.addEventListener('change', copydanpaste);
 
+    /* button: reset and copy */
     const reset = document.getElementById('reset');
     reset.addEventListener('click', btnReset);
+
+    const copy = document.getElementById('hasil_copy');
+    copy.addEventListener('click', btnCopy);
 })();
