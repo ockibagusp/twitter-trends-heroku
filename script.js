@@ -114,7 +114,7 @@ function getdaytrends(event) {
     const form = document.getElementById('copy');
     form.addEventListener('change', copydanpaste);
 
-    /* button: reset and copy */
+    /* button: reset dan copy */
     const reset = document.getElementById('reset');
     reset.addEventListener('click', btnReset);
 
