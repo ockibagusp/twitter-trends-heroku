@@ -25,7 +25,9 @@ function copydanpaste(event) {
     }
 
     // 'Oknum, Motor, ' ke 'Oknum, Motor'
-    if (trends != '') {
+    if (str == '' || str == null) {
+        return;
+    } else if (trends != '') {
         trends = 'Tags: ' + trends.substr(0, trends.length-2);
     } else {
         trends = 'Tidak ada hasil'
