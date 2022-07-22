@@ -26,7 +26,7 @@ function copydanpaste(event) {
 
     // 'Oknum, Motor, ' ke 'Oknum, Motor'
     if (str == '' || str == null) {
-        return;
+        // why?
     } else if (trends != '') {
         trends = 'Tags: ' + trends.substr(0, trends.length-2);
     } else {
