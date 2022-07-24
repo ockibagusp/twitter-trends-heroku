@@ -6,11 +6,11 @@ function copydanpaste(event) {
     // regex101.com
     const regex = new RegExp(/(Sedang tren dalam topik Indonesia|Trending in Indonesia|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm);
     
-    const str = document.getElementById('copy').value;
+    const str = document.getElementById('copydanpaste');
     
     let m;
 
-    while ((m = regex.exec(str)) !== null) {
+    while ((m = regex.exec(str.value)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
         if (m.index === regex.lastIndex) {
             regex.lastIndex++;
@@ -27,7 +27,7 @@ function copydanpaste(event) {
     // 'Oknum, Motor, ' ke 'Oknum, Motor'
     if (trends != '') {
         trends = 'Tags: ' + trends.substr(0, trends.length-2);
-    } if (str != '' && trends == '') {
+    } if (str.value != '' && trends == '') {
         trends = 'Tidak ada hasil'
     }
 
@@ -35,8 +35,10 @@ function copydanpaste(event) {
     textareaHasil.innerHTML = trends;
 }
 
-function btnReset() {
-    const textareaCopy = document.getElementById('copy');
+function btnReset(event) {
+    event.preventDefault();
+
+    const textareaCopy = document.getElementById('copydanpaste');
     textareaCopy.select();
     textareaCopy.value = null;
 
@@ -111,13 +113,13 @@ function getdaytrends(event) {
 }
 
 (function main() {
-    const form = document.getElementById('copy');
+    const form = document.getElementById('formcopydanpaste');
     form.addEventListener('change', copydanpaste);
 
     /* button: reset dan copy */
     const reset = document.getElementById('reset');
     reset.addEventListener('click', btnReset);
 
-    const copy = document.getElementById('hasil_copy');
+    const copy = document.getElementById('copy');
     copy.addEventListener('click', btnCopy);
 })();

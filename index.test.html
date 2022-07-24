@@ -9,7 +9,8 @@
     <h2>Trending Topic Twitter di Indonesia Test</h2>
 
     <h3>Copy Test</h3>
-    <textarea name="copy" id="copy" rows="10" cols="50">
+    <form id="formcopydanpaste" action="#">
+        <textarea name="copydanpaste" id="copydanpaste" rows="10" cols="50">
 
 Untuk melihat pintasan papan ketik, tekan tanda tanya
 Lihat pintasan papan ketik
@@ -55,9 +56,13 @@ Aksesibilitas
 Informasi iklan
 Lainnya
 © 2022 Twitter, Inc.
-    </textarea>
-    <br>
-    <strong>6 matches</strong>
+        </textarea>
+        <br>
+        <button name="reset" id="reset" disabled>Reset</button>
+        <br>
+        <strong>6 matches</strong>
+    </form>
+    
     <h4>Test:</h4>
     <ol>
         <li>Hasil: Benar [v]</li>
@@ -68,6 +73,8 @@ Lainnya
 
     <h3>Paste Test</h3>
     <textarea name="hasil" id="hasil" rows="5" cols="50"></textarea>
+    <br>
+    <button name="copy" id="copy" disabled>Copy</button>
     <br>
     <strong>Benar</strong>
 
