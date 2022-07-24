@@ -24,14 +24,19 @@ function copydanpaste(event) {
         });
     }
 
+    const textareaHasil = document.getElementById('hasil');
+    const btnCopy = document.getElementById('copy');
     // 'Oknum, Motor, ' ke 'Oknum, Motor'
     if (trends != '') {
         trends = 'Tags: ' + trends.substr(0, trends.length-2);
+        textareaHasil.disabled = false;
+        btnCopy.disabled = false;
     } if (str.value != '' && trends == '') {
         trends = 'Tidak ada hasil'
+        textareaHasil.disabled = true;
+        btnCopy.disabled = true;
     }
 
-    const textareaHasil = document.getElementById('hasil');
     textareaHasil.innerHTML = trends;
 }
 
@@ -43,7 +48,11 @@ function btnReset(event) {
     textareaCopy.value = null;
 
     const textareaHasil = document.getElementById('hasil');
+    textareaHasil.disabled = true;
     textareaHasil.innerHTML = null;
+    
+    const btnCopy = document.getElementById('copy');
+    btnCopy.disabled = true;
 }
 
 function btnCopy() {
