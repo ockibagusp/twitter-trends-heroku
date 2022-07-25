@@ -1,3 +1,7 @@
+/**
+ * form id=copydanpaste
+ * @param {*} event 
+ */
 function copydanpaste(event) {
     event.preventDefault();
     
@@ -40,6 +44,10 @@ function copydanpaste(event) {
     textareaHasil.innerHTML = trends;
 }
 
+/**
+ * button id=reset
+ * @param {*} event 
+ */
 function btnReset(event) {
     event.preventDefault();
 
@@ -55,6 +63,10 @@ function btnReset(event) {
     btnCopy.disabled = true;
 }
 
+/**
+ * button id=copy
+ * @param - 
+ */
 function btnCopy() {
     const textareaHasil = document.getElementById('hasil');
     

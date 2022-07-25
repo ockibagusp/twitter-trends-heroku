@@ -59,6 +59,7 @@ Lainnya
         </textarea>
         <br>
         <button name="reset" id="reset" hidden>Reset</button>
+        <button name="btn-copy" id="btn-copy">Copy</button>
         <br>
         <strong>6 matches</strong>
     </form>
@@ -80,9 +81,22 @@ Lainnya
 
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript">
-        window.onload = (event) => { 
-            // ?
+        // Tidak bisa jest (kayaknya)
+        window.onload = (event) => {
             copydanpaste(event);
+            
+            const copy = document.getElementById('btn-copy');
+            copy.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const textareaCdp = document.getElementById('copydanpaste');
+                
+                textareaCdp.select();
+                // Untuk perangkat seluler
+                textareaCdp.setSelectionRange(0, 99999);
+            
+                navigator.clipboard.writeText(textareaCdp.value);
+            });
         };
     </script>
 </body>
