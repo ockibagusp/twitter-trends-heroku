@@ -38,6 +38,7 @@
             fetchTest = [
                 '*',
                 'null',
+                'https://ockibagusp.github.io/',
                 'https://ockibagusp.github.io/twitter-trends/',
                 'https://ockibagusp.github.io/twitter-trends/url.html',
             ];
@@ -55,10 +56,10 @@
                         return res.text();
                     })
                     .then(function (html) {
-                        console.log(fetchTest[i], 'html:', html);
+                        console.log(i, fetchTest[i], 'html:', html);
                     })
                     .catch((err) => {
-                        console.log(fetchTest[i], 'err:', err);
+                        console.log(i, fetchTest[i], 'err:', err);
                     });
             }
         };
