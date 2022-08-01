@@ -134,13 +134,5 @@ function getdaytrends(event) {
 }
 
 (function main() {
-    const form = document.getElementById('formcopydanpaste');
-    form.addEventListener('change', copydanpaste);
-
-    /* button: reset dan copy */
-    const reset = document.getElementById('reset');
-    reset.addEventListener('click', btnReset);
-
-    const copy = document.getElementById('copy');
-    copy.addEventListener('click', btnCopy);
+    // ?
 })();

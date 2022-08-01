@@ -41,5 +41,18 @@ Motor
     <a href="index.test.html" target="_blank">Sini!</a>
     
     <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+        window.onload = () => {
+            const form = document.getElementById('formcopydanpaste');
+            form.addEventListener('change', copydanpaste);
+
+            /* button: reset dan copy */
+            const reset = document.getElementById('reset');
+            reset.addEventListener('click', btnReset);
+
+            const copy = document.getElementById('copy');
+            copy.addEventListener('click', btnCopy);
+        };
+    </script>
 </body>
 </html>

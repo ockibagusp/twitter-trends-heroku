@@ -1,9 +1,11 @@
 https://twitter.com/i/trends x tidak bisa. v bisa (browser) + Select All
 
 https://getdaytrends.com/indonesia/ v bisa
+https://getdaytrends.com/indonesia/jakarta/
+https://getdaytrends.com/indonesia/bekasi/
 
 >> trends
-Regex: /\/">(.*)<\//gm
+Regex: /<a href="[^"]+">(.*)<\/a>/gm
 
 Test String:
 <tr>
