@@ -13,7 +13,7 @@
     <h3>Browser aja.</h3>
 
     <h3 id="getdaytrends">
-        <a href="https://getdaytrends.com/indonesia/" target="_blank">
+        <a href="https://getdaytrends.com/indonesia" target="_blank">
             Link: getdaytrends.com!
         </a>
     </h3>
@@ -32,10 +32,13 @@
     
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript">
+        
         window.onload = (event) => {
             getdaytrends(event);
             
-            const source = fetch("https://getdaytrends.com/indonesia/bekasi/");
+            pathname = window.location.pathname;
+            console.log(pathname.substr(0, pathname.length-13));
+            const source = fetch(pathname);
             source.
                 then((res) => {
                     return res.text();
