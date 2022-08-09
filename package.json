@@ -1,10 +1,11 @@
 {
-  "name": "vue-project",
+  "name": "twitter-trends",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build",
-    "preview": "vite preview --port 4173"
+    "preview": "vite preview --port 4173",
+    "test:unit": "vitest --environment jsdom"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -13,6 +14,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",
-    "vite": "^3.0.1"
+    "@vue/test-utils": "^2.0.2",
+    "jsdom": "^20.0.0",
+    "vite": "^3.0.1",
+    "vitest": "^0.18.1"
   }
 }

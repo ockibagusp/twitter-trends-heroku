@@ -1,58 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trending Topic Twitter di Indonesia</title>
-</head>
-<body>
-    <h2>Trending Topic Twitter di Indonesia (Indonesia atau Inggris)</h2>
-
-    <h3>>> Copy dan Paste!</h3>
-    <h3>Browser aja.</h3>
-    <p> <a href="https://twitter.com/i/trends" target="_blank">twitter.com/i/trends</a> + Select All</p>
-
-    <h3>Copy sini!</h3>
-    <form id="formcopydanpaste" action="#">
-        <textarea name="copydanpaste" id="copydanpaste" rows="10" cols="50" 
-        placeholder="Tren
-Sedang tren dalam topik Indonesia
-Aksi Cepat Tanggap
-10,3 rb Tweet
-Sedang tren dalam topik Indonesia
-Oknum
-3.581 Tweet
-Sedang tren dalam topik Indonesia
-Motor
-44,9 rb Tweet ..." autofocus></textarea>
-        <br>
-        <button name="reset" id="reset">Reset</button>
-    </form>
-    <br>
-
-    <h3>... dan Paste!</h3>
-    <textarea name="hasil" id="hasil" rows="5" cols="50" 
-        placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." disabled></textarea>
-    <br>
-    <button name="copy" id="copy" disabled>Copy</button>
-    <br>
-
-    <p><strong>Trending Topic Twitter di Indonesia Test</strong></p>
-    <a href="index.test.html" target="_blank">Sini!</a>
-    
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript">
-        window.onload = () => {
-            const form = document.getElementById('formcopydanpaste');
-            form.addEventListener('change', copydanpaste);
-
-            /* button: reset dan copy */
-            const reset = document.getElementById('reset');
-            reset.addEventListener('click', btnReset);
-
-            const copy = document.getElementById('copy');
-            copy.addEventListener('click', btnCopy);
-        };
-    </script>
-</body>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>

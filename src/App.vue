@@ -9,6 +9,6 @@ import CopydanPaste from './pages/CopydanPaste.vue';
     <h3>>> Copy dan Paste!</h3>
     <h3>Browser aja.</h3>
 
-    <CopydanPaste msg="loading..."/>
+    <CopydanPaste/>
   </main>
 </template>
