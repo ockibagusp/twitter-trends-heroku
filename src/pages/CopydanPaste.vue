@@ -23,6 +23,12 @@ export default {
   watch: {
     // textarea: copydanpaste
     copydanpaste() {
+      this.memuat()
+    }
+  },
+  methods: {
+    // memuat: dari textarea copydanpaste ini
+    memuat() {
       let trends = ''
 
       // regex101.com
@@ -58,9 +64,8 @@ export default {
       }
       
       this.hasil = trends
-    }
-  },
-  methods: {
+    },
+    
     // button: reset dan copy
     btnReset() {
       this.copydanpaste = ''
@@ -89,7 +94,7 @@ export default {
   <p> <a href="https://twitter.com/i/trends" target="_blank">twitter.com/i/trends</a> + Select All</p>
 
     <h3>Copy sini!</h3>
-      <textarea v-model="copydanpaste" ref="copydanpaste" rows="10" cols="50" 
+      <textarea v-model="copydanpaste" ref="copydanpaste" data-test="copydanpaste" rows="10" cols="50" 
       placeholder="Tren
 Sedang tren dalam topik Indonesia
 Aksi Cepat Tanggap
@@ -101,11 +106,11 @@ Sedang tren dalam topik Indonesia
 Motor
 44,9 rb Tweet ..." autofocus></textarea>
     <br>
-    <button @click="btnReset">Reset</button>
+    <button @click="btnReset" data-test="btnReset">Reset</button>
     <br>
 
     <h3>... dan Paste!</h3>
-    <textarea v-model="hasil" id="hasil" ref="hasil" rows="5" cols="50" 
+    <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
         placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
     <br>
     <button @click="btnCopy" :disabled="isCopy">Copy</button>
