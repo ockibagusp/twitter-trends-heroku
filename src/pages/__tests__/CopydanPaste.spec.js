@@ -59,11 +59,14 @@ Lainnya
 © 2022 Twitter, Inc.`)
 
     assert.isDefined(copydanpaste.element.value)
+
+    await copydanpaste.trigger('change')
     
-    // const hasil = wrapper.find('[data-test="hasil"]')
-    // expect(hasil.element.value).toEqual(''
-    //     // 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
-    //   )
+    const hasil = wrapper.find('[data-test="hasil"]')
+    assert.equal(
+      hasil.element.value,
+      'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
+    )
   })
 
   it('button reset', async() => {
