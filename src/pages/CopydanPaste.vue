@@ -113,6 +113,6 @@ Motor
     <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
         placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
     <br>
-    <button @click="btnCopy" :disabled="isCopy">Copy</button>
+    <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
     <br>
 </template>

@@ -1,18 +1,39 @@
-import { describe, it, expect, assert } from 'vitest'
+import { describe, it, assert } from 'vitest'
 
 import { mount } from '@vue/test-utils'
 import CopydanPaste from '../CopydanPaste.vue'
 
 describe('Copy dan Paste', () => {
-  expect(CopydanPaste).toBeTruthy()
+  assert.exists(CopydanPaste)
 
   const wrapper = mount(CopydanPaste, {
     props: { } 
   })
 
-  it('Copy dan Paste init', async() => {
-    const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
-    copydanpaste.setValue(`
+  // textarea: copydanpaste dan hasil
+  const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
+  const hasil = wrapper.find('[data-test="hasil"]')
+
+  // button: btnReset dan btnCopy
+  const btnReset = wrapper.find('[data-test="btnReset"]') 
+  const btnCopy = wrapper.find('[data-test="btnCopy"]')
+
+  it('init', () => {
+    assert.isEmpty(copydanpaste.element.value)
+    // TODO: copydanpaste.element.focus() => undefined. Why?
+    assert.equal(copydanpaste.element.focus(), undefined)
+
+    assert.isEmpty(hasil.element.value)
+
+    assert.isUndefined(btnReset.attributes().disabled)
+    assert.equal(btnCopy.attributes().disabled, '')
+  })  
+
+  it('lingkaran dari `for`', async() => {
+    // test cases
+    const testCases = [
+      { 
+        copydanpaste:`
 Untuk melihat pintasan papan ketik, tekan tanda tanya
 Lihat pintasan papan ketik
 Pesan
@@ -56,32 +77,38 @@ Kebijakan Penggunaan Kuki
 Aksesibilitas
 Informasi iklan
 Lainnya
-© 2022 Twitter, Inc.`)
+© 2022 Twitter, Inc.`, 
+        hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
+      },
+      {
+        copydanpaste: '-',
+        hasil: 'Tidak ada hasil'
+      }
+    ]
 
-    assert.isDefined(copydanpaste.element.value)
+    for (let test of testCases) {
+      copydanpaste.setValue(test.copydanpaste)
 
-    await copydanpaste.trigger('change')
-    
-    const hasil = wrapper.find('[data-test="hasil"]')
-    assert.equal(
-      hasil.element.value,
-      'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
-    )
+      assert.equal(test.copydanpaste, copydanpaste.element.value)
+
+      await copydanpaste.trigger('change')
+      
+      assert.equal(
+        hasil.element.value,
+        test.hasil
+      )
+    }
   })
 
   it('button reset', async() => {
-    const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
-    copydanpaste.setValue('-')
-    const hasil = wrapper.find('[data-test="hasil"]')
-    hasil.setValue('Tidak ada hasil')
+    // 1. textarea: copydanpaste = '-'
+    // 2. textarea: hasil = 'Tidak ada hasil'
 
     assert.equal(copydanpaste.element.value, '-')
     assert.equal(hasil.element.value, 'Tidak ada hasil')
 
-    await wrapper.get('[data-test="btnReset"]').trigger('click')
+    await btnReset.trigger('click')
     assert.equal(copydanpaste.element.value, '')
     assert.equal(hasil.element.value, '')
-
-    // copydanpaste.element.fac
   })
 })
