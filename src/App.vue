@@ -1,14 +1,19 @@
 <script setup>
-import CopydanPaste from './pages/CopydanPaste.vue';
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
-<template> 
+<template>
+  <nav>
+    <RouterLink to="/">Home</RouterLink> |
+    <RouterLink to="/getdaytrends">GetDayTrends</RouterLink>
+  </nav>
+  
   <main>
     <h2>Trending Topic Twitter di Indonesia (Indonesia atau Inggris)</h2>
 
     <h3>>> Copy dan Paste!</h3>
     <h3>Browser aja.</h3>
 
-    <CopydanPaste/>
+    <RouterView />
   </main>
 </template>
