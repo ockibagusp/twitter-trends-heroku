@@ -43,7 +43,7 @@ export default {
     memuat() {
       let trends = ''
 
-      // TODO: regex
+      // TODO: regex without ' and "
       // regex101.com
       const regex = /<td class="main"><a (class="string" )?href="[^"]+">([^'"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+|\d+\.\d*|\d+)K tweets<\/span><\/div><\/td>/gm
       
