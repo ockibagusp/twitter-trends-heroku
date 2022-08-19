@@ -43,9 +43,9 @@ export default {
     memuat() {
       let trends = ''
 
-      // TODO: regex without ' and "
+      // TODO: regex without "
       // regex101.com
-      const regex = /<td class="main"><a (class="string" )?href="[^"]+">([^'"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+|\d+\.\d*|\d+)K tweets<\/span><\/div><\/td>/gm
+      const regex = /<td class="main"><a (class="string" )?href="[^"]+">([^"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+|\d+\.\d*|\d+)K tweets<\/span><\/div><\/td>/gm
       
       const str = this.getdaytrends
       
@@ -60,7 +60,15 @@ export default {
         // The result can be accessed through the `m`-variable.
         m.forEach((match, groupIndex) => {
           if (groupIndex === 2) {
-              trends += `${match}, `
+            // unescape HTML
+            const unescapeHtml = match
+              .replace(/&amp;/g, "&")
+              .replace(/&lt;/g, "<")
+              .replace(/&gt;/g, ">")
+              .replace(/&quot;/g, "\"")
+              .replace(/&#39;/g, "'")
+
+            trends += `${unescapeHtml}, `
           }
         })
       }
@@ -102,9 +110,13 @@ export default {
 <template>
   <p>TODO:</p>
   <ol>
-    <li>regex: without ' and "</li>
+    <li>regex: without "</li>
     <li>AxiosError: Network Error</li>
     The CORS Header 'Access-Control-Allow-Origin' is missing.
+
+    <br>
+    <a href="https://addons.mozilla.org/en-US/firefox/search/?q=cors" target="_blank">Firefox</a> |
+    <a href="https://chrome.google.com/webstore/search/cors?hl=en" target="_blank">Chrome</a>
   </ol>
   <p>--------------------------------------------------------</p>
   <p>(alpha) GetDayTrends.com!</p>

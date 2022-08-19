@@ -5,7 +5,7 @@ https://getdaytrends.com/indonesia/jakarta/
 https://getdaytrends.com/indonesia/bekasi/
 
 >> trends [x]
-Regex: /<td class="main"><a (class="string" )?href="[^"]+">([^'"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+|\d+\.\d*|\d+)K tweets<\/span><\/div><\/td>/gm
+Regex: /<td class="main"><a (class="string" )?href="[^"]+">([^"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+|\d+\.\d*|\d+)K tweets<\/span><\/div><\/td>/gm
 
 
 Test String:
@@ -34,3 +34,7 @@ Test String:
   <a href="/indonesia/bekasi/trend/%23Happy8thAnniversaryWINNER/">#Happy8thAnniversaryWINNER</a>
 </td>
 <td class="details small text-muted text-right">9 hours</td>
+
+<td class="main">
+  <a class="string" href="/indonesia/bekasi/trend/ma'ruf">ma'ruf</a>
+  <div class="desc"><span class="small text-muted">
