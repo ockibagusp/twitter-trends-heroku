@@ -115,6 +115,7 @@ export default {
     The CORS Header 'Access-Control-Allow-Origin' is missing.
 
     <br>
+    CORS rules are bypassed: 
     <a href="https://addons.mozilla.org/en-US/firefox/search/?q=cors" target="_blank">Firefox</a> |
     <a href="https://chrome.google.com/webstore/search/cors?hl=en" target="_blank">Chrome</a>
   </ol>
