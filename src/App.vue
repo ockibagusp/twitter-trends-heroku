@@ -4,8 +4,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <nav>
-    <RouterLink to="/">Home</RouterLink> |
-    <RouterLink to="/getdaytrends">GetDayTrends</RouterLink>
+    <RouterLink to="/">Twitter Trends</RouterLink> |
+    <RouterLink to="/getdaytrends">(alpha) GetDayTrends.com</RouterLink>
   </nav>
   
   <main>
