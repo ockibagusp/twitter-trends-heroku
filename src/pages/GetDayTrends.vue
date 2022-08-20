@@ -3,12 +3,18 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      // data getdaytrends.com
       getdaytrends: '',
-      trends: '',
+      // textarea: hasil
+      hasil: '',
+
       // pilih hasil, button submit dan button copy: true atau false
       selectSubmit: false,
       selectHasil: false,
-      selectCopy: false
+      selectCopy: false,
+
+      // pindah CORS: true atau false
+      pindah: true
     }
   },
   computed: {
@@ -23,22 +29,48 @@ export default {
       return !this.selectCopy
     }
   },
-  async created() {
-    try {
-      const res = await axios.get(`https://getdaytrends.com/indonesia/bekasi/`)
-      this.getdaytrends = res.data
-      this.selectSubmit = true
-    } catch (error) {
-      alert(error)
-    }
+  created() {
+    this.dibuat()
   },
   watch: {
     // textarea: getdaytrends
     getdaytrends() {
       this.memuat()
+    },
+    // checkbox: pindah
+    pindah() {
+      this.dibuat()
     }
   },
   methods: {
+    // dibuat: dari textarea getdaytrends ini
+    async dibuat() {
+      // textarea hasil: loading...
+      this.hasil = 'Loading...'
+
+      try {
+        // TODO: test getdaytrends.com
+        let pindah = ''
+        if (!this.pindah) {
+          pindah = `https://getdaytrends.com/indonesia/bekasi/`
+        } else {
+          pindah = `http://localhost:3000/getdaytrends.test.html`
+        }
+          
+        const res = await axios.get(pindah)
+        this.getdaytrends = res.data
+        this.selectSubmit = true
+
+        // hasil
+        this.memuat()
+      } catch (error) {
+        this.hasil = ''
+        this.selectHasil = false
+        this.selectSubmit = false
+        this.selectCopy = false
+        alert(error)
+      }
+    },
     // memuat: dari textarea getdaytrends ini
     memuat() {
       let trends = ''
@@ -51,6 +83,7 @@ export default {
       
       let m;
 
+      let i = 0
       while ((m = regex.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
         if (m.index === regex.lastIndex) {
@@ -70,7 +103,18 @@ export default {
 
             trends += `${unescapeHtml}, `
           }
+
+          // // Misalnya: 20K
+          // if (groupIndex === 4) {
+          //   console.log(match)
+          // }
         })
+        
+        i++
+        // trens getdaytrends.com: no. 1-15
+        if (i === 15) {
+          break
+        }
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
@@ -90,7 +134,14 @@ export default {
 
     // button: submit dan copy
     btnSubmit() {
-      this.memuat()
+      this.selectHasil = false
+      this.selectCopy = false
+
+      // textarea hasil: loading...
+      this.hasil = 'Loading...'
+
+      // TODO: setTimeout
+      setTimeout(this.memuat, 1000)  
     },
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
@@ -108,6 +159,10 @@ export default {
 </script>
 
 <template>
+  Test getdaytrends.com:
+  <input type="checkbox" v-model="pindah" />
+	<label for="checkbox">{{ pindah }}</label>
+  
   <p>TODO:</p>
   <ol>
     <li>regex: without "</li>

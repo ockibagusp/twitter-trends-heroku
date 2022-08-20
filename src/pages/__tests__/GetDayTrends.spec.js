@@ -22,7 +22,8 @@ describe('Copy dan Paste', () => {
   it('init', () => {
     assert.equal(btnSubmit.attributes().disabled, '')
 
-    assert.isEmpty(hasil.element.value)
+    // textarea hasil: loading...
+    assert.equal(hasil.element.value, 'Loading...')
     assert.equal(btnCopy.attributes().disabled, '')
   })  
 
@@ -30,21 +31,21 @@ describe('Copy dan Paste', () => {
     // test cases
     const testCases = [
       { 
-        trendsUrl: '', 
+        getdaytrends: '', 
         hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
       },
       {
-        trendsUrl: '-',
+        getdaytrends: '-',
         hasil: 'Tidak ada hasil'
       }
     ]
 
     for (let test of testCases) {
-      trendsUrl.setValue(test.trendsUrl)
+      trendsUrl.setValue(test.getdaytrends)
 
-      assert.equal(test.trendsUrl, trendsUrl.element.value)
+      assert.equal(test.getdaytrends, trendsUrl.element.value)
 
-      await trendsUrl.trigger('change')
+      await trendsUrl.trigger('click')
       
       assert.equal(
         hasil.element.value,
