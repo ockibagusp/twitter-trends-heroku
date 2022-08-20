@@ -182,6 +182,8 @@ export default {
   <br>
   
   <h3>... dan Paste!</h3>
+  
+  <p v-if="pindah">Test getdaytrends.com</p>
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
