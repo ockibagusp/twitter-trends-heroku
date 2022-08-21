@@ -3,7 +3,7 @@ import { describe, it, assert } from 'vitest'
 import { mount } from '@vue/test-utils'
 import  GetDayTrends from '../GetDayTrends.vue'
 
-describe('Copy dan Paste', () => {
+describe('getdaytrends.com', () => {
   assert.exists(GetDayTrends)
 
   const wrapper = mount(GetDayTrends, {
