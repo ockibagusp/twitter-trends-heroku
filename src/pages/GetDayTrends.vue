@@ -111,7 +111,7 @@ export default {
         })
         
         i++
-        // trens getdaytrends.com: no. 1-15
+        // trends getdaytrends.com: no. 1-15
         if (i === 15) {
           break
         }
@@ -128,7 +128,6 @@ export default {
         this.selectCopy = false
       }
       
-      console.log(trends)
       this.hasil = trends
     },
 
@@ -140,8 +139,7 @@ export default {
       // textarea hasil: loading...
       this.hasil = 'Loading...'
 
-      // TODO: setTimeout
-      setTimeout(this.memuat, 1000)  
+      this.memuat()
     },
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
@@ -183,6 +181,7 @@ export default {
   
   <h3>... dan Paste!</h3>
   
+  <p>Tren Twitter Sekarang:</p>
   <p v-if="pindah">Test getdaytrends.com</p>
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
