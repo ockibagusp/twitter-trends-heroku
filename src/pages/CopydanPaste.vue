@@ -23,6 +23,10 @@ export default {
   watch: {
     // textarea: copydanpaste
     copydanpaste() {
+      // textarea hasil: loading...
+      this.hasil = 'Loading...'
+      
+      // vue methods: memuat
       this.memuat()
     }
   },
