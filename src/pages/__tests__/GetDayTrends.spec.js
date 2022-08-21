@@ -27,30 +27,5 @@ describe('Copy dan Paste', () => {
     assert.equal(btnCopy.attributes().disabled, '')
   })  
 
-  it('lingkaran dari `for`', async() => {
-    // test cases
-    const testCases = [
-      { 
-        getdaytrends: '', 
-        hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
-      },
-      {
-        getdaytrends: '-',
-        hasil: 'Tidak ada hasil'
-      }
-    ]
-
-    for (let test of testCases) {
-      trendsUrl.setValue(test.getdaytrends)
-
-      assert.equal(test.getdaytrends, trendsUrl.element.value)
-
-      await trendsUrl.trigger('click')
-      
-      assert.equal(
-        hasil.element.value,
-        test.hasil
-      )
-    }
-  })
+  it.todo('lingkaran dari `for`')
 })
