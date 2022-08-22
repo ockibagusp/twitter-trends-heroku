@@ -54,7 +54,7 @@ export default {
         if (!this.pindah) {
           pindah = `https://getdaytrends.com/indonesia/bekasi/`
         } else {
-          pindah = `http://localhost:3000/getdaytrends.test.html`
+          pindah = `/getdaytrends.test.html`
         }
           
         const res = await axios.get(pindah)
