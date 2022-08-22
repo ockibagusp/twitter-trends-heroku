@@ -1,6 +1,8 @@
 # twitter-trends
 Browser aja. Copy dan Paste!
 
+Link:
+[ockibagusp.github.io/twitter-trends](https://ockibagusp.github.io/twitter-trends)
 
 ## Vue 3 project
 
