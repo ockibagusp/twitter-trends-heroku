@@ -4,7 +4,7 @@ import GetDayTrends from '../pages/GetDayTrends.vue'
 import NotFound from '../pages/NotFound.vue'
 
 const router = createRouter({
-  history: createWebHistory('/twitter-trends/'),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
