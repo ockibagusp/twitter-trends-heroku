@@ -14,8 +14,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // string shorthand
-      '/foo': 'https://api.github.com'
+      '/getdaytrends': {
+        target: 'https://getdaytrends.com/indonesia/bekasi/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/getdaytrends/, '')
+      },
     }
   }
 })

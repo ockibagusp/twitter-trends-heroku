@@ -11,10 +11,7 @@ export default {
       // pilih hasil, button submit dan button copy: true atau false
       selectSubmit: false,
       selectHasil: false,
-      selectCopy: false,
-
-      // pindah CORS: true atau false
-      pindah: true
+      selectCopy: false
     }
   },
   computed: {
@@ -49,15 +46,7 @@ export default {
       this.hasil = 'Loading...'
 
       try {
-        // TODO: test getdaytrends.com
-        let pindah = ''
-        if (!this.pindah) {
-          pindah = `https://getdaytrends.com/indonesia/bekasi/`
-        } else {
-          pindah = `/twitter-trends/getdaytrends.test.html`
-        }
-          
-        const res = await axios.get(pindah)
+        const res = await axios.get(`/getdaytrends`)
         this.getdaytrends = res.data
         this.selectSubmit = true
 
@@ -156,24 +145,13 @@ export default {
 }
 </script>
 
-<template>
-  Test getdaytrends.com:
-  <input type="checkbox" v-model="pindah" />
-	<label for="checkbox">{{ pindah }}</label>
-  
+<template> 
   <p>TODO:</p>
   <ol>
     <li>regex: without "</li>
-    <li>AxiosError: Network Error</li>
-    The CORS Header 'Access-Control-Allow-Origin' is missing.
-
-    <br>
-    CORS rules are bypassed: 
-    <a href="https://addons.mozilla.org/en-US/firefox/search/?q=cors" target="_blank">Firefox</a> |
-    <a href="https://chrome.google.com/webstore/search/cors?hl=en" target="_blank">Chrome</a>
   </ol>
   <p>--------------------------------------------------------</p>
-  <p>(alpha) GetDayTrends.com!</p>
+  <p>(beta) GetDayTrends.com!</p>
   <p> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
 
   <button @click="btnSubmit" data-test="btnSubmit" :disabled="isSubmit">Submit</button>
@@ -181,8 +159,6 @@ export default {
   
   <h3>... dan Paste!</h3>
   
-  <p>Tren Twitter Sekarang:</p>
-  <p v-if="pindah">Test getdaytrends.com</p>
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
