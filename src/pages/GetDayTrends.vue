@@ -46,7 +46,7 @@ export default {
       this.hasil = 'Loading...'
 
       try {
-        const res = await axios.get(`/getdaytrends`)
+        const res = await axios.get('/twitter-trends/url')
         this.getdaytrends = res.data
         this.selectSubmit = true
 

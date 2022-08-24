@@ -14,10 +14,10 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/getdaytrends': {
+      '/twitter-trends/url': {
         target: 'https://getdaytrends.com/indonesia/bekasi/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/getdaytrends/, '')
+        rewrite: (path) => path.replace(/^\/twitter-trends\/url/, '')
       },
     }
   }
