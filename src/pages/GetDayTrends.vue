@@ -1,5 +1,9 @@
 <script>
 import axios from 'axios'
+
+// PINDAH: test, CORS dan GitHub-Pages
+const PINDAH = [0, 1, 2]
+
 export default {
   data() {
     return {
@@ -11,7 +15,10 @@ export default {
       // pilih hasil, button submit dan button copy: true atau false
       selectSubmit: false,
       selectHasil: false,
-      selectCopy: false
+      selectCopy: false,
+
+      // pindah: test, CORS dan GitHub Pages
+      pindah: PINDAH[0]
     }
   },
   computed: {
@@ -46,8 +53,17 @@ export default {
       this.hasil = 'Loading...'
 
       try {
-        const res = await axios.get('/twitter-trends/url')
-        this.getdaytrends = res.data
+        // TODO: getdaytrends.com test, CORS dan GitHub-Pages
+        if (this.pindah == PINDAH[0]) {
+          this.getdaytrends = '<td class="main"><a href="/indonesia/bekasi/trend/%23TimnasIndonesia/">#TimnasIndonesia</a><div class="desc"><span class="small text-muted">22.1K tweets</span></div></td>'
+        } else if (this.pindah == PINDAH[1]) {
+          const res = await axios.get('https://getdaytrends.com/indonesia/bekasi/')
+          this.getdaytrends = res.data
+        } else {
+          const res = await axios.get('/twitter-trends/url')
+          this.getdaytrends = res.data
+        }
+
         this.selectSubmit = true
 
         // hasil
@@ -145,11 +161,41 @@ export default {
 }
 </script>
 
-<template> 
+<template>
+  <div>Pindah:</div>
+
+  <input type="radio" value=0 v-model="pindah" />
+  <label for="test">Test</label> | 
+
+  <input type="radio" value=1 v-model="pindah" />
+  <label for="cors">CORS</label> |
+
+  <input type="radio" value=2 v-model="pindah" />
+  <label for="GitHub-Pages">GitHub-Pages</label>
+
+  <p v-if="pindah == 0">&gt;&gt;&gt; Test getdaytrends.com</p>
+  <div v-if="pindah == 1">
+    <li>&gt;&gt;&gt; AxiosError: Network Error</li>
+    The CORS Header 'Access-Control-Allow-Origin' is missing.
+    <br>
+    CORS rules are bypassed: 
+    <a href="https://addons.mozilla.org/en-US/firefox/search/?q=cors" target="_blank">Firefox</a> |
+    <a href="https://chrome.google.com/webstore/search/cors?hl=en" target="_blank">Chrome</a>
+  </div>
+  <div v-if="pindah == 2">
+    &gt;&gt;&gt; localhost: bisa | ockibagusp.github.io/twitter-trends: tidak bisa
+    <p>contoh,</p>
+    <p>
+      <a href="http://localhost:3000/twitter-trends/getdaytrends" target="_blank">localhost:3000/twitter-trends/getdaytrends: bisa</a> | 
+      <a href="https://ockibagusp.github.io/twitter-trends/getdaytrends" target="_blank"> ockibagusp.github.io/twitter-trends/getdaytrends: tidak bisa</a>
+    </p>
+  </div>
+
   <p>TODO:</p>
   <ol>
     <li>regex: without "</li>
   </ol>
+
   <p>--------------------------------------------------------</p>
   <p>(beta) GetDayTrends.com!</p>
   <p> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
