@@ -45,3 +45,17 @@ npm run test:ui
 ```sh
 npm run test:unit
 ```
+
+### Comment bash: git-build
+
+#### Linux or MacOS: 
+```sh
+chmod 755 git-build
+```
+
+#### Use: git-build [commit]
+
+Example:
+```sh
+./git-build "init"
+```
