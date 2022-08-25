@@ -187,7 +187,7 @@ export default {
     <p>contoh,</p>
     <p>
       <a href="http://localhost:3000/twitter-trends/getdaytrends" target="_blank">localhost:3000/twitter-trends/getdaytrends: bisa</a> | 
-      <a href="https://ockibagusp.github.io/twitter-trends/getdaytrends" target="_blank"> ockibagusp.github.io/twitter-trends/getdaytrends: tidak bisa</a>
+      <a href="https://ockibagusp.github.io/twitter-trends/getdaytrends" target="_blank"> ockibagusp.github.io/twitter-trends/getdaytrends: 404 File not found</a>
     </p>
   </div>
 
