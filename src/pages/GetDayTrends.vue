@@ -191,11 +191,6 @@ export default {
     </p>
   </div>
 
-  <p>TODO:</p>
-  <ol>
-    <li>regex: without "</li>
-  </ol>
-
   <p>--------------------------------------------------------</p>
   <p>(beta) GetDayTrends.com!</p>
   <p> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
