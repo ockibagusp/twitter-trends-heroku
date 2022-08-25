@@ -18,14 +18,14 @@ if [ $ARGS != 1 ]; then
 fi
 
 function selection {
-  echo "&gt; npm run build...";
+  echo "$ npm run build...\n";
   npm run build;
   
-  echo "&gt; git add dist -f...";
+  echo "$ git add dist -f...\n";
   git add dist -f;
-  echo "&gt; git commit...";
+  echo "$ git commit...\n";
   git commit -m "$1";
-  echo "&gt; git subtree push --prefix dist origin gh-pages...";
+  echo "$ git subtree push --prefix dist origin gh-pages...\n";
   git subtree push --prefix dist origin gh-pages;
 }
 
