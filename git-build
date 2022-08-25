@@ -1,0 +1,32 @@
+#!/bin/bash
+
+. /etc/rc.d/init.d/functions
+
+# Linux or MacOS: $ chmod 755 git-build
+
+ARGS=$#
+COMMIT=$1
+
+function help {
+  printf 'Use: git-build [commit]\n Example:
+    git-build "init" \n'
+}
+
+if [ $ARGS != 1 ]; then
+  help;
+  exit;
+fi
+
+function selection {
+  echo "&gt; npm run build...";
+  npm run build;
+  
+  echo "&gt; git add dist -f...";
+  git add dist -f;
+  echo "&gt; git commit...";
+  git commit -m "$1";
+  echo "&gt; git subtree push --prefix dist origin gh-pages...";
+  git subtree push --prefix dist origin gh-pages;
+}
+
+selection "$COMMIT"
