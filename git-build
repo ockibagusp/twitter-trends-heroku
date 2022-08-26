@@ -24,7 +24,7 @@ function selection {
   printf '\n$ git add dist -f...\n'
   git add dist -f;
   printf '\n$ git commit...\n';
-  git commit -m "$1";
+  git commit -m "gh-pages: $1";
 
   printf '\n$ git subtree push --prefix dist origin gh-pages...\n';
   git subtree push --prefix dist origin gh-pages;
