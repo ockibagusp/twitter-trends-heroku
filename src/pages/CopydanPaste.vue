@@ -96,9 +96,9 @@ export default {
 
 <template>
   <p>Twitter Trends</p>
-  <p> <a href="https://twitter.com/i/trends" target="_blank">twitter.com/i/trends</a> + Select All</p>
+  <p> <a href="https://twitter.com/i/trends" target="_blank">twitter.com/i/trends</a> + Select All (ctrl + a)</p>
 
-  <h3>Copy sini!</h3>
+  <h3>Copy (ctrl + c) sini!</h3>
     <textarea v-model="copydanpaste" ref="copydanpaste" data-test="copydanpaste" rows="10" cols="50" 
     placeholder="Tren
 Sedang tren dalam topik Indonesia
@@ -114,7 +114,7 @@ Motor
   <button @click="btnReset" data-test="btnReset">Reset</button>
   <br>
 
-  <h3>... dan Paste!</h3>
+  <h3>... dan Paste (ctrl + v)!</h3>
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>

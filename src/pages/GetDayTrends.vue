@@ -193,7 +193,7 @@ export default {
   <button @click="btnSubmit" data-test="btnSubmit" :disabled="isSubmit">Submit</button>
   <br>
   
-  <h3>... dan Paste!</h3>
+  <h3>... dan Paste (ctrl + v)!</h3>
   
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
