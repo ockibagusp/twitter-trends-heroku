@@ -196,7 +196,7 @@ export default {
   <h3>... dan Paste (ctrl + v)!</h3>
   
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
-    placeholder="Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
+    placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
   <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
   <br>
