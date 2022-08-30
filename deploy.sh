@@ -5,14 +5,15 @@
 # Linux or MacOS: $ chmod 755 git-build
 
 ARGS=$#
-COMMIT=$1
+# save the latest commit hash as a string
+LOGSTRING=$(git log);
+COMMIT=$(echo $LOGSTRING | awk '{print $2}');
 
 function help {
-  printf 'Use: git-build [commit]\n Example:
-    git-build "init" \n'
+  printf 'Use: git-build \n'
 }
 
-if [ $ARGS != 1 ]; then
+if [ $ARGS != 0 ]; then
   help;
   exit;
 fi
@@ -24,10 +25,10 @@ function selection {
   printf '\n$ git add dist -f...\n'
   git add dist -f;
   printf '\n$ git commit...\n';
-  git commit -m "gh-pages: $1";
+  git commit -m "deploy (commit: $COMMIT)";
 
   printf '\n$ git subtree push --prefix dist origin gh-pages...\n';
   git subtree push --prefix dist origin gh-pages;
 }
 
-selection "$COMMIT"
+selection
