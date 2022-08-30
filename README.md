@@ -53,9 +53,9 @@ npm run test:unit
 chmod 755 git-build
 ```
 
-#### Use: git-build [commit]
+#### Use: deploy
 
 Example:
 ```sh
-./git-build "init"
+./deploy.sh
 ```
