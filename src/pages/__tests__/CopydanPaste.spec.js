@@ -112,3 +112,44 @@ Lainnya
     assert.equal(hasil.element.value, '')
   })
 })
+
+// TDD
+// 1. web awal dalam textarea `hasil` sama textarea `tweet` ini dinonaktifkan ✅
+// 2. textarea `tweet` ini diaktifkan, jika maks. 140 karakter ❎
+// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
+describe('Tweet', () => {
+  assert.exists(CopydanPaste)
+
+  const wrapper = mount(CopydanPaste, {
+    props: { } 
+  })
+
+  // textarea: copydanpaste dan hasil
+  const hasil = wrapper.find('[data-test="hasil"]')
+
+  // button: btnCopy dan btnTweet
+  const btnCopy = wrapper.find('[data-test="btnCopy"]')
+  const btnTweet = wrapper.find('[data-test="btnTweet"]')
+
+  it('init', () => {
+    assert.equal(btnCopy.attributes().disabled, '')
+    assert.equal(btnTweet.attributes().disabled, '')
+  })
+
+  it('min. dan maks. 140 karakter', () => {
+    // min. 140 karakter.
+    // bool: true
+    hasil.setValue('Tags: #TimnasIndonesia')
+    assert.equal(
+      hasil.element.value,
+      'Tags: #TimnasIndonesia'
+    )
+    // Maks. 150 karakter.
+    // bool: false
+    hasil.setValue('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat volutpat arcu, in condimentum dolor vehicula vitae. Fusce ullamcorper ex tortor, a porta augue luctus vitae. Praesent ac molestie neque. Sed laoreet ante id mi elementum aliquet. Morbi eget dolor est. Maks. 150 karakter.')
+    assert.equal(
+      hasil.element.value,
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat volutpat arcu, in condimentum dolor vehicula vitae. Fusce ullamcorper ex tortor, a porta augue luctus vitae. Praesent ac molestie neque. Sed laoreet ante id mi elementum aliquet. Morbi eget dolor est. Maks. 150 karakter.'
+    )
+  })
+})

@@ -6,9 +6,13 @@ export default {
       copydanpaste: '',
       hasil: '',
 
+      // tweet dihasil maks. 140 karakter
+      count: 0,
+
       // pilih hasil dan button copy: true atau false
       selectHasil: false,
-      selectCopy: false
+      selectCopy: false,
+      selectTweet: false
     }
   },
   computed: {
@@ -18,9 +22,15 @@ export default {
     },
     isCopy: function() {
       return !this.selectCopy
+    },
+    isTweet: function() {
+      return !this.selectTweet
     }
   },
   watch: {
+    count() {
+      this.count++
+    },
     // textarea: copydanpaste
     copydanpaste() {
       // textarea hasil: loading...
@@ -61,10 +71,12 @@ export default {
         trends = 'Tags: ' + trends.substr(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
+        this.selectTweet = true
       } if (str != '' && trends == '') {
         trends = 'Tidak ada hasil'
         this.selectHasil = false
         this.selectCopy = false
+        this.selectTweet = false
       }
       
       this.hasil = trends
@@ -89,6 +101,10 @@ export default {
       this.$refs.hasil.setSelectionRange(0, 99999);
     
       navigator.clipboard.writeText(this.hasil);
+    },
+    btnTweet() {
+      const UTF8_hash = this.hasil.replace("#", "%23")
+      window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     }
   }
 }
@@ -119,5 +135,6 @@ Motor
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
   <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
+  <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: {{count}}</button>
   <br>
 </template>
