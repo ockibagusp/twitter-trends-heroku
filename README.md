@@ -46,6 +46,18 @@ npm run test:ui
 npm run test:unit
 ```
 
+or,
+
+Example:
+
+```bash
+ls src/pages/__tests__/CopydanPaste.spec.js
+```
+
+```sh
+npm run test:unit -t CopydanPaste
+```
+
 ### Comment bash: git-build
 
 #### Linux or MacOS: 
