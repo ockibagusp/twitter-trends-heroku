@@ -6,6 +6,9 @@ export default {
       copydanpaste: '',
       hasil: '',
 
+      // array untuk trends
+      arraytrends: [],
+
       // tweet dihasil maks. 140 karakter
       count: 0,
 
@@ -28,9 +31,6 @@ export default {
     }
   },
   watch: {
-    count() {
-      this.count++
-    },
     // textarea: copydanpaste
     copydanpaste() {
       // textarea hasil: loading...
@@ -50,7 +50,7 @@ export default {
       
       const str = this.copydanpaste
       
-      let m;
+      let m
 
       while ((m = regex.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
@@ -61,18 +61,22 @@ export default {
         // The result can be accessed through the `m`-variable.
         m.forEach((match, groupIndex) => {
           if (groupIndex === 2) {
-              trends += `${match}, `
+            this.arraytrends.push({
+              text: match,
+              completed: true
+            })
+            trends += `${match}, `
           }
         })
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
-      if (trends != '') {
-        trends = 'Tags: ' + trends.substr(0, trends.length-2)
+      if (this.arraytrends.length >= 1) {
+        trends = 'Tags: ' + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
-      } if (str != '' && trends == '') {
+      } else if (str != '' && trends == '') {
         trends = 'Tidak ada hasil'
         this.selectHasil = false
         this.selectCopy = false
@@ -90,6 +94,7 @@ export default {
 
       this.hasil = ''
       this.selectCopy = false
+      this.arraytrends = []
     },
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
@@ -103,6 +108,10 @@ export default {
       navigator.clipboard.writeText(this.hasil);
     },
     btnTweet() {
+      if (this.hasil.length > 140) {
+        this.selectTweet = false
+        return
+      }
       const UTF8_hash = this.hasil.replace("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     }
@@ -115,7 +124,7 @@ export default {
   <p> <a href="https://twitter.com/i/trends" target="_blank">twitter.com/i/trends</a> + Select All (ctrl + a)</p>
 
   <h3>Copy (ctrl + c) sini!</h3>
-    <textarea v-model="copydanpaste" ref="copydanpaste" data-test="copydanpaste" rows="10" cols="50" 
+    <textarea v-model="copydanpaste" ref="copydanpaste" data-test="copydanpaste" rows="8" cols="50" 
     placeholder="Tren
 Sedang tren dalam topik Indonesia
 Aksi Cepat Tanggap
@@ -137,4 +146,19 @@ Motor
   <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
   <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: {{count}}</button>
   <br>
+  
+  <h4>Twitter Trends:</h4>
+  <div
+    v-for="trends in arraytrends"
+    :key="trends.text"
+    data-test="arrayTrends"
+    :class="[trends.completed ? 'completed' : '']"
+  >
+    <input
+      type="checkbox"
+      v-model="trends.completed"
+      data-test="trends-checkbox"
+    />
+    {{ trends.text }}
+  </div>
 </template>
