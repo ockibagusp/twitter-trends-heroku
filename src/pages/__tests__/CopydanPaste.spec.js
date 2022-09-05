@@ -115,8 +115,9 @@ Lainnya
 
 // TDD
 // 1. web awal dalam textarea `hasil` sama textarea `tweet` ini dinonaktifkan ✅
-// 2. textarea `tweet` ini diaktifkan, jika maks. 140 karakter ❎
-// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
+// 2. textarea `hasil` benar maka array untuk trends, tidak benar maka 'Tidak ada hasil'
+// 3. textarea `tweet` ini diaktifkan, jika maks. 140 karakter ❎
+// 4. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
 describe('Tweet', () => {
   assert.exists(CopydanPaste)
 
@@ -131,25 +132,27 @@ describe('Tweet', () => {
   const btnCopy = wrapper.find('[data-test="btnCopy"]')
   const btnTweet = wrapper.find('[data-test="btnTweet"]')
 
-  it('init', () => {
+  // array untuk trends
+  const arrayTrends = wrapper.find('[data-test="arrayTrends"]')
+
+  it('web awal dalam textarea `hasil` sama textarea `tweet` ini dinonaktifkan', () => {
     assert.equal(btnCopy.attributes().disabled, '')
     assert.equal(btnTweet.attributes().disabled, '')
   })
 
-  it('min. dan maks. 140 karakter', () => {
+  it('textarea `hasil` benar maka array untuk trends, tidak benar maka \'Tidak ada hasil\'', () => {
+    assert.isTrue(arrayTrends)
+  })
+
+  it('min. dan maks. 140 karakter', async() => {
     // min. 140 karakter.
     // bool: true
-    hasil.setValue('Tags: #TimnasIndonesia')
-    assert.equal(
-      hasil.element.value,
-      'Tags: #TimnasIndonesia'
-    )
+    hasil.setValue('Test Tags: #TimnasIndonesia')
+    await btnTweet.trigger('click')
+    
     // Maks. 150 karakter.
     // bool: false
-    hasil.setValue('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat volutpat arcu, in condimentum dolor vehicula vitae. Fusce ullamcorper ex tortor, a porta augue luctus vitae. Praesent ac molestie neque. Sed laoreet ante id mi elementum aliquet. Morbi eget dolor est. Maks. 150 karakter.')
-    assert.equal(
-      hasil.element.value,
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat volutpat arcu, in condimentum dolor vehicula vitae. Fusce ullamcorper ex tortor, a porta augue luctus vitae. Praesent ac molestie neque. Sed laoreet ante id mi elementum aliquet. Morbi eget dolor est. Maks. 150 karakter.'
-    )
+    hasil.setValue('Test Tags: Test1, Test2, Test3, Test4, #Test5, Test6, Test7, Test8, Test9, #Test10, Test11, Test12, Test13, Test14, #Test15, Test16, Test17, Test18, Test19, #Test20, Test21, Test22, Test23, Test24, #Test25, Test26, Test27, Test28, Test29, #Test30, Test31, Test32, Test33, Test34, #Test35')
+    await btnTweet.trigger('click')
   })
 })
