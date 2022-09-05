@@ -94,6 +94,7 @@ export default {
 
       this.hasil = ''
       this.selectCopy = false
+      this.selectTweet = false
       this.arraytrends = []
     },
     btnCopy() {
