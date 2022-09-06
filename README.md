@@ -58,11 +58,11 @@ ls src/pages/__tests__/CopydanPaste.spec.js
 npm run test:unit -t CopydanPaste
 ```
 
-### Comment bash: git-build
+### Comment bash: deploy.sh
 
 #### Linux or MacOS: 
 ```sh
-chmod 755 git-build
+chmod 755 deploy.sh
 ```
 
 #### Use: deploy
