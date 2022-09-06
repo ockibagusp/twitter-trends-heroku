@@ -10,7 +10,7 @@ export default {
       arraytrends: [],
 
       // tweet dihasil maks. 140 karakter
-      count: 0,
+      count: 280,
 
       // pilih hasil dan button copy: true atau false
       selectHasil: false,
@@ -78,11 +78,15 @@ export default {
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
+
+        this.count = 280 - trends.length
       } else if (str != '' && this.arraytrends.length == 0) {
         trends = 'Tidak ada hasil'
         this.selectHasil = false
         this.selectCopy = false
         this.selectTweet = false
+
+        this.count = 280
       }
       
       this.hasil = trends
@@ -111,11 +115,11 @@ export default {
       navigator.clipboard.writeText(this.hasil);
     },
     btnTweet() {
-      if (this.hasil.length > 140) {
+      if (this.hasil.length > 280) {
         this.selectTweet = false
         return
       }
-      const UTF8_hash = this.hasil.replace("#", "%23")
+      const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     }
   }

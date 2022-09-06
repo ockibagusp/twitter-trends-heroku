@@ -126,6 +126,7 @@ describe('Tweet', () => {
   })
 
   // textarea: copydanpaste dan hasil
+  const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
   const hasil = wrapper.find('[data-test="hasil"]')
 
   // button: btnCopy dan btnTweet
@@ -141,18 +142,62 @@ describe('Tweet', () => {
   })
 
   it('textarea `hasil` benar maka array untuk trends, tidak benar maka \'Tidak ada hasil\'', () => {
-    //
+    // ?
   })
 
-  it('min. dan maks. 140 karakter', async() => {
-    // min. 140 karakter.
-    // bool: true
-    hasil.setValue('Test Tags: #TimnasIndonesia')
-    await btnTweet.trigger('click')
-    
-    // Maks. 150 karakter.
-    // bool: false
-    hasil.setValue('Test Tags: Test1, Test2, Test3, Test4, #Test5, Test6, Test7, Test8, Test9, #Test10, Test11, Test12, Test13, Test14, #Test15, Test16, Test17, Test18, Test19, #Test20, Test21, Test22, Test23, Test24, #Test25, Test26, Test27, Test28, Test29, #Test30, Test31, Test32, Test33, Test34, #Test35')
-    await btnTweet.trigger('click')
+  it('min. dan maks. 280 karakter', async() => {
+    // test cases
+    const testCases = [
+      { 
+        copydanpaste:`
+...
+Olahraga · Populer
+(Indonesia) #TimnasIndonesia
+2.233 rb Tweet
+...
+        `,
+        text: 'Tweet is: 246'        
+      },
+      {
+        copydanpaste:`
+...
+Trending in Indonesia
+Lorem ipsum dolor sit amet
+1.23 rb Tweet
+Trending in Indonesia
+consectetur adipiscing elit
+Trending in Indonesia
+Donec id luctus metus
+Trending in Indonesia
+Quisque semper condimentum metus sed imperdiet
+Trending in Indonesia
+#Donec eget ullamcorper velit
+Trending in Indonesia
+Maecenas lacinia
+1.23 rb Tweet
+Trending in Indonesia
+urna sit amet egestas aliquet
+Trending in Indonesia
+eros elit egestas nulla
+Trending in Indonesia
+a sollicitudin tortor lectus ut urna
+Trending in Indonesia
+Duis sagittis mattis mauris
+...
+        `,
+        text: 'Tweet is: -24'
+      },
+      {
+        copydanpaste: '-',
+        text: 'Tweet is: 280'
+      }
+    ]
+
+    for (let test of testCases) {
+      copydanpaste.setValue(test.copydanpaste)
+      await copydanpaste.trigger('change')
+      
+      assert.equal(btnTweet.text(), test.text)     
+    }
   })
 })
