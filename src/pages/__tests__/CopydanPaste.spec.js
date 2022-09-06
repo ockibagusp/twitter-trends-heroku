@@ -32,16 +32,6 @@ describe('Copy dan Paste', () => {
   it('lingkaran dari `for`', async() => {
     // test cases
     const testCases = [
-      // why?
-      // a{ copydanpaste: `\n>>> Indonesia...` }
-      // b{ copydanpaste: '-' }
-
-      // a, b ❎
-      // b, a ✅
-      {
-        copydanpaste: '-',
-        hasil: 'Tidak ada hasil'
-      },
       { 
         copydanpaste:`
 ...
@@ -68,6 +58,10 @@ Entertainment · Trending
 `, 
         hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
       },
+      {
+        copydanpaste: '-',
+        hasil: 'Tidak ada hasil'
+      }
     ]
 
     for (let test of testCases) {

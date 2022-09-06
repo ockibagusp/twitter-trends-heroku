@@ -71,7 +71,7 @@ export default {
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
-      if (this.arraytrends.length >= 1) {
+      if (trends != '') {
         trends = 'Tags: ' + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
