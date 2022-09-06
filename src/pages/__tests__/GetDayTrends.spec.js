@@ -20,12 +20,13 @@ describe('getdaytrends.com', () => {
   const btnCopy = wrapper.find('[data-test="btnCopy"]')
 
   it('init', () => {
-    // TODO: btnSubmit.attributes() => { 'data-test': 'btnSubmit' }
-    assert.equal(btnSubmit.attributes().disabled, undefined)
+    // button: btnSubmit diaktifkan
+    assert.isUndefined(btnSubmit.attributes().disabled)
 
     // textarea hasil: test getdaytrends.com
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia')
-    assert.equal(btnCopy.attributes().disabled, undefined)
+    // button: btnCopy diaktifkan
+    assert.isUndefined(btnCopy.attributes().disabled)
   })  
 
   it.todo('lingkaran dari `for`')
