@@ -18,6 +18,9 @@ describe('Copy dan Paste', () => {
   const btnReset = wrapper.find('[data-test="btnReset"]') 
   const btnCopy = wrapper.find('[data-test="btnCopy"]')
 
+  // button: btnTweet
+  const btnTweet = wrapper.find('[data-test="btnTweet"]')
+
   it('init', () => {
     assert.isEmpty(copydanpaste.element.value)
     // TODO: copydanpaste.element.focus() => undefined. Why?
@@ -56,11 +59,18 @@ Entertainment · Trending
 (Inggris) Yayasan Aksi Cepat Tanggap
 54.5 Tweets
 `, 
-        hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
+        hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap',
+        bntCopyDanTweet: true
       },
       {
         copydanpaste: '-',
-        hasil: 'Tidak ada hasil'
+        hasil: 'Tidak ada hasil',
+        bntCopyDanTweet: false
+      },
+      {
+        copydanpaste: '',
+        hasil: '',
+        bntCopyDanTweet: false
       }
     ]
 
@@ -75,6 +85,16 @@ Entertainment · Trending
         hasil.element.value,
         test.hasil
       )
+
+      if (test.bntCopyDanTweet) {
+        // button: bntCopy dan bntTweet diaktifkan
+        assert.isUndefined(btnCopy.attributes().disabled)
+        assert.isUndefined(btnTweet.attributes().disabled)
+      } else {
+        // button: bntCopy dan bntTweet dinonaktifkan
+        assert.equal(btnCopy.attributes().disabled, '')
+        assert.equal(btnTweet.attributes().disabled, '')
+      }
     }
   })
 
