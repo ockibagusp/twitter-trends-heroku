@@ -154,7 +154,7 @@ Motor
   <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: {{count}}</button>
   <br>
   
-  <h4 v-if="arraytrends.length > 0">Twitter Trends:</h4>
+  <h4 v-if="arraytrends.length > 0">Select:</h4>
   <div
     v-for="trends in arraytrends"
     :key="trends.text"
