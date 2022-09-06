@@ -43,6 +43,8 @@ export default {
   methods: {
     // memuat: dari textarea copydanpaste ini
     memuat() {
+      this.arraytrends = []
+      
       let trends = ''
 
       // regex101.com
@@ -71,12 +73,12 @@ export default {
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
-      if (trends != '') {
+      if (this.arraytrends.length != 0) {
         trends = 'Tags: ' + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
-      } else if (str != '' && trends == '') {
+      } else if (str != '' && this.arraytrends.length == 0) {
         trends = 'Tidak ada hasil'
         this.selectHasil = false
         this.selectCopy = false
