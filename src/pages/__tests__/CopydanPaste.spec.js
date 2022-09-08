@@ -1,4 +1,4 @@
-import { describe, it, assert } from 'vitest'
+import { describe, it, assert, expect } from 'vitest'
 
 import { mount } from '@vue/test-utils'
 import CopydanPaste from '../CopydanPaste.vue'
@@ -60,16 +60,19 @@ Entertainment · Trending
 54.5 Tweets
 `, 
         hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap',
+        tweetIs: 'Tweet is: 96',
         bntCopyDanTweet: true
       },
       {
         copydanpaste: '-',
         hasil: 'Tidak ada hasil',
+        tweetIs: 'Tweet is: 280',
         bntCopyDanTweet: false
       },
       {
         copydanpaste: '',
         hasil: '',
+        tweetIs: 'Tweet is: 280',
         bntCopyDanTweet: false
       }
     ]
@@ -85,6 +88,8 @@ Entertainment · Trending
         hasil.element.value,
         test.hasil
       )
+
+      assert.equal(btnTweet.text(), test.tweetIs)
 
       if (test.bntCopyDanTweet) {
         // button: bntCopy dan bntTweet diaktifkan
@@ -114,90 +119,44 @@ Entertainment · Trending
 })
 
 // TDD
-// 1. web awal dalam textarea `hasil` sama textarea `tweet` ini dinonaktifkan ✅
-// 2. textarea `hasil` benar maka array untuk trends, tidak benar maka 'Tidak ada hasil'
-// 3. textarea `tweet` ini diaktifkan, jika maks. 140 karakter ❎
-// 4. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
+// ✅ ❎
+// 1. textarea `hasil` untuk array untuk trends ❎
+// 2. textarea `tweet` ini diaktifkan, jika maks. 280 karakter 
+// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
 describe('Tweet', () => {
   assert.exists(CopydanPaste)
 
   const wrapper = mount(CopydanPaste, {
-    props: { } 
+    props: { },
+    data() {
+      return {
+        arraytrends: [
+          {
+            text: "#TimnasIndonesia",
+            completed: true
+          },
+          {
+            text: "Test 1",
+            completed: true
+          },
+          {
+            text: "Test 2",
+            completed: true
+          }
+        ],
+      }
+    } 
   })
-
-  // textarea: copydanpaste dan hasil
-  const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
-  const hasil = wrapper.find('[data-test="hasil"]')
-
-  // button: btnCopy dan btnTweet
-  const btnCopy = wrapper.find('[data-test="btnCopy"]')
-  const btnTweet = wrapper.find('[data-test="btnTweet"]')
 
   // array untuk trends
-  const arrayTrends = wrapper.find('[data-test="arrayTrends"]')
+  const arrayTrends = wrapper.findAll('[data-test="arrayTrends"]')
 
-  it('web awal dalam textarea `hasil` sama textarea `tweet` ini dinonaktifkan', () => {
-    assert.equal(btnCopy.attributes().disabled, '')
-    assert.equal(btnTweet.attributes().disabled, '')
-  })
-
-  it('textarea `hasil` benar maka array untuk trends, tidak benar maka \'Tidak ada hasil\'', () => {
-    // ?
-  })
-
-  it('min. dan maks. 280 karakter', async() => {
-    // test cases
-    const testCases = [
-      { 
-        copydanpaste:`
-...
-Olahraga · Populer
-(Indonesia) #TimnasIndonesia
-2.233 rb Tweet
-...
-        `,
-        text: 'Tweet is: 246'        
-      },
-      {
-        copydanpaste:`
-...
-Trending in Indonesia
-Lorem ipsum dolor sit amet
-1.23 rb Tweet
-Trending in Indonesia
-consectetur adipiscing elit
-Trending in Indonesia
-Donec id luctus metus
-Trending in Indonesia
-Quisque semper condimentum metus sed imperdiet
-Trending in Indonesia
-#Donec eget ullamcorper velit
-Trending in Indonesia
-Maecenas lacinia
-1.23 rb Tweet
-Trending in Indonesia
-urna sit amet egestas aliquet
-Trending in Indonesia
-eros elit egestas nulla
-Trending in Indonesia
-a sollicitudin tortor lectus ut urna
-Trending in Indonesia
-Duis sagittis mattis mauris
-...
-        `,
-        text: 'Tweet is: -24'
-      },
-      {
-        copydanpaste: '-',
-        text: 'Tweet is: 280'
-      }
-    ]
-
-    for (let test of testCases) {
-      copydanpaste.setValue(test.copydanpaste)
-      await copydanpaste.trigger('change')
-      
-      assert.equal(btnTweet.text(), test.text)     
+  it('textarea `hasil` untuk array untuk trends', async() => {
+    // arrayTrends: '[0] => #TimnasIndonesia, [1] => Test 1, [2] => Test 2'
+    for (let i = 0; i < arrayTrends.length; i++) {
+      assert.deepEqual(arrayTrends.at(i).classes(), ['completed' ], `ke-${i}`)
     }
+
+    expect(arrayTrends).toHaveLength(3)
   })
 })
