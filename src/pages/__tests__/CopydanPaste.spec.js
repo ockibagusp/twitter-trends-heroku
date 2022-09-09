@@ -140,7 +140,11 @@ describe('Tweet', () => {
             completed: true
           },
           {
-            text: "Test 2",
+            text: "#Test2",
+            completed: true
+          },
+          {
+            text: "Test 3",
             completed: true
           }
         ],
@@ -148,15 +152,32 @@ describe('Tweet', () => {
     } 
   })
 
-  // array untuk trends
+  // array dan checkbox untuk trends
   const arrayTrends = wrapper.findAll('[data-test="arrayTrends"]')
+  const checkboxTrends = wrapper.findAll('[data-test="trends-checkbox"]')
+
+  // textarea: hasil
+  const hasil = wrapper.find('[data-test="hasil"]')
 
   it('textarea `hasil` untuk array untuk trends', async() => {
-    // arrayTrends: '[0] => #TimnasIndonesia, [1] => Test 1, [2] => Test 2'
+    // arrayTrends: '[0] => #TimnasIndonesia, [1] => Test 1, [2] => #Test2, [3] => Test 3'
     for (let i = 0; i < arrayTrends.length; i++) {
-      assert.deepEqual(arrayTrends.at(i).classes(), ['completed' ], `ke-${i}`)
+      // same: assert.deepEqual(arrayTrends.at(1).classes(), ['completed'])
+      expect(arrayTrends.at(i).classes(), `ke-${i}`).toContain('completed')
     }
 
-    expect(arrayTrends).toHaveLength(3)
+    hasil.setValue('Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
+
+    // [2] => #Test2 []
+    await checkboxTrends.at(2).setValue(false)
+
+    expect(arrayTrends.at(0).classes()).toContain('completed')
+    expect(arrayTrends.at(1).classes()).toContain('completed')
+    // same: assert.deepEqual(arrayTrends.at(2).classes(), [])
+    expect(arrayTrends.at(2).classes()).to.deep.equal([])
+    expect(arrayTrends.at(3).classes()).toContain('completed')
+
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, Test 3')
   })
 })
