@@ -9,7 +9,7 @@ export default {
       // array untuk trends
       arraytrends: [],
 
-      // tweet dihasil maks. 140 karakter
+      // tweet dihasil maks. 280 karakter
       count: 280,
 
       // pilih hasil dan button copy: true atau false
