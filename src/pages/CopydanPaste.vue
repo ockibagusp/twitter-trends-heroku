@@ -121,6 +121,36 @@ export default {
       }
       const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
+    },
+
+    // berubah dalam array untuk trends
+    trendsChanged(event, index) {
+      let text = this.arraytrends[index].text
+
+      if (event.target.checked) {
+        console.debug("checked", `${index} => ${text}`)
+        // splice
+        this.hasil =  `Tags: checked ${index}`
+      } else {
+        console.debug("unchecked", `${index} => ${text}`)
+        let melepas = ''
+        if (this.hasil.includes(`${text}, `)) {
+          melepas = `${text}, `
+        } else if (this.hasil.includes(`, ${text}`)) {
+          melepas = `, ${text}`
+        } else if (this.hasil.includes(`, ${text}, `)) {
+          melepas = `, ${text}, `
+        } else {
+          // melepas = text 
+          this.hasil = 'Tidak ada hasil'
+          // pilih hasil dan button copy: true atau false
+          this.selectHasil = false,
+          this.selectCopy = false
+          this.selectTweet = false
+          return
+        }
+        this.hasil = this.hasil.replace(melepas, '')
+      }
     }
   }
 }
@@ -156,10 +186,11 @@ Motor
   
   <h4 v-if="arraytrends.length > 0">Kotak Centang:</h4>
   <div
-    v-for="trends in arraytrends"
+    v-for="(trends, index) in arraytrends"
     :key="trends.text"
     data-test="arrayTrends"
     :class="[trends.completed ? 'completed' : '']"
+    @change="trendsChanged($event, index)"
   >
     <input
       type="checkbox"
