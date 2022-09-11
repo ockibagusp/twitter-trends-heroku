@@ -125,7 +125,11 @@ export default {
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
-      let text = this.arraytrends[index].text
+      const text = this.arraytrends[index].text
+
+      const kananKoma = `${text}, `
+      const kiriKoma = `, ${text}`
+      const keduanyaKoma = `, ${text}, `
 
       if (event.target.checked) {
         console.debug("checked", `${index} => ${text}`)
@@ -134,12 +138,12 @@ export default {
       } else {
         console.debug("unchecked", `${index} => ${text}`)
         let melepas = ''
-        if (this.hasil.includes(`${text}, `)) {
-          melepas = `${text}, `
-        } else if (this.hasil.includes(`, ${text}`)) {
-          melepas = `, ${text}`
-        } else if (this.hasil.includes(`, ${text}, `)) {
-          melepas = `, ${text}, `
+        if (this.hasil.includes(kananKoma)) {
+          melepas = kananKoma
+        } else if (this.hasil.includes(kiriKoma)) {
+          melepas = kiriKoma
+        } else if (this.hasil.includes(keduanyaKoma)) {
+          melepas = keduanyaKoma
         } else {
           // melepas = text 
           this.hasil = 'Tidak ada hasil'
