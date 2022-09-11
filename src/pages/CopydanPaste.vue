@@ -47,7 +47,6 @@ export default {
       this.arraytrends = []
       this.arraytrendsindex = []
 
-      
       let trends = ''
 
       // regex101.com
