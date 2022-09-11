@@ -230,7 +230,7 @@ Test 3
     assert.equal(hasil.element.value, 'Tidak ada hasil')
 
     console.debug('-----')
-    
+
     // test cases
     const testCases = [   
       {
@@ -261,9 +261,9 @@ Test 3
 
     for (let test of testCases) {
       console.debug('checked ke-', test.name)
-      await checkboxTrends.at(test.index).setValue(false)
+      await checkboxTrends.at(test.index).setValue(true)
       
-      for (let i = 0; i < test.listBool.length; i++) {
+      for (let i = test.listBool.length-1; i >= 0; i--) {
         if (test.listBool[i]) {
           expect(arrayTrends.at(i).classes()).toContain('completed')
         } else {

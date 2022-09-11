@@ -8,6 +8,7 @@ export default {
 
       // array untuk trends
       arraytrends: [],
+      arraytrendsindex: [],
 
       // tweet dihasil maks. 280 karakter
       count: 280,
@@ -44,6 +45,8 @@ export default {
     // memuat: dari textarea copydanpaste ini
     memuat() {
       this.arraytrends = []
+      this.arraytrendsindex = []
+
       
       let trends = ''
 
@@ -67,14 +70,14 @@ export default {
               text: match,
               completed: true
             })
-            trends += `${match}, `
+            this.arraytrendsindex.push(match)
           }
         })
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (this.arraytrends.length != 0) {
-        trends = 'Tags: ' + trends.substring(0, trends.length-2)
+        trends = 'Tags: ' + this.arraytrendsindex.join(', ')
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
@@ -134,7 +137,16 @@ export default {
       if (event.target.checked) {
         console.debug("checked", `${index} => ${text}`)
         // splice
-        this.hasil =  `Tags: checked ${index}`
+
+        if (this.hasil === 'Tidak ada hasil') {
+          this.hasil =  `Tags: ${text}`
+          // pilih hasil, button copy dan button tweet: true
+          this.selectHasil = true
+          this.selectCopy = true
+          this.selectTweet = true
+        } else {
+           // ?
+        }
       } else {
         console.debug("unchecked", `${index} => ${text}`)
         let melepas = ''
@@ -147,8 +159,8 @@ export default {
         } else {
           // melepas = text 
           this.hasil = 'Tidak ada hasil'
-          // pilih hasil dan button copy: true atau false
-          this.selectHasil = false,
+          // pilih hasil, button copy dan button tweet: false
+          this.selectHasil = false
           this.selectCopy = false
           this.selectTweet = false
           return
