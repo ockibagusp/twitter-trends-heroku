@@ -160,9 +160,8 @@ describe('Tweet', () => {
   const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
   const hasil = wrapper.find('[data-test="hasil"]')
 
-  it('textarea `hasil` untuk array untuk trends', async() => {
-    copydanpaste.setValue(`
-    ...
+  copydanpaste.setValue(`
+...
 Olahraga · Populer
 #TimnasIndonesia
 Sedang tren dalam topik Indonesia
@@ -174,10 +173,12 @@ Sedang tren dalam topik Indonesia
 Sedang tren dalam topik Indonesia
 Test 3
 54.5 Tweet
-    `)
+...
+  `)
 
+  it('textarea `hasil` untuk array untuk trends: tidak dicentang', async() => {
     await copydanpaste.trigger('change')
-
+        
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
 
     // test cases
@@ -209,7 +210,57 @@ Test 3
     ]
 
     for (let test of testCases) {
-      console.debug('ke-', test.name)
+      console.debug('unchecked ke-', test.name)
+      await checkboxTrends.at(test.index).setValue(false)
+      
+      for (let i = 0; i < test.listBool.length; i++) {
+        if (test.listBool[i]) {
+          expect(arrayTrends.at(i).classes()).toContain('completed')
+        } else {
+          // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+          expect(arrayTrends.at(i).classes()).to.deep.equal([])
+        }
+      }
+
+      assert.equal(hasil.element.value, test.hasil)
+    }
+  })
+
+  it('textarea `hasil` untuk array untuk trends: dicentang', async() => {    
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
+
+    console.debug('-----')
+    
+    // test cases
+    const testCases = [   
+      {
+        name: 'Test 3',
+        index: 3,
+        listBool: [false, false, false, true],
+        hasil: 'Tags: Test 3'
+      },
+      {
+        name: '#Test2',
+        index: 2,
+        listBool: [false, false, true, true],
+        hasil: 'Tags: #Test2, Test 3'
+      },
+      {
+        name: 'Test 1',
+        index: 1,
+        listBool: [false, true, true, true],
+        hasil: 'Tags: Test 1, #Test2, Test 3'
+      },
+      {
+        name: '#TimnasIndonesia',
+        index: 0,
+        listBool: [true, true, true, true],
+        hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3'
+      }  
+    ]
+
+    for (let test of testCases) {
+      console.debug('checked ke-', test.name)
       await checkboxTrends.at(test.index).setValue(false)
       
       for (let i = 0; i < test.listBool.length; i++) {
