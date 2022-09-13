@@ -8,7 +8,7 @@ export default {
 
       // array untuk trends
       arraytrends: [],
-      arraytrendsindex: [],
+      arraytrendstext: [],
 
       // tweet dihasil maks. 280 karakter
       count: 280,
@@ -55,6 +55,7 @@ export default {
       const str = this.copydanpaste
       
       let m
+      let i = 0
 
       while ((m = regex.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
@@ -69,14 +70,15 @@ export default {
               text: match,
               completed: true
             })
-            this.arraytrendsindex.push(match)
+            this.arraytrendstext[i] = match
+            i++
           }
         })
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (this.arraytrends.length != 0) {
-        trends = 'Tags: ' + this.arraytrendsindex.join(', ')
+        trends = 'Tags: ' + this.arraytrendstext.join(', ')
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
@@ -135,8 +137,8 @@ export default {
 
       if (event.target.checked) {
         console.debug("checked", `${index} => ${text}`)
-        // splice
 
+        this.arraytrendstext[index] = text
         if (this.hasil === 'Tidak ada hasil') {
           this.hasil =  `Tags: ${text}`
           // pilih hasil, button copy dan button tweet: true
@@ -144,10 +146,18 @@ export default {
           this.selectCopy = true
           this.selectTweet = true
         } else {
-           // ?
+          let oldArraytrendstext = ''
+          for (let i = 0; i < this.arraytrendstext.length; i++) {
+            if (this.arraytrendstext[i] !== '') {
+              oldArraytrendstext += `${this.arraytrendstext[i]}, `
+            }
+          }
+
+          this.hasil = 'Tags: ' + oldArraytrendstext.substring(0, oldArraytrendstext.length-2)
         }
       } else {
         console.debug("unchecked", `${index} => ${text}`)
+        this.arraytrendstext[index] = ''
         let melepas = ''
         if (this.hasil.includes(kananKoma)) {
           melepas = kananKoma

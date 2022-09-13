@@ -234,26 +234,26 @@ Test 3
     // test cases
     const testCases = [   
       {
-        name: 'Test 3',
-        index: 3,
-        listBool: [false, false, false, true],
-        hasil: 'Tags: Test 3'
-      },
-      {
-        name: '#Test2',
-        index: 2,
-        listBool: [false, false, true, true],
-        hasil: 'Tags: #Test2, Test 3'
-      },
-      {
         name: 'Test 1',
         index: 1,
-        listBool: [false, true, true, true],
-        hasil: 'Tags: Test 1, #Test2, Test 3'
+        listBool: [false, true, false, false],
+        hasil: 'Tags: Test 1'
+      },
+      {
+        name: 'Test 3',
+        index: 3,
+        listBool: [false, true, false, true],
+        hasil: 'Tags: Test 1, Test 3'
       },
       {
         name: '#TimnasIndonesia',
         index: 0,
+        listBool: [true, true, false, true],
+        hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3'
+      },
+      {
+        name: '#Test2',
+        index: 2,
         listBool: [true, true, true, true],
         hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3'
       }  
@@ -263,7 +263,7 @@ Test 3
       console.debug('checked ke-', test.name)
       await checkboxTrends.at(test.index).setValue(true)
       
-      for (let i = test.listBool.length-1; i >= 0; i--) {
+      for (let i = 0; i < test.listBool.length; i++) {
         if (test.listBool[i]) {
           expect(arrayTrends.at(i).classes()).toContain('completed')
         } else {
