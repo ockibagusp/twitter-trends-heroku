@@ -1,4 +1,6 @@
 <script>
+const TAGS = 'Tags: '
+
 export default {
   data() {
     return {
@@ -74,7 +76,7 @@ export default {
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (this.arraytrends.length != 0) {
-        trends = 'Tags: ' + trends.substring(0, trends.length-2)
+        trends = TAGS + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
@@ -142,7 +144,7 @@ export default {
             }
           }
 
-          this.hasil = 'Tags: ' + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
+          this.hasil = TAGS + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
         }
       } else {
         const kananKoma = `${text}, `
