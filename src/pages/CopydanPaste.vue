@@ -8,7 +8,6 @@ export default {
 
       // array untuk trends
       arraytrends: [],
-      arraytrendstext: [],
 
       // tweet dihasil maks. 280 karakter
       count: 280,
@@ -45,7 +44,6 @@ export default {
     // memuat: dari textarea copydanpaste ini
     memuat() {
       this.arraytrends = []
-      this.arraytrendsindex = []
 
       let trends = ''
 
@@ -55,7 +53,6 @@ export default {
       const str = this.copydanpaste
       
       let m
-      let i = 0
 
       while ((m = regex.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
@@ -70,15 +67,14 @@ export default {
               text: match,
               completed: true
             })
-            this.arraytrendstext[i] = match
-            i++
+            trends += `${match}, `
           }
         })
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (this.arraytrends.length != 0) {
-        trends = 'Tags: ' + this.arraytrendstext.join(', ')
+        trends = 'Tags: ' + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
@@ -131,14 +127,7 @@ export default {
     trendsChanged(event, index) {
       const text = this.arraytrends[index].text
 
-      const kananKoma = `${text}, `
-      const kiriKoma = `, ${text}`
-      const keduanyaKoma = `, ${text}, `
-
       if (event.target.checked) {
-        console.debug("checked", `${index} => ${text}`)
-
-        this.arraytrendstext[index] = text
         if (this.hasil === 'Tidak ada hasil') {
           this.hasil =  `Tags: ${text}`
           // pilih hasil, button copy dan button tweet: true
@@ -146,18 +135,20 @@ export default {
           this.selectCopy = true
           this.selectTweet = true
         } else {
-          let oldArraytrendstext = ''
-          for (let i = 0; i < this.arraytrendstext.length; i++) {
-            if (this.arraytrendstext[i] !== '') {
-              oldArraytrendstext += `${this.arraytrendstext[i]}, `
+          let newArrayTrendsText = ''
+          for (let i = 0; i < this.arraytrends.length; i++) {
+            if (this.arraytrends[i].completed !== false) {
+              newArrayTrendsText += `${this.arraytrends[i].text}, `
             }
           }
 
-          this.hasil = 'Tags: ' + oldArraytrendstext.substring(0, oldArraytrendstext.length-2)
+          this.hasil = 'Tags: ' + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
         }
       } else {
-        console.debug("unchecked", `${index} => ${text}`)
-        this.arraytrendstext[index] = ''
+        const kananKoma = `${text}, `
+        const kiriKoma = `, ${text}`
+        const keduanyaKoma = `, ${text}, `
+
         let melepas = ''
         if (this.hasil.includes(kananKoma)) {
           melepas = kananKoma
