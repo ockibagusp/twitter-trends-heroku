@@ -1,4 +1,4 @@
-import { describe, it, assert } from 'vitest'
+import { describe, it, assert, expect } from 'vitest'
 
 import { mount } from '@vue/test-utils'
 import CopydanPaste from '../CopydanPaste.vue'
@@ -18,6 +18,9 @@ describe('Copy dan Paste', () => {
   const btnReset = wrapper.find('[data-test="btnReset"]') 
   const btnCopy = wrapper.find('[data-test="btnCopy"]')
 
+  // button: btnTweet
+  const btnTweet = wrapper.find('[data-test="btnTweet"]')
+
   it('init', () => {
     assert.isEmpty(copydanpaste.element.value)
     // TODO: copydanpaste.element.focus() => undefined. Why?
@@ -32,16 +35,6 @@ describe('Copy dan Paste', () => {
   it('lingkaran dari `for`', async() => {
     // test cases
     const testCases = [
-      // why?
-      // a{ copydanpaste: `\n>>> Indonesia...` }
-      // b{ copydanpaste: '-' }
-
-      // a, b ❎
-      // b, a ✅
-      {
-        copydanpaste: '-',
-        hasil: 'Tidak ada hasil'
-      },
       { 
         copydanpaste:`
 ...
@@ -66,8 +59,22 @@ Entertainment · Trending
 (Inggris) Yayasan Aksi Cepat Tanggap
 54.5 Tweets
 `, 
-        hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap'
+        hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap',
+        tweetIs: 'Tweet is: + 96',
+        bntCopyDanTweet: true
       },
+      {
+        copydanpaste: '-',
+        hasil: 'Tidak ada hasil',
+        tweetIs: 'Tweet is: + 280',
+        bntCopyDanTweet: false
+      },
+      {
+        copydanpaste: '',
+        hasil: '',
+        tweetIs: 'Tweet is: + 280',
+        bntCopyDanTweet: false
+      }
     ]
 
     for (let test of testCases) {
@@ -81,6 +88,18 @@ Entertainment · Trending
         hasil.element.value,
         test.hasil
       )
+
+      assert.equal(btnTweet.text(), test.tweetIs)
+
+      if (test.bntCopyDanTweet) {
+        // button: bntCopy dan bntTweet diaktifkan
+        assert.isUndefined(btnCopy.attributes().disabled)
+        assert.isUndefined(btnTweet.attributes().disabled)
+      } else {
+        // button: bntCopy dan bntTweet dinonaktifkan
+        assert.equal(btnCopy.attributes().disabled, '')
+        assert.equal(btnTweet.attributes().disabled, '')
+      }
     }
   })
 
@@ -100,45 +119,167 @@ Entertainment · Trending
 })
 
 // TDD
-// 1. web awal dalam textarea `hasil` sama textarea `tweet` ini dinonaktifkan ✅
-// 2. textarea `hasil` benar maka array untuk trends, tidak benar maka 'Tidak ada hasil'
-// 3. textarea `tweet` ini diaktifkan, jika maks. 140 karakter ❎
-// 4. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
+// ✅ ❎
+// 1. textarea `hasil` untuk array untuk trends ✅
+// 2. textarea `tweet` ini diaktifkan, jika maks. 280 karakter 
+// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
 describe('Tweet', () => {
   assert.exists(CopydanPaste)
 
   const wrapper = mount(CopydanPaste, {
-    props: { } 
+    props: { },
+    data() {
+      return {
+        arraytrends: [
+          {
+            text: "#TimnasIndonesia",
+            completed: true
+          },
+          {
+            text: "Test 1",
+            completed: true
+          },
+          {
+            text: "#Test2",
+            completed: true
+          },
+          {
+            text: "Test 3",
+            completed: true
+          }
+        ],
+      }
+    } 
   })
+
+  // array dan checkbox untuk trends
+  const arrayTrends = wrapper.findAll('[data-test="arrayTrends"]')
+  const checkboxTrends = wrapper.findAll('[data-test="trends-checkbox"]')
 
   // textarea: copydanpaste dan hasil
+  const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
   const hasil = wrapper.find('[data-test="hasil"]')
 
-  // button: btnCopy dan btnTweet
-  const btnCopy = wrapper.find('[data-test="btnCopy"]')
-  const btnTweet = wrapper.find('[data-test="btnTweet"]')
+  copydanpaste.setValue(`
+...
+Olahraga · Populer
+#TimnasIndonesia
+Sedang tren dalam topik Indonesia
+Test 1
+2.233 rb Tweet
+Sedang tren dalam topik Indonesia
+#Test2
+1.660 Tweet
+Sedang tren dalam topik Indonesia
+Test 3
+54.5 Tweet
+...
+  `)
 
-  // array untuk trends
-  const arrayTrends = wrapper.find('[data-test="arrayTrends"]')
+  it('textarea `hasil` untuk array untuk trends: tidak dicentang', async() => {
+    await copydanpaste.trigger('change')
+        
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
 
-  it('web awal dalam textarea `hasil` sama textarea `tweet` ini dinonaktifkan', () => {
-    assert.equal(btnCopy.attributes().disabled, '')
-    assert.equal(btnTweet.attributes().disabled, '')
+    // test cases
+    const testCases = [
+      {
+        name: '#TimnasIndonesia',
+        index: 0,
+        listBool: [false, true, true, true],
+        hasil: 'Tags: Test 1, #Test2, Test 3'
+      },
+      {
+        name: 'Test 1',
+        index: 1,
+        listBool: [false, false, true, true],
+        hasil: 'Tags: #Test2, Test 3'
+      },
+      {
+        name: '#Test2',
+        index: 2,
+        listBool: [false, false, false, true],
+        hasil: 'Tags: Test 3'
+      },
+      {
+        name: 'Test 3',
+        index: 3,
+        listBool: [false, false, false, false],
+        hasil: 'Tidak ada hasil'
+      }
+    ]
+
+    for (let test of testCases) {
+      console.debug('unchecked ke-', test.name)
+      await checkboxTrends.at(test.index).setValue(false)
+      
+      for (let i = 0; i < test.listBool.length; i++) {
+        if (test.listBool[i]) {
+          expect(arrayTrends.at(i).classes()).toContain('completed')
+        } else {
+          // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+          expect(arrayTrends.at(i).classes()).to.deep.equal([])
+        }
+      }
+
+      assert.equal(hasil.element.value, test.hasil)
+    }
   })
 
-  it('textarea `hasil` benar maka array untuk trends, tidak benar maka \'Tidak ada hasil\'', () => {
-    //
+  it('textarea `hasil` untuk array untuk trends: dicentang', async() => {    
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
+
+    console.debug('-----')
+
+    // test cases
+    const testCases = [   
+      {
+        name: 'Test 1',
+        index: 1,
+        listBool: [false, true, false, false],
+        hasil: 'Tags: Test 1'
+      },
+      {
+        name: 'Test 3',
+        index: 3,
+        listBool: [false, true, false, true],
+        hasil: 'Tags: Test 1, Test 3'
+      },
+      {
+        name: '#TimnasIndonesia',
+        index: 0,
+        listBool: [true, true, false, true],
+        hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3'
+      },
+      {
+        name: '#Test2',
+        index: 2,
+        listBool: [true, true, true, true],
+        hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3'
+      }  
+    ]
+
+    for (let test of testCases) {
+      console.debug('checked ke-', test.name)
+      await checkboxTrends.at(test.index).setValue(true)
+      
+      for (let i = 0; i < test.listBool.length; i++) {
+        if (test.listBool[i]) {
+          expect(arrayTrends.at(i).classes()).toContain('completed')
+        } else {
+          // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+          expect(arrayTrends.at(i).classes()).to.deep.equal([])
+        }
+      }
+
+      assert.equal(hasil.element.value, test.hasil)
+    }
   })
 
-  it('min. dan maks. 140 karakter', async() => {
-    // min. 140 karakter.
-    // bool: true
-    hasil.setValue('Test Tags: #TimnasIndonesia')
-    await btnTweet.trigger('click')
-    
-    // Maks. 150 karakter.
-    // bool: false
-    hasil.setValue('Test Tags: Test1, Test2, Test3, Test4, #Test5, Test6, Test7, Test8, Test9, #Test10, Test11, Test12, Test13, Test14, #Test15, Test16, Test17, Test18, Test19, #Test20, Test21, Test22, Test23, Test24, #Test25, Test26, Test27, Test28, Test29, #Test30, Test31, Test32, Test33, Test34, #Test35')
-    await btnTweet.trigger('click')
+  it('textarea `hasil` untuk array untuk trends: ditweet', async() => {    
+    hasil.setValue('Tags: Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus risus lectus, venenatis ac scelerisque eu, efficitur id mi, Nunc dolor ligula, viverra et rhoncus in, iaculis at mi, Vivamus erat justo, cursus sit amet felis non, posuere lobortis odio, Vestibulum ante ipsum primis')
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
+
+    console.debug('-----')
   })
 })

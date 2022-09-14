@@ -1,4 +1,6 @@
 <script>
+const TAGS = 'Tags: '
+
 export default {
   data() {
     return {
@@ -9,8 +11,8 @@ export default {
       // array untuk trends
       arraytrends: [],
 
-      // tweet dihasil maks. 140 karakter
-      count: 0,
+      // tweet dihasil maks. 280 karakter
+      count: 280,
 
       // pilih hasil dan button copy: true atau false
       selectHasil: false,
@@ -43,6 +45,8 @@ export default {
   methods: {
     // memuat: dari textarea copydanpaste ini
     memuat() {
+      this.arraytrends = []
+
       let trends = ''
 
       // regex101.com
@@ -71,19 +75,25 @@ export default {
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
-      if (this.arraytrends.length >= 1) {
-        trends = 'Tags: ' + trends.substring(0, trends.length-2)
+      if (this.arraytrends.length != 0) {
+        trends = TAGS + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
         this.selectTweet = true
-      } else if (str != '' && trends == '') {
+
+        this.count = 280 - trends.length
+      } else if (str != '' && this.arraytrends.length == 0) {
         trends = 'Tidak ada hasil'
         this.selectHasil = false
         this.selectCopy = false
         this.selectTweet = false
+
+        this.count = 280
       }
       
       this.hasil = trends
+
+      this.isCountTweet()
     },
     
     // button: reset dan copy
@@ -96,6 +106,8 @@ export default {
       this.selectCopy = false
       this.selectTweet = false
       this.arraytrends = []
+
+      this.count = 280
     },
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
@@ -109,12 +121,71 @@ export default {
       navigator.clipboard.writeText(this.hasil);
     },
     btnTweet() {
-      if (this.hasil.length > 140) {
+      if (this.hasil.length > 280) {
         this.selectTweet = false
         return
       }
-      const UTF8_hash = this.hasil.replace("#", "%23")
+      const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
+    },
+
+    // berubah dalam array untuk trends
+    trendsChanged(event, index) {
+      const text = this.arraytrends[index].text
+
+      if (event.target.checked) {
+        if (this.hasil === 'Tidak ada hasil') {
+          this.hasil =  `Tags: ${text}`
+          // pilih hasil, button copy dan button tweet: true
+          this.selectHasil = true
+          this.selectCopy = true
+          this.selectTweet = true
+        } else {
+          let newArrayTrendsText = ''
+          for (let i = 0; i < this.arraytrends.length; i++) {
+            if (this.arraytrends[i].completed !== false) {
+              newArrayTrendsText += `${this.arraytrends[i].text}, `
+            }
+          }
+
+          this.hasil = TAGS + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
+
+          this.count = 280 - this.hasil.length
+          this.isCountTweet()
+        }
+      } else {
+        const kananKoma = `${text}, `
+        const kiriKoma = `, ${text}`
+        const keduanyaKoma = `, ${text}, `
+
+        let melepas = ''
+        if (this.hasil.includes(kananKoma)) {
+          melepas = kananKoma
+        } else if (this.hasil.includes(kiriKoma)) {
+          melepas = kiriKoma
+        } else if (this.hasil.includes(keduanyaKoma)) {
+          melepas = keduanyaKoma
+        } else {
+          // melepas = text 
+          this.hasil = 'Tidak ada hasil'
+          // pilih hasil, button copy dan button tweet: false
+          this.selectHasil = false
+          this.selectCopy = false
+          this.selectTweet = false
+          return
+        }
+        this.hasil = this.hasil.replace(melepas, '')
+
+        this.count = 280 - this.hasil.length
+        this.isCountTweet()
+      }
+    },
+
+    // adalah textarea hitungan dan tombol tweet
+    isCountTweet() {
+      if (this.hasil === '' || this.hasil === 'Tidak ada hasil' 
+        || this.hasil.length > 280) this.selectTweet = false
+      else this.selectTweet = true
     }
   }
 }
@@ -145,15 +216,16 @@ Motor
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
   <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
-  <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: {{count}}</button>
+  <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length < 280">+</small> {{count}}</button>
   <br>
   
-  <h4 v-if="arraytrends.length > 0">Twitter Trends:</h4>
+  <h4 v-if="arraytrends.length > 0">Kotak Centang:</h4>
   <div
-    v-for="trends in arraytrends"
+    v-for="(trends, index) in arraytrends"
     :key="trends.text"
     data-test="arrayTrends"
     :class="[trends.completed ? 'completed' : '']"
+    @change="trendsChanged($event, index)"
   >
     <input
       type="checkbox"
