@@ -216,7 +216,7 @@ Motor
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
   <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
-  <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length <= 280">+</small> {{count}}</button>
+  <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length < 280">+</small> {{count}}</button>
   <br>
   
   <h4 v-if="arraytrends.length > 0">Kotak Centang:</h4>
