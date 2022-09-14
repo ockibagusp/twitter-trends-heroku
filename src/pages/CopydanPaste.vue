@@ -92,6 +92,8 @@ export default {
       }
       
       this.hasil = trends
+
+      this.isCountTweet()
     },
     
     // button: reset dan copy
@@ -104,6 +106,8 @@ export default {
       this.selectCopy = false
       this.selectTweet = false
       this.arraytrends = []
+
+      this.count = 280
     },
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
@@ -145,6 +149,9 @@ export default {
           }
 
           this.hasil = TAGS + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
+
+          this.count = 280 - this.hasil.length
+          this.isCountTweet()
         }
       } else {
         const kananKoma = `${text}, `
@@ -168,7 +175,17 @@ export default {
           return
         }
         this.hasil = this.hasil.replace(melepas, '')
+
+        this.count = 280 - this.hasil.length
+        this.isCountTweet()
       }
+    },
+
+    // adalah textarea hitungan dan tombol tweet
+    isCountTweet() {
+      if (this.hasil === '' || this.hasil === 'Tidak ada hasil' 
+        || this.hasil.length > 280) this.selectTweet = false
+      else this.selectTweet = true
     }
   }
 }
@@ -199,7 +216,7 @@ Motor
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
   <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
-  <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: {{count}}</button>
+  <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length <= 280">+</small> {{count}}</button>
   <br>
   
   <h4 v-if="arraytrends.length > 0">Kotak Centang:</h4>

@@ -60,19 +60,19 @@ Entertainment · Trending
 54.5 Tweets
 `, 
         hasil: 'Tags: (Indonesia) Menpan RB, (Indonesia) #TimnasIndonesia, (Indonesia) Yayasan Aksi Cepat Tanggap, (Inggris) Menpan RB, (Inggris) #TimnasIndonesia, (Inggris) Yayasan Aksi Cepat Tanggap',
-        tweetIs: 'Tweet is: 96',
+        tweetIs: 'Tweet is: + 96',
         bntCopyDanTweet: true
       },
       {
         copydanpaste: '-',
         hasil: 'Tidak ada hasil',
-        tweetIs: 'Tweet is: 280',
+        tweetIs: 'Tweet is: + 280',
         bntCopyDanTweet: false
       },
       {
         copydanpaste: '',
         hasil: '',
-        tweetIs: 'Tweet is: 280',
+        tweetIs: 'Tweet is: + 280',
         bntCopyDanTweet: false
       }
     ]
@@ -274,5 +274,12 @@ Test 3
 
       assert.equal(hasil.element.value, test.hasil)
     }
+  })
+
+  it('textarea `hasil` untuk array untuk trends: ditweet', async() => {    
+    hasil.setValue('Tags: Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus risus lectus, venenatis ac scelerisque eu, efficitur id mi, Nunc dolor ligula, viverra et rhoncus in, iaculis at mi, Vivamus erat justo, cursus sit amet felis non, posuere lobortis odio, Vestibulum ante ipsum primis')
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
+
+    console.debug('-----')
   })
 })
