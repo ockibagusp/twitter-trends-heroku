@@ -160,6 +160,9 @@ describe('Tweet', () => {
   const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
   const hasil = wrapper.find('[data-test="hasil"]')
 
+  // button: btnAllCheckBox diaktifkan atau tidak diaktifkan semua kotak centang
+  const btnAllCheckBox = wrapper.find('[data-test="btnAllCheckBox"]') 
+
   copydanpaste.setValue(`
 ...
 Olahraga · Populer
@@ -276,10 +279,7 @@ Test 3
     }
   })
 
-  it('textarea `hasil` untuk array untuk trends: ditweet', async() => {    
-    hasil.setValue('Tags: Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus risus lectus, venenatis ac scelerisque eu, efficitur id mi, Nunc dolor ligula, viverra et rhoncus in, iaculis at mi, Vivamus erat justo, cursus sit amet felis non, posuere lobortis odio, Vestibulum ante ipsum primis')
-    assert.equal(hasil.element.value, 'Tidak ada hasil')
-
-    console.debug('-----')
+  it('button `semua kotak centang` di array untuk trends: tidak diaktifkan', async() => {
+    assert.equal(btnAllCheckBox.text(), 'tidak diaktifkan')
   })
 })
