@@ -121,8 +121,8 @@ Entertainment · Trending
 // TDD
 // ✅ ❎
 // 1. textarea `hasil` untuk array untuk trends ✅
-// 2. textarea `tweet` ini diaktifkan, jika maks. 280 karakter 
-// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
+// 2. textarea `tweet` ini diaktifkan, jika maks. 280 karakter ✅
+// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan ✅
 describe('Tweet', () => {
   assert.exists(CopydanPaste)
 
@@ -227,9 +227,9 @@ Test 3
   })
 
   it('textarea `hasil` untuk array untuk trends: dicentang', async() => {    
-    assert.equal(hasil.element.value, 'Tidak ada hasil')
-
     console.debug('-----')
+    
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
 
     // test cases
     const testCases = [   
