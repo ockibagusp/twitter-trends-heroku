@@ -123,6 +123,7 @@ Entertainment · Trending
 // 1. textarea `hasil` untuk array untuk trends ✅
 // 2. textarea `tweet` ini diaktifkan, jika maks. 280 karakter ✅
 // 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan ✅
+// 4. button `semua kotak centang` jika ini diaktifkan atau tidak diaktifkan ✅
 describe('Tweet', () => {
   assert.exists(CopydanPaste)
 
