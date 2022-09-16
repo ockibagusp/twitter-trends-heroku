@@ -160,8 +160,10 @@ describe('Tweet', () => {
   const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
   const hasil = wrapper.find('[data-test="hasil"]')
 
-  // button: btnAllCheckBox diaktifkan atau tidak diaktifkan semua kotak centang
-  const btnAllCheckBox = wrapper.find('[data-test="btnAllCheckBox"]') 
+  // button: btnTweet
+  const btnTweet = wrapper.find('[data-test="btnTweet"]')
+  // button: btnCheckBoxAll diaktifkan atau tidak diaktifkan semua kotak centang
+  const btnCheckBoxAll = wrapper.find('[data-test="btnCheckBoxAll"]') 
 
   copydanpaste.setValue(`
 ...
@@ -240,25 +242,29 @@ Test 3
         name: 'Test 1',
         index: 1,
         listBool: [false, true, false, false],
-        hasil: 'Tags: Test 1'
+        hasil: 'Tags: Test 1',
+        tweetIs: 'Tweet is: + 268',
       },
       {
         name: 'Test 3',
         index: 3,
         listBool: [false, true, false, true],
-        hasil: 'Tags: Test 1, Test 3'
+        hasil: 'Tags: Test 1, Test 3',
+        tweetIs: 'Tweet is: + 260',
       },
       {
         name: '#TimnasIndonesia',
         index: 0,
         listBool: [true, true, false, true],
-        hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3'
+        hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3',
+        tweetIs: 'Tweet is: + 242',
       },
       {
         name: '#Test2',
         index: 2,
         listBool: [true, true, true, true],
-        hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3'
+        hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3',
+        tweetIs: 'Tweet is: + 234',
       }  
     ]
 
@@ -273,6 +279,8 @@ Test 3
           // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
           expect(arrayTrends.at(i).classes()).to.deep.equal([])
         }
+
+        assert.equal(btnTweet.text(), test.tweetIs)
       }
 
       assert.equal(hasil.element.value, test.hasil)
@@ -280,6 +288,25 @@ Test 3
   })
 
   it('button `semua kotak centang` di array untuk trends: tidak diaktifkan', async() => {
-    assert.equal(btnAllCheckBox.text(), 'tidak diaktifkan')
+    assert.equal(btnCheckBoxAll.text(), 'tidak diaktifkan')
+
+    let listBool = [true, true, true, true]
+    for (let i = 0; i < listBool.length; i++) {
+      expect(arrayTrends.at(i).classes()).toContain('completed')
+    }
+
+    await btnCheckBoxAll.trigger('click')
+    assert.equal(btnCheckBoxAll.text(), 'diaktifkan')
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
+
+    listBool = [false, false, false, false]
+    for (let i = 0; i < listBool.length; i++) {
+      // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+      expect(arrayTrends.at(i).classes()).to.deep.equal([])
+    }
+
+    await btnCheckBoxAll.trigger('click')
+    assert.equal(btnCheckBoxAll.text(), 'tidak diaktifkan')
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
   })
 })

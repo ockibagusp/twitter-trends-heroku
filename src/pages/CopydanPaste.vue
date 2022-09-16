@@ -17,7 +17,10 @@ export default {
       // pilih hasil dan button copy: true atau false
       selectHasil: false,
       selectCopy: false,
-      selectTweet: false
+      selectTweet: false,
+
+      // pilih `semua kotak centang`: true atau false
+      selectCheckBoxAll: false
     }
   },
   computed: {
@@ -30,7 +33,12 @@ export default {
     },
     isTweet: function() {
       return !this.selectTweet
-    }
+    },
+
+    // adalah button `semua kotak centang`: true atau false
+    isCheckBoxAll: function() {
+      return !this.selectCheckBoxAll
+    },
   },
   watch: {
     // textarea: copydanpaste
@@ -96,7 +104,7 @@ export default {
       this.isCountTweet()
     },
     
-    // button: reset dan copy
+    // button: reset, copy dan `semua kotak centang`
     btnReset() {
       this.copydanpaste = ''
       // autofocus
@@ -128,6 +136,38 @@ export default {
       const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     },
+    // button `semua kotak centang`
+    btnCheckBoxAll(event) {
+      if (this.selectCheckBoxAll === true) {
+        let newArrayTrendsText = ''
+        for (let i = 0; i < this.arraytrends.length; i++) {
+          this.arraytrends[i].completed = true
+          newArrayTrendsText += `${this.arraytrends[i].text}, `
+        }
+        this.selectHasil = true
+        this.selectCopy = true
+        this.selectTweet = true
+
+        this.selectCheckBoxAll = false
+
+        this.hasil = TAGS + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
+        this.count = 280 - this.hasil.length
+        this.isCountTweet()
+      } else {
+        this.arraytrends.forEach((val, index) => {
+          this.arraytrends[index].completed = false
+        })
+
+        this.count = 280
+        this.hasil = 'Tidak ada hasil'
+        this.isCountTweet()
+
+        this.selectHasil = false
+        this.selectCopy = false
+        this.selectTweet = false        
+        this.selectCheckBoxAll = true
+      }
+    },
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
@@ -149,10 +189,10 @@ export default {
           }
 
           this.hasil = TAGS + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
-
-          this.count = 280 - this.hasil.length
           this.isCountTweet()
         }
+
+        this.count = 280 - this.hasil.length
       } else {
         const kananKoma = `${text}, `
         const kiriKoma = `, ${text}`
@@ -172,6 +212,7 @@ export default {
           this.selectHasil = false
           this.selectCopy = false
           this.selectTweet = false
+          this.count = 280
           return
         }
         this.hasil = this.hasil.replace(melepas, '')
@@ -219,7 +260,11 @@ Motor
   <button @click="btnTweet" data-test="btnTweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length < 280">+</small> {{count}}</button>
   <br>
   
-  <h4 v-if="arraytrends.length > 0">Kotak Centang:</h4>
+  <h4 v-if="arraytrends.length > 0">Kotak Centang: 
+    <button @click="btnCheckBoxAll($event)" data-test="btnCheckBoxAll">
+      {{ !isCheckBoxAll ? 'diaktifkan': 'tidak diaktifkan' }}
+    </button>
+  </h4>
   <div
     v-for="(trends, index) in arraytrends"
     :key="trends.text"
