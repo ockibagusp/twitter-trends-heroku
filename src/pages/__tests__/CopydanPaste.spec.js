@@ -134,18 +134,22 @@ describe('Tweet', () => {
         arraytrends: [
           {
             text: "#TimnasIndonesia",
+            numberOfTweets: '200k Tweets',
             completed: true
           },
           {
             text: "Test 1",
+            numberOfTweets: '1k Tweets',
             completed: true
           },
           {
             text: "#Test2",
+            numberOfTweets: '2k Tweets',
             completed: true
           },
           {
             text: "Test 3",
+            numberOfTweets: 0,
             completed: true
           }
         ],
@@ -315,5 +319,11 @@ Test 3
     await btnCheckBoxAll.trigger('click')
     assert.equal(btnCheckBoxAll.text(), 'tidak diaktifkan')
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
+  })
+
+  it('jumlan tweet', () => {
+    // <div ...><input type="checkbox" ...> #TimnasIndonesia <small>(200k Tweets)</small></div>?
+    //                                                       ----------------------------
+    assert.equal(arrayTrends.at(0).element.innerHTML, '<input type="checkbox" data-test="trends-checkbox"> #TimnasIndonesia <!--v-if-->')
   })
 })

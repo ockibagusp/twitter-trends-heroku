@@ -61,8 +61,9 @@ export default {
       const regex = /(Sedang tren dalam topik Indonesia|Trending in Indonesia|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm
       
       const str = this.copydanpaste
-      
+
       let m
+      let i = 0
 
       while ((m = regex.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
@@ -72,14 +73,25 @@ export default {
         
         // The result can be accessed through the `m`-variable.
         m.forEach((match, groupIndex) => {
+          // teks hash: misalnya, #TimnasIndonesia
           if (groupIndex === 2) {
+            // sama, this.arraytrends[i] = {...}
             this.arraytrends.push({
               text: match,
+              numberOfTweets: 0,
               completed: true
             })
             trends += `${match}, `
           }
+
+          // jumlah tweet: misalnya, 7,153 Tweets
+          if (groupIndex === 3) {
+            if (match !== undefined)
+              this.arraytrends[i].numberOfTweets = match
+          }
         })
+        
+        i++
       }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
@@ -277,6 +289,6 @@ Motor
       v-model="trends.completed"
       data-test="trends-checkbox"
     />
-    {{ trends.text }}
+    {{ trends.text }} <small v-if="trends.numberOfTweets !== 0">{{ `(${trends.numberOfTweets})` }}</small>
   </div>
 </template>
