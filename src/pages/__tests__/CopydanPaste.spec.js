@@ -121,8 +121,9 @@ Entertainment · Trending
 // TDD
 // ✅ ❎
 // 1. textarea `hasil` untuk array untuk trends ✅
-// 2. textarea `tweet` ini diaktifkan, jika maks. 280 karakter 
-// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan
+// 2. textarea `tweet` ini diaktifkan, jika maks. 280 karakter ✅
+// 3. textarea `copy` ini diaktifkan dan textarea `tweet` jika ini dinonaktifkan ✅
+// 4. button `semua kotak centang` jika ini diaktifkan atau tidak diaktifkan ✅
 describe('Tweet', () => {
   assert.exists(CopydanPaste)
 
@@ -133,18 +134,22 @@ describe('Tweet', () => {
         arraytrends: [
           {
             text: "#TimnasIndonesia",
+            numberOfTweets: '200k Tweets',
             completed: true
           },
           {
             text: "Test 1",
+            numberOfTweets: '1k Tweets',
             completed: true
           },
           {
             text: "#Test2",
+            numberOfTweets: '2k Tweets',
             completed: true
           },
           {
             text: "Test 3",
+            numberOfTweets: 0,
             completed: true
           }
         ],
@@ -159,6 +164,11 @@ describe('Tweet', () => {
   // textarea: copydanpaste dan hasil
   const copydanpaste = wrapper.find('[data-test="copydanpaste"]')
   const hasil = wrapper.find('[data-test="hasil"]')
+
+  // button: btnTweet
+  const btnTweet = wrapper.find('[data-test="btnTweet"]')
+  // button: btnCheckBoxAll diaktifkan atau tidak diaktifkan semua kotak centang
+  const btnCheckBoxAll = wrapper.find('[data-test="btnCheckBoxAll"]') 
 
   copydanpaste.setValue(`
 ...
@@ -180,6 +190,7 @@ Test 3
     await copydanpaste.trigger('change')
         
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
+    assert.equal(btnTweet.text(), 'Tweet is: + 234')
 
     // test cases
     const testCases = [
@@ -187,25 +198,29 @@ Test 3
         name: '#TimnasIndonesia',
         index: 0,
         listBool: [false, true, true, true],
-        hasil: 'Tags: Test 1, #Test2, Test 3'
+        hasil: 'Tags: Test 1, #Test2, Test 3',
+        tweetIs: 'Tweet is: + 252',
       },
       {
         name: 'Test 1',
         index: 1,
         listBool: [false, false, true, true],
-        hasil: 'Tags: #Test2, Test 3'
+        hasil: 'Tags: #Test2, Test 3',
+        tweetIs: 'Tweet is: + 260',
       },
       {
         name: '#Test2',
         index: 2,
         listBool: [false, false, false, true],
-        hasil: 'Tags: Test 3'
+        hasil: 'Tags: Test 3',
+        tweetIs: 'Tweet is: + 268',
       },
       {
         name: 'Test 3',
         index: 3,
         listBool: [false, false, false, false],
-        hasil: 'Tidak ada hasil'
+        hasil: 'Tidak ada hasil',
+        tweetIs: 'Tweet is: + 280',
       }
     ]
 
@@ -223,13 +238,14 @@ Test 3
       }
 
       assert.equal(hasil.element.value, test.hasil)
+      assert.equal(btnTweet.text(), test.tweetIs)
     }
   })
 
   it('textarea `hasil` untuk array untuk trends: dicentang', async() => {    
-    assert.equal(hasil.element.value, 'Tidak ada hasil')
-
     console.debug('-----')
+    
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
 
     // test cases
     const testCases = [   
@@ -237,25 +253,29 @@ Test 3
         name: 'Test 1',
         index: 1,
         listBool: [false, true, false, false],
-        hasil: 'Tags: Test 1'
+        hasil: 'Tags: Test 1',
+        tweetIs: 'Tweet is: + 268',
       },
       {
         name: 'Test 3',
         index: 3,
         listBool: [false, true, false, true],
-        hasil: 'Tags: Test 1, Test 3'
+        hasil: 'Tags: Test 1, Test 3',
+        tweetIs: 'Tweet is: + 260',
       },
       {
         name: '#TimnasIndonesia',
         index: 0,
         listBool: [true, true, false, true],
-        hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3'
+        hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3',
+        tweetIs: 'Tweet is: + 242',
       },
       {
         name: '#Test2',
         index: 2,
         listBool: [true, true, true, true],
-        hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3'
+        hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3',
+        tweetIs: 'Tweet is: + 234',
       }  
     ]
 
@@ -270,16 +290,40 @@ Test 3
           // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
           expect(arrayTrends.at(i).classes()).to.deep.equal([])
         }
+
+        assert.equal(btnTweet.text(), test.tweetIs)
       }
 
       assert.equal(hasil.element.value, test.hasil)
     }
   })
 
-  it('textarea `hasil` untuk array untuk trends: ditweet', async() => {    
-    hasil.setValue('Tags: Lorem ipsum dolor sit amet, consectetur adipiscing elit, Phasellus risus lectus, venenatis ac scelerisque eu, efficitur id mi, Nunc dolor ligula, viverra et rhoncus in, iaculis at mi, Vivamus erat justo, cursus sit amet felis non, posuere lobortis odio, Vestibulum ante ipsum primis')
+  it('button `semua kotak centang` di array untuk trends: tidak diaktifkan', async() => {
+    assert.equal(btnCheckBoxAll.text(), 'tidak diaktifkan')
+
+    let listBool = [true, true, true, true]
+    for (let i = 0; i < listBool.length; i++) {
+      expect(arrayTrends.at(i).classes()).toContain('completed')
+    }
+
+    await btnCheckBoxAll.trigger('click')
+    assert.equal(btnCheckBoxAll.text(), 'diaktifkan')
     assert.equal(hasil.element.value, 'Tidak ada hasil')
 
-    console.debug('-----')
+    listBool = [false, false, false, false]
+    for (let i = 0; i < listBool.length; i++) {
+      // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+      expect(arrayTrends.at(i).classes()).to.deep.equal([])
+    }
+
+    await btnCheckBoxAll.trigger('click')
+    assert.equal(btnCheckBoxAll.text(), 'tidak diaktifkan')
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
+  })
+
+  it('jumlan tweet', () => {
+    // <div ...><input type="checkbox" ...> #TimnasIndonesia <small>(200k Tweets)</small></div>?
+    //                                                       ----------------------------
+    assert.equal(arrayTrends.at(0).element.innerHTML, '<input type="checkbox" data-test="trends-checkbox"> #TimnasIndonesia <!--v-if-->')
   })
 })
