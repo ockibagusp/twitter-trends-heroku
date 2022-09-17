@@ -186,6 +186,7 @@ Test 3
     await copydanpaste.trigger('change')
         
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
+    assert.equal(btnTweet.text(), 'Tweet is: + 234')
 
     // test cases
     const testCases = [
@@ -193,25 +194,29 @@ Test 3
         name: '#TimnasIndonesia',
         index: 0,
         listBool: [false, true, true, true],
-        hasil: 'Tags: Test 1, #Test2, Test 3'
+        hasil: 'Tags: Test 1, #Test2, Test 3',
+        tweetIs: 'Tweet is: + 252',
       },
       {
         name: 'Test 1',
         index: 1,
         listBool: [false, false, true, true],
-        hasil: 'Tags: #Test2, Test 3'
+        hasil: 'Tags: #Test2, Test 3',
+        tweetIs: 'Tweet is: + 260',
       },
       {
         name: '#Test2',
         index: 2,
         listBool: [false, false, false, true],
-        hasil: 'Tags: Test 3'
+        hasil: 'Tags: Test 3',
+        tweetIs: 'Tweet is: + 268',
       },
       {
         name: 'Test 3',
         index: 3,
         listBool: [false, false, false, false],
-        hasil: 'Tidak ada hasil'
+        hasil: 'Tidak ada hasil',
+        tweetIs: 'Tweet is: + 280',
       }
     ]
 
@@ -229,6 +234,7 @@ Test 3
       }
 
       assert.equal(hasil.element.value, test.hasil)
+      assert.equal(btnTweet.text(), test.tweetIs)
     }
   })
 
