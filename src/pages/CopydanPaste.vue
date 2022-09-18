@@ -58,7 +58,7 @@ export default {
       let trends = ''
 
       // regex101.com
-      const regex = /(Sedang tren dalam topik Indonesia|Trending in Indonesia|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm
+      const regex = /(Sedang tren dalam topik Indonesia|Trending in Indonesia|Popular|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm
       
       const str = this.copydanpaste
 
