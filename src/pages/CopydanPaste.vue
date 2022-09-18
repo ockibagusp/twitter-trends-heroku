@@ -73,14 +73,21 @@ export default {
         
         // The result can be accessed through the `m`-variable.
         m.forEach((match, groupIndex) => {
-          // teks hash: misalnya, #TimnasIndonesia
-          if (groupIndex === 2) {
+          // topik yang sedang tren: TODO
+          if (groupIndex === 1) {
             // sama, this.arraytrends[i] = {...}
             this.arraytrends.push({
-              name: match,
+              trendingTopics: match,
+              name: '',
               tweetVolume: 0,
               completed: true
             })
+          }
+          
+          // name hash: misalnya, #TimnasIndonesia
+          if (groupIndex === 2) {
+            this.arraytrends[i].name = match
+
             trends += `${match}, `
           }
 
