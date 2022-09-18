@@ -4,6 +4,12 @@ Browser aja. Copy dan Paste!
 Link:
 [ockibagusp.github.io/twitter-trends](https://ockibagusp.github.io/twitter-trends)
 
+Twitter Trends:
+
+![Twitter Trends 1](../images/twitter-trends1.png?raw=true)
+
+![Twitter Trends 2](../images/twitter-trends2.png?raw=true)
+
 ## Vue 3 project
 
 This template should help get you started developing with Vue 3 in Vite.
