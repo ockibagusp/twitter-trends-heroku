@@ -133,23 +133,23 @@ describe('Tweet', () => {
       return {
         arraytrends: [
           {
-            text: "#TimnasIndonesia",
-            numberOfTweets: '200k Tweets',
+            name: "#TimnasIndonesia",
+            tweetVolume: '200k Tweets',
             completed: true
           },
           {
-            text: "Test 1",
-            numberOfTweets: '1k Tweets',
+            name: "Test 1",
+            tweetVolume: '1k Tweets',
             completed: true
           },
           {
-            text: "#Test2",
-            numberOfTweets: '2k Tweets',
+            name: "#Test2",
+            tweetVolume: '2k Tweets',
             completed: true
           },
           {
-            text: "Test 3",
-            numberOfTweets: 0,
+            name: "Test 3",
+            tweetVolume: 0,
             completed: true
           }
         ],
@@ -182,7 +182,7 @@ Sedang tren dalam topik Indonesia
 1.660 Tweet
 Sedang tren dalam topik Indonesia
 Test 3
-54.5 Tweet
+54.5K Tweet
 ...
   `)
 
@@ -321,9 +321,10 @@ Test 3
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
   })
 
-  it('jumlan tweet', () => {
-    // <div ...><input type="checkbox" ...> #TimnasIndonesia <small>(200k Tweets)</small></div>?
-    //                                                       ----------------------------
-    assert.equal(arrayTrends.at(0).element.innerHTML, '<input type="checkbox" data-test="trends-checkbox"> #TimnasIndonesia <!--v-if-->')
+  it('jumlah tweet', () => {
+    assert.equal(arrayTrends.at(0).get('.tweetVolume-class').text(), '')
+    assert.equal(arrayTrends.at(1).get('.tweetVolume-class').text(), '(2.233 rb Tweet)')
+    assert.equal(arrayTrends.at(2).get('.tweetVolume-class').text(), '(1.660 Tweet)')
+    assert.equal(arrayTrends.at(3).get('.tweetVolume-class').text(), '(54.5K Tweet)')
   })
 })
