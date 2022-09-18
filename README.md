@@ -4,7 +4,7 @@
 Link:
 [ockibagusp.github.io/twitter-trends](https://ockibagusp.github.io/twitter-trends)
 
-## Twitter Trends:
+### Twitter Trends:
 
 ![Twitter Trends 1](../images/twitter-trends1.png?raw=true)
 
