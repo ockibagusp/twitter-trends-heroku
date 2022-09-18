@@ -58,7 +58,7 @@ export default {
       let trends = ''
 
       // regex101.com
-      const regex = /(Sedang tren dalam topik Indonesia|Trending in Indonesia|Popular|Populer|Trending)\n?\n(.*)\n?\n([\d.,]+.*)?/gm
+      const regex = /(Sedang tren dalam topik (.+)|Trending in (.+)|(.+) Popular|(.+) Populer|(.+) Trending)\n?\n(.+)\n?\n([\d.,]+.*)?/gm
       
       const str = this.copydanpaste
 
@@ -85,14 +85,14 @@ export default {
           }
           
           // name hash: misalnya, #TimnasIndonesia
-          if (groupIndex === 2) {
+          if (groupIndex === 7) {
             this.arraytrends[i].name = match
 
             trends += `${match}, `
           }
 
           // jumlah tweet: misalnya, 7,153 Tweets
-          if (groupIndex === 3) {
+          if (groupIndex === 8) {
             if (match !== undefined)
               this.arraytrends[i].tweetVolume = match
           }
@@ -298,5 +298,7 @@ Motor
     />
     {{ trends.name }}
     <small class="tweetVolume-class">{{ trends.tweetVolume !== 0 ? `(${trends.tweetVolume})` : '' }}</small>
+    -
+    <small class="trendingTopics-class">{{ trends.trendingTopics }}</small>
   </div>
 </template>
