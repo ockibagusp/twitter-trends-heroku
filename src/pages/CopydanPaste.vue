@@ -77,8 +77,8 @@ export default {
           if (groupIndex === 2) {
             // sama, this.arraytrends[i] = {...}
             this.arraytrends.push({
-              text: match,
-              numberOfTweets: 0,
+              name: match,
+              tweetVolume: 0,
               completed: true
             })
             trends += `${match}, `
@@ -87,7 +87,7 @@ export default {
           // jumlah tweet: misalnya, 7,153 Tweets
           if (groupIndex === 3) {
             if (match !== undefined)
-              this.arraytrends[i].numberOfTweets = match
+              this.arraytrends[i].tweetVolume = match
           }
         })
         
@@ -151,10 +151,10 @@ export default {
     // button `semua kotak centang`
     btnCheckBoxAll(event) {
       if (this.selectCheckBoxAll === true) {
-        let newArrayTrendsText = ''
+        let newArrayTrendsName = ''
         for (let i = 0; i < this.arraytrends.length; i++) {
           this.arraytrends[i].completed = true
-          newArrayTrendsText += `${this.arraytrends[i].text}, `
+          newArrayTrendsName += `${this.arraytrends[i].name}, `
         }
         this.selectHasil = true
         this.selectCopy = true
@@ -162,7 +162,7 @@ export default {
 
         this.selectCheckBoxAll = false
 
-        this.hasil = TAGS + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
+        this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
         this.count = 280 - this.hasil.length
         this.isCountTweet()
       } else {
@@ -183,32 +183,32 @@ export default {
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
-      const text = this.arraytrends[index].text
+      const name = this.arraytrends[index].name
 
       if (event.target.checked) {
         if (this.hasil === 'Tidak ada hasil') {
-          this.hasil =  `Tags: ${text}`
+          this.hasil =  `Tags: ${name}`
           // pilih hasil, button copy dan button tweet: true
           this.selectHasil = true
           this.selectCopy = true
           this.selectTweet = true
         } else {
-          let newArrayTrendsText = ''
+          let newArrayTrendsName = ''
           for (let i = 0; i < this.arraytrends.length; i++) {
             if (this.arraytrends[i].completed !== false) {
-              newArrayTrendsText += `${this.arraytrends[i].text}, `
+              newArrayTrendsName += `${this.arraytrends[i].name}, `
             }
           }
 
-          this.hasil = TAGS + newArrayTrendsText.substring(0, newArrayTrendsText.length-2)
+          this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
           this.isCountTweet()
         }
 
         this.count = 280 - this.hasil.length
       } else {
-        const kananKoma = `${text}, `
-        const kiriKoma = `, ${text}`
-        const keduanyaKoma = `, ${text}, `
+        const kananKoma = `${name}, `
+        const kiriKoma = `, ${name}`
+        const keduanyaKoma = `, ${name}, `
 
         let melepas = ''
         if (this.hasil.includes(kananKoma)) {
@@ -279,7 +279,7 @@ Motor
   </h4>
   <div
     v-for="(trends, index) in arraytrends"
-    :key="trends.text"
+    :key="trends.name"
     data-test="arrayTrends"
     :class="[trends.completed ? 'completed' : '']"
     @change="trendsChanged($event, index)"
@@ -289,7 +289,7 @@ Motor
       v-model="trends.completed"
       data-test="trends-checkbox"
     />
-    {{ trends.text }}
-    <small class="numberOfTweets-class">{{ trends.numberOfTweets !== 0 ? `(${trends.numberOfTweets})` : '' }}</small>
+    {{ trends.name }}
+    <small class="tweetVolume-class">{{ trends.tweetVolume !== 0 ? `(${trends.tweetVolume})` : '' }}</small>
   </div>
 </template>

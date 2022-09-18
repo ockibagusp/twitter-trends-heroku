@@ -133,23 +133,23 @@ describe('Tweet', () => {
       return {
         arraytrends: [
           {
-            text: "#TimnasIndonesia",
-            numberOfTweets: '200k Tweets',
+            name: "#TimnasIndonesia",
+            tweetVolume: '200k Tweets',
             completed: true
           },
           {
-            text: "Test 1",
-            numberOfTweets: '1k Tweets',
+            name: "Test 1",
+            tweetVolume: '1k Tweets',
             completed: true
           },
           {
-            text: "#Test2",
-            numberOfTweets: '2k Tweets',
+            name: "#Test2",
+            tweetVolume: '2k Tweets',
             completed: true
           },
           {
-            text: "Test 3",
-            numberOfTweets: 0,
+            name: "Test 3",
+            tweetVolume: 0,
             completed: true
           }
         ],
@@ -322,9 +322,9 @@ Test 3
   })
 
   it('jumlah tweet', () => {
-    assert.equal(arrayTrends.at(0).get('.numberOfTweets-class').text(), '')
-    assert.equal(arrayTrends.at(1).get('.numberOfTweets-class').text(), '(2.233 rb Tweet)')
-    assert.equal(arrayTrends.at(2).get('.numberOfTweets-class').text(), '(1.660 Tweet)')
-    assert.equal(arrayTrends.at(3).get('.numberOfTweets-class').text(), '(54.5K Tweet)')
+    assert.equal(arrayTrends.at(0).get('.tweetVolume-class').text(), '')
+    assert.equal(arrayTrends.at(1).get('.tweetVolume-class').text(), '(2.233 rb Tweet)')
+    assert.equal(arrayTrends.at(2).get('.tweetVolume-class').text(), '(1.660 Tweet)')
+    assert.equal(arrayTrends.at(3).get('.tweetVolume-class').text(), '(54.5K Tweet)')
   })
 })
