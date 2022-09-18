@@ -289,6 +289,7 @@ Motor
       v-model="trends.completed"
       data-test="trends-checkbox"
     />
-    {{ trends.text }} <small v-if="trends.numberOfTweets !== 0">{{ `(${trends.numberOfTweets})` }}</small>
+    {{ trends.text }}
+    <small class="numberOfTweets-class">{{ trends.numberOfTweets !== 0 ? `(${trends.numberOfTweets})` : '' }}</small>
   </div>
 </template>

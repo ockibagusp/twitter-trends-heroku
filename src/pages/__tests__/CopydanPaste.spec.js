@@ -182,7 +182,7 @@ Sedang tren dalam topik Indonesia
 1.660 Tweet
 Sedang tren dalam topik Indonesia
 Test 3
-54.5 Tweet
+54.5K Tweet
 ...
   `)
 
@@ -321,9 +321,10 @@ Test 3
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
   })
 
-  it('jumlan tweet', () => {
-    // <div ...><input type="checkbox" ...> #TimnasIndonesia <small>(200k Tweets)</small></div>?
-    //                                                       ----------------------------
-    assert.equal(arrayTrends.at(0).element.innerHTML, '<input type="checkbox" data-test="trends-checkbox"> #TimnasIndonesia <!--v-if-->')
+  it('jumlah tweet', () => {
+    assert.equal(arrayTrends.at(0).get('.numberOfTweets-class').text(), '')
+    assert.equal(arrayTrends.at(1).get('.numberOfTweets-class').text(), '(2.233 rb Tweet)')
+    assert.equal(arrayTrends.at(2).get('.numberOfTweets-class').text(), '(1.660 Tweet)')
+    assert.equal(arrayTrends.at(3).get('.numberOfTweets-class').text(), '(54.5K Tweet)')
   })
 })
