@@ -180,7 +180,7 @@ Test 1
 Sedang tren dalam topik Indonesia
 #Test2
 1.660 Tweet
-Sedang tren dalam topik Indonesia
+Technology · Trending
 Test 3
 54.5K Tweet
 ...
@@ -326,5 +326,12 @@ Test 3
     assert.equal(arrayTrends.at(1).get('.tweetVolume-class').text(), '(2.233 rb Tweet)')
     assert.equal(arrayTrends.at(2).get('.tweetVolume-class').text(), '(1.660 Tweet)')
     assert.equal(arrayTrends.at(3).get('.tweetVolume-class').text(), '(54.5K Tweet)')
+  })
+
+  it('topik yang sedang tren', () => {
+    assert.equal(arrayTrends.at(0).get('.trendingTopics-class').text(), 'Olahraga · Populer')
+    assert.equal(arrayTrends.at(1).get('.trendingTopics-class').text(), 'Sedang tren dalam topik Indonesia')
+    assert.equal(arrayTrends.at(2).get('.trendingTopics-class').text(), 'Sedang tren dalam topik Indonesia')
+    assert.equal(arrayTrends.at(3).get('.trendingTopics-class').text(), 'Technology · Trending')
   })
 })
