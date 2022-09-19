@@ -20,7 +20,10 @@ export default {
       selectTweet: false,
 
       // pilih `semua kotak centang`: true atau false
-      selectCheckBoxAll: false
+      selectCheckBoxAll: false,
+
+      // `semua kotak centang` diaktifkan
+      allCheckboxesEnabled: 0
     }
   },
   computed: {
@@ -98,6 +101,7 @@ export default {
           }
         })
         
+        this.allCheckboxesEnabled++
         i++
       }
 
@@ -159,9 +163,12 @@ export default {
     btnCheckBoxAll(event) {
       if (this.selectCheckBoxAll === true) {
         let newArrayTrendsName = ''
+        this.allCheckboxesEnabled = 0
+
         for (let i = 0; i < this.arraytrends.length; i++) {
           this.arraytrends[i].completed = true
           newArrayTrendsName += `${this.arraytrends[i].name}, `
+          this.allCheckboxesEnabled++
         }
         this.selectHasil = true
         this.selectCopy = true
@@ -180,6 +187,7 @@ export default {
         this.count = 280
         this.hasil = 'Tidak ada hasil'
         this.isCountTweet()
+        this.allCheckboxesEnabled = 0
 
         this.selectHasil = false
         this.selectCopy = false
@@ -199,6 +207,8 @@ export default {
           this.selectHasil = true
           this.selectCopy = true
           this.selectTweet = true
+
+          this.allCheckboxesEnabled = 1
         } else {
           let newArrayTrendsName = ''
           for (let i = 0; i < this.arraytrends.length; i++) {
@@ -209,6 +219,8 @@ export default {
 
           this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
           this.isCountTweet()
+
+          this.allCheckboxesEnabled++
         }
 
         this.count = 280 - this.hasil.length
@@ -232,12 +244,16 @@ export default {
           this.selectCopy = false
           this.selectTweet = false
           this.count = 280
+
+          this.allCheckboxesEnabled = 0
           return
         }
         this.hasil = this.hasil.replace(melepas, '')
 
         this.count = 280 - this.hasil.length
         this.isCountTweet()
+
+        this.allCheckboxesEnabled--
       }
     },
 
@@ -282,8 +298,13 @@ Motor
   <h4 v-if="arraytrends.length > 0">Kotak Centang: 
     <button @click="btnCheckBoxAll($event)" data-test="btnCheckBoxAll">
       {{ !isCheckBoxAll ? 'diaktifkan': 'tidak diaktifkan' }}
-    </button>
+    </button>    
   </h4>
+  
+  <p style="margin-top: -18px; margin-bottom: 5px;" data-test="all-checkboxes-enabled">
+    diaktifkan: {{ allCheckboxesEnabled }}
+  </p>
+  
   <div
     v-for="(trends, index) in arraytrends"
     :key="trends.name"
