@@ -169,6 +169,9 @@ describe('Tweet', () => {
   const btnTweet = wrapper.find('[data-test="btnTweet"]')
   // button: btnCheckBoxAll diaktifkan atau tidak diaktifkan semua kotak centang
   const btnCheckBoxAll = wrapper.find('[data-test="btnCheckBoxAll"]') 
+  
+  // `semua kotak centang` diaktifkan
+  const semuaDiaktifkan = wrapper.find('[data-test="semua-diaktifkan"]')
 
   copydanpaste.setValue(`
 ...
@@ -255,6 +258,8 @@ Test 3
         listBool: [false, true, false, false],
         hasil: 'Tags: Test 1',
         tweetIs: 'Tweet is: + 268',
+        // `semua kotak centang` diaktifkan
+        semuaDiaktifkan: 1
       },
       {
         name: 'Test 3',
@@ -262,6 +267,7 @@ Test 3
         listBool: [false, true, false, true],
         hasil: 'Tags: Test 1, Test 3',
         tweetIs: 'Tweet is: + 260',
+        semuaDiaktifkan: 2
       },
       {
         name: '#TimnasIndonesia',
@@ -269,6 +275,7 @@ Test 3
         listBool: [true, true, false, true],
         hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3',
         tweetIs: 'Tweet is: + 242',
+        semuaDiaktifkan: 3
       },
       {
         name: '#Test2',
@@ -276,6 +283,7 @@ Test 3
         listBool: [true, true, true, true],
         hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3',
         tweetIs: 'Tweet is: + 234',
+        semuaDiaktifkan: 4
       }  
     ]
 
@@ -295,6 +303,8 @@ Test 3
       }
 
       assert.equal(hasil.element.value, test.hasil)
+      // `semua kotak centang` diaktifkan
+      assert.equal(semuaDiaktifkan.text(), test.semuaDiaktifkan)
     }
   })
 
