@@ -5,7 +5,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/twitter-trends/',
+  base: process.env.NODE_ENV === 'production'
+    ? '/twitter-trends/'
+    : '/',
   plugins: [vue()],
   resolve: {
     alias: {
