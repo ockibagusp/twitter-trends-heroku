@@ -6,10 +6,12 @@
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
-    "test:ui": "vitest --environment jsdom --ui"
+    "test:ui": "vitest --environment jsdom --ui",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "express": "^4.18.1",
     "vue": "^3.2.37",
     "vue-axios": "^3.4.1",
     "vue-router": "^4.1.3"
