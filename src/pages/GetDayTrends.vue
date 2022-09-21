@@ -60,7 +60,8 @@ export default {
           const res = await axios.get('https://getdaytrends.com/indonesia/bekasi/')
           this.getdaytrends = res.data
         } else {
-          const res = await axios.get('/twitter-trends/url')
+          // const res = await axios.get('/twitter-trends/url')
+          const res = await axios.get('/url')
           this.getdaytrends = res.data
         }
 

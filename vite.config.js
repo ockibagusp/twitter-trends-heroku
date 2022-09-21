@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/twitter-trends/',
+  // base: '/twitter-trends/',
   plugins: [vue()],
   resolve: {
     alias: {
@@ -14,10 +14,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/twitter-trends/url': {
+      // '/twitter-trends/url': {
+      '/url': {
         target: 'https://getdaytrends.com/indonesia/bekasi/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/twitter-trends\/url/, '')
+        rewrite: (path) => path.replace(/^\/url/, '')
       },
     }
   }
