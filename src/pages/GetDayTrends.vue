@@ -200,5 +200,7 @@ export default {
   <br>
   <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
   <br>
+
+  <!-- Trending Now -->
 </template>
 
