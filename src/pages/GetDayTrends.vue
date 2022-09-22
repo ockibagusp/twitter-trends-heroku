@@ -82,7 +82,7 @@ export default {
 
       // TODO: regex without "
       // regex101.com
-      const regex = /<td class="main"><a (class="string" )?href="[^"]+">([^"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+|\d+\.\d*|\d+)K tweets<\/span><\/div><\/td>/gm
+      const regex = /<td class="main"><a (class="string" )?href="[^"]+">([^'"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+K tweets|\d+\.\d*K tweets|\d+K tweets)<\/span><\/div><\/td>/gm
       
       const str = this.getdaytrends
       
@@ -190,7 +190,7 @@ export default {
   <p>(beta) GetDayTrends.com!</p>
   <p> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
 
-  <button @click="btnSubmit" data-test="btnSubmit" :disabled="isSubmit">Submit</button>
+  <button @click="btnSubmit" data-test="btn-submit" :disabled="isSubmit">Submit</button>
   <br>
   
   <h3>... dan Paste (ctrl + v)!</h3>
@@ -198,7 +198,7 @@ export default {
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
-  <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
+  <button @click="btnCopy" data-test="btn-copy" :disabled="isCopy">Copy</button>
   <br>
 
   <!-- Trending Now -->
