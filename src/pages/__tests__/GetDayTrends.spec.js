@@ -23,7 +23,28 @@ describe('getdaytrends.com', async() => {
   assert.exists(GetDayTrends)
 
   const wrapper = mount(GetDayTrends, {
-    props: { }
+    props: { },
+    data() {
+      return {
+        arraytrends: [
+          {
+            name: '#TimnasIndonesia',
+            tweetVolume: '22.1K tweets',
+            completed: true
+          },
+          {
+            name: '#TambahLokalTambahBangga',
+            tweetVolume: 'Under 10K tweets',
+            completed: true
+          },
+          {
+            name: 'Dirgahayu Republik Indonesia',
+            tweetVolume: '53.9K tweets',
+            completed: true
+          },
+        ]
+      }
+    }
   })
 
   expect(axios.get).toHaveBeenCalledTimes(1)
@@ -55,33 +76,9 @@ describe('getdaytrends.com', async() => {
   const arrayTrends = wrapper.findAll('[data-test="array-trends"]')
 
   it('kotak centang untuk trends di getdaytrends.com: diaktifkan', async => {
-    const wrapper = mount(GetDayTrends, {
-      data() {
-        return {
-          arraytrends: [
-            {
-              name: '#TimnasIndonesia',
-              tweetVolume: '22.1K tweets',
-              completed: true
-            },
-            {
-              name: '#TambahLokalTambahBangga',
-              tweetVolume: 'Under 10K tweets',
-              completed: true
-            },
-            {
-              name: 'Dirgahayu Republik Indonesia',
-              tweetVolume: '53.9K tweets',
-              completed: true
-            },
-          ]
-        }
-      }
-    })
-
-    expect(arrayTrends.at(0).classes()).toContain('completed')
-    expect(arrayTrends.at(1).classes()).toContain('completed')
-    expect(arrayTrends.at(2).classes()).toContain('completed')
+    for (let i = 0; i < arrayTrends.length; i++) {
+      expect(arrayTrends.at(i).classes()).toContain('completed')
+    }
   })
 
   it('kotak centang untuk trends di getdaytrends.com: tidak dicentang', async => {
