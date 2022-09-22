@@ -15,6 +15,10 @@ const mockGetDayTrends = {
 // GET
 vi.spyOn(axios, 'get').mockResolvedValueOnce(mockGetDayTrends)
 
+// TDD
+// ✅ ❎
+// 1. textarea `hasil` untuk array untuk trends ✅
+// 2. kotak centang untuk trends di getdaytrends.com ❎
 describe('getdaytrends.com', async() => {
   assert.exists(GetDayTrends)
 
@@ -45,7 +49,42 @@ describe('getdaytrends.com', async() => {
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, #TambahLokalTambahBangga, Dirgahayu Republik Indonesia')
     // button: btnCopy diaktifkan
     assert.isUndefined(btnCopy.attributes().disabled)
-  })  
+  })
 
-  it.todo('lingkaran dari `for`')
+  // array untuk trends
+  const arrayTrends = wrapper.findAll('[data-test="array-trends"]')
+
+  it('kotak centang untuk trends di getdaytrends.com: diaktifkan', async => {
+    const wrapper = mount(GetDayTrends, {
+      data() {
+        return {
+          arraytrends: [
+            {
+              name: '#TimnasIndonesia',
+              tweetVolume: '22.1K tweets',
+              completed: true
+            },
+            {
+              name: '#TambahLokalTambahBangga',
+              tweetVolume: 'Under 10K tweets',
+              completed: true
+            },
+            {
+              name: 'Dirgahayu Republik Indonesia',
+              tweetVolume: '53.9K tweets',
+              completed: true
+            },
+          ]
+        }
+      }
+    })
+
+    expect(arrayTrends.at(0).classes()).toContain('completed')
+    expect(arrayTrends.at(1).classes()).toContain('completed')
+    expect(arrayTrends.at(2).classes()).toContain('completed')
+  })
+
+  it('kotak centang untuk trends di getdaytrends.com: tidak dicentang', async => {
+
+  })
 })
