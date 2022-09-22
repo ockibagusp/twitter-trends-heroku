@@ -12,6 +12,9 @@ export default {
       // textarea: hasil
       hasil: '',
 
+      // array untuk trends
+      arraytrends: [],
+
       // pilih hasil, button submit dan button copy: true atau false
       selectSubmit: false,
       selectHasil: false,
@@ -106,13 +109,24 @@ export default {
               .replace(/&quot;/g, "\"")
               .replace(/&#39;/g, "'")
 
+            this.arraytrends[i] = {
+              name: unescapeHtml,
+              tweetVolume: '',
+              completed: true
+            }
+
             trends += `${unescapeHtml}, `
           }
 
-          // // Misalnya: 20K
-          // if (groupIndex === 4) {
-          //   console.log(match)
-          // }
+          if (groupIndex === 3) {
+            if (match !== undefined)
+              this.arraytrends[i].tweetVolume = `${match}`
+          }
+
+          // Misalnya: 20K
+          if (groupIndex === 4) {
+            this.arraytrends[i].tweetVolume += match
+          }
         })
         
         i++
@@ -201,6 +215,21 @@ export default {
   <button @click="btnCopy" data-test="btn-copy" :disabled="isCopy">Copy</button>
   <br>
 
-  <!-- Trending Now -->
+  <h4>Tren Sekarang</h4>
+  <div
+    v-for="(trends, index) in arraytrends"
+    :key="trends.name"
+    data-test="array-trends"
+    :class="[trends.completed ? 'completed' : '']"
+    @change="trendsChanged($event, index)"
+  >
+    <input
+      type="checkbox"
+      v-model="trends.completed"
+      data-test="trends-checkbox"
+    />
+    {{ trends.name }}
+    <small class="tweetVolume-class">{{ trends.tweetVolume !== 0 ? `(${trends.tweetVolume})` : '' }}</small>
+  </div>
 </template>
 
