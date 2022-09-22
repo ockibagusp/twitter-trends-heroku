@@ -33,13 +33,13 @@ describe('getdaytrends.com', async() => {
   await flushPromises()
 
   // button: btnSubmit
-  const btnSubmit = wrapper.find('[data-test="btnSubmit"]')
+  const btnSubmit = wrapper.find('[data-test="btn-submit"]')
   
   // textarea: hasil
   const hasil = wrapper.find('[data-test="hasil"]')
 
   // button: btnCopy
-  const btnCopy = wrapper.find('[data-test="btnCopy"]')
+  const btnCopy = wrapper.find('[data-test="btn-copy"]')
 
   it('init', async() => {
     // button: btnSubmit diaktifkan
