@@ -18,7 +18,7 @@ export default {
       selectCopy: false,
 
       // pindah: test, CORS dan GitHub Pages
-      pindah: PINDAH[0]
+      pindah: PINDAH[2]
     }
   },
   computed: {
@@ -124,7 +124,7 @@ export default {
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (trends != '') {
-        trends = 'Tags: ' + trends.substr(0, trends.length-2)
+        trends = 'Tags: ' + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
       } if (str != '' && trends == '') {
