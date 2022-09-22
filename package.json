@@ -1,11 +1,13 @@
 {
   "name": "twitter-trends",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
+    "test:unit-CopydanPaste": "vitest --environment jsdom CopydanPaste",
+    "test:unit-GetDayTrends": "vitest --environment jsdom GetDayTrends",
     "test:ui": "vitest --environment jsdom --ui",
     "start": "node server.js"
   },
