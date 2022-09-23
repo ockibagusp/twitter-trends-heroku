@@ -75,13 +75,17 @@ describe('getdaytrends.com', async() => {
   // array untuk trends
   const arrayTrends = wrapper.findAll('[data-test="array-trends"]')
 
-  it('kotak centang untuk trends di getdaytrends.com: diaktifkan', async => {
+  it('kotak centang untuk trends di getdaytrends.com: baru', async => {
     for (let i = 0; i < arrayTrends.length; i++) {
       expect(arrayTrends.at(i).classes()).toContain('completed')
     }
   })
 
   it('kotak centang untuk trends di getdaytrends.com: tidak dicentang', async => {
+
+  })
+
+  it('kotak centang untuk trends di getdaytrends.com: dicentang', async => {
 
   })
 })
