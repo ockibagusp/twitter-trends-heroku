@@ -20,7 +20,8 @@ vi.spyOn(axios, 'get').mockResolvedValueOnce(mockGetDayTrends)
 // TDD
 // ✅ ❎
 // 1. textarea `hasil` untuk array untuk trends ✅
-// 2. kotak centang untuk trends di getdaytrends.com ❎
+// 2. kotak centang untuk trends di getdaytrends.com ✅
+// 3. button `semua kotak centang` jika ini diaktifkan atau tidak diaktifkan ❎
 describe('getdaytrends.com', async() => {
   assert.exists(GetDayTrends)
 
@@ -140,7 +141,7 @@ describe('getdaytrends.com', async() => {
 
   it('kotak centang untuk trends di getdaytrends.com: dicentang', async() => {
     console.debug('-----')
-    
+
     assert.equal(hasil.element.value, 'Tidak ada hasil')
 
     // test cases
