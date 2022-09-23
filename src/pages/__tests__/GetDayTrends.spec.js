@@ -70,6 +70,9 @@ describe('getdaytrends.com', async() => {
   // button: btnCopy
   const btnCopy = wrapper.find('[data-test="btn-copy"]')
 
+  // button: btnCheckBoxAll diaktifkan atau tidak diaktifkan semua kotak centang
+  const btnCheckBoxAll = wrapper.find('[data-test="btn-checkbox-all"]') 
+
   it('init', async() => {
     // button: btnSubmit diaktifkan
     assert.isUndefined(btnSubmit.attributes().disabled)
@@ -101,24 +104,28 @@ describe('getdaytrends.com', async() => {
         index: 0,
         listBool: [false, true, true, true],
         hasil: 'Tags: Test 1, #Test2, Test 3',
+        tweetIs: 'Tweet is: + 252',
       },
       {
         name: 'Test 1',
         index: 1,
         listBool: [false, false, true, true],
         hasil: 'Tags: #Test2, Test 3',
+        tweetIs: 'Tweet is: + 260',
       },
       {
         name: '#Test2',
         index: 2,
         listBool: [false, false, false, true],
         hasil: 'Tags: Test 3',
+        tweetIs: 'Tweet is: + 268',
       },
       {
         name: 'Test 3',
         index: 3,
         listBool: [false, false, false, false],
         hasil: 'Tidak ada hasil',
+        tweetIs: 'Tweet is: + 280',
       },
     ]
 
@@ -136,6 +143,7 @@ describe('getdaytrends.com', async() => {
       }
 
       assert.equal(hasil.element.value, test.hasil)
+      assert.equal(btnTweet.text(), test.tweetIs)
     }
   })
 
@@ -187,5 +195,9 @@ describe('getdaytrends.com', async() => {
 
       assert.equal(hasil.element.value, test.hasil)
     }
+  })
+
+  it('button `semua kotak centang` di array untuk trends: tidak diaktifkan', async() => {
+    
   })
 })
