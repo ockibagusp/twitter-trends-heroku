@@ -170,6 +170,37 @@ export default {
       this.$refs.hasil.setSelectionRange(0, 99999);
     
       navigator.clipboard.writeText(this.hasil);
+    },
+
+    // berubah dalam array untuk trends
+    trendsChanged(event, index) {
+      const name = this.arraytrends[index].name
+
+      if (event.target.checked) {
+      
+      } else {
+        const kananKoma = `${name}, `
+        const kiriKoma = `, ${name}`
+        const keduanyaKoma = `, ${name}, `
+
+        let melepas = ''
+        if (this.hasil.includes(kananKoma)) {
+          melepas = kananKoma
+        } else if (this.hasil.includes(kiriKoma)) {
+          melepas = kiriKoma
+        } else if (this.hasil.includes(keduanyaKoma)) {
+          melepas = keduanyaKoma
+        } else {
+          // melepas = text 
+          this.hasil = 'Tidak ada hasil'
+          // pilih hasil, button copy dan button tweet: false
+          this.selectHasil = false
+          this.selectCopy = false
+
+          return
+        }
+        this.hasil = this.hasil.replace(melepas, '')
+      }
     }
   }
 }
