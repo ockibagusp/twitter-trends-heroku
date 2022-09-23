@@ -4,6 +4,8 @@ import axios from 'axios'
 // PINDAH: test, CORS dan GitHub-Pages
 const PINDAH = [0, 1, 2]
 
+const TAGS = 'Tags: '
+
 export default {
   data() {
     return {
@@ -177,7 +179,21 @@ export default {
       const name = this.arraytrends[index].name
 
       if (event.target.checked) {
-      
+        if (this.hasil === 'Tidak ada hasil') {
+          this.hasil =  `Tags: ${name}`
+          // pilih hasil, button copy dan button tweet: true
+          this.selectHasil = true
+          this.selectCopy = true
+        } else {
+          let newArrayTrendsName = ''
+          for (let i = 0; i < this.arraytrends.length; i++) {
+            if (this.arraytrends[i].completed !== false) {
+              newArrayTrendsName += `${this.arraytrends[i].name}, `
+            }
+          }
+
+          this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
+        }
       } else {
         const kananKoma = `${name}, `
         const kiriKoma = `, ${name}`
