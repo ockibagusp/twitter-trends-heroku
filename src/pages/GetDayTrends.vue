@@ -17,10 +17,14 @@ export default {
       // array untuk trends
       arraytrends: [],
 
-      // pilih hasil, button submit dan button copy: true atau false
+      // tweet dihasil maks. 280 karakter
+      count: 280,
+
+      // pilih hasil, button submit, button copy dan button tweet: true atau false
       selectSubmit: false,
       selectHasil: false,
       selectCopy: false,
+      selectTweet: false,
 
       // pindah: test, CORS dan GitHub Pages
       pindah: PINDAH[2]
@@ -36,7 +40,10 @@ export default {
     },
     isCopy: function() {
       return !this.selectCopy
-    }
+    },
+    isTweet: function() {
+      return !this.selectTweet
+    },
   },
   created() {
     this.dibuat()
@@ -140,16 +147,23 @@ export default {
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (trends != '') {
-        trends = 'Tags: ' + trends.substring(0, trends.length-2)
+        trends = TAGS + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
+        this.selectTweet = true
+
+        this.count = 280 - trends.length
       } if (str != '' && trends == '') {
         trends = 'Tidak ada hasil'
         this.selectHasil = false
         this.selectCopy = false
+        this.selectTweet = false
+
+        this.count = 280
       }
       
       this.hasil = trends
+      this.isCountTweet()
     },
 
     // button: submit dan copy
@@ -173,6 +187,14 @@ export default {
     
       navigator.clipboard.writeText(this.hasil);
     },
+    btnTweet() {
+      if (this.hasil.length > 280) {
+        this.selectTweet = false
+        return
+      }
+      const UTF8_hash = this.hasil.replaceAll("#", "%23")
+      window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
+    },
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
@@ -180,7 +202,7 @@ export default {
 
       if (event.target.checked) {
         if (this.hasil === 'Tidak ada hasil') {
-          this.hasil =  `Tags: ${name}`
+          this.hasil =  TAGS + name
           // pilih hasil, button copy dan button tweet: true
           this.selectHasil = true
           this.selectCopy = true
@@ -193,7 +215,10 @@ export default {
           }
 
           this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
+          this.isCountTweet()
         }
+
+        this.count = 280 - this.hasil.length
       } else {
         const kananKoma = `${name}, `
         const kiriKoma = `, ${name}`
@@ -212,11 +237,22 @@ export default {
           // pilih hasil, button copy dan button tweet: false
           this.selectHasil = false
           this.selectCopy = false
+          this.selectTweet = false
+          this.count = 280
 
           return
         }
         this.hasil = this.hasil.replace(melepas, '')
+        this.count = 280 - this.hasil.length
+        this.isCountTweet()
       }
+    },
+
+    // adalah textarea hitungan dan tombol tweet
+    isCountTweet() {
+      if (this.hasil === '' || this.hasil === 'Tidak ada hasil' 
+        || this.hasil.length > 280) this.selectTweet = false
+      else this.selectTweet = true
     }
   }
 }
@@ -260,6 +296,7 @@ export default {
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
   <button @click="btnCopy" data-test="btn-copy" :disabled="isCopy">Copy</button>
+  <button @click="btnTweet" data-test="btn-tweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length < 280">+</small> {{count}}</button>
   <br>
 
   <h4>Tren Sekarang</h4>
