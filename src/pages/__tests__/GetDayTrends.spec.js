@@ -8,8 +8,10 @@ import axios from 'axios'
 // test html: https://getdaytrends.com/indonesia/bekasi/
 const mockGetDayTrends = { 
   data: '<td class="main"><a href="/indonesia/bekasi/trend/%23TimnasIndonesia/">#TimnasIndonesia</a><div class="desc"><span class="small text-muted">22.1K tweets</span></div></td>' +
-    '<td class="main"><a href="/indonesia/bekasi/trend/%23TambahLokalTambahBangga/">#TambahLokalTambahBangga</a><div class="desc"><span class="small text-muted">Under 10K tweets</span></div></td>' +
-    '<td class="main"><a class="string" href="/indonesia/bekasi/trend/Dirgahayu%20Republik%20Indonesia/">Dirgahayu Republik Indonesia</a><div class="desc"><span class="small text-muted">53.9K tweets</span></div></td>'
+    '<td class="main"><a href="/indonesia/bekasi/trend/Test%201/">Test 1</a><div class="desc"><span class="small text-muted">Under 10K tweets</span></div></td>' +
+    '<td class="main"><a class="string" href="/indonesia/bekasi/trend/%23Test2/">#Test2</a><div class="desc"><span class="small text-muted">53.9K tweets</span></div></td>' +
+    '<td class="main"><a class="string" href="/indonesia/bekasi/trend/Test%203/">Test 3</a><div class="desc"><span class="small text-muted">54.5K tweets</span></div></td>'
+
 }
 
 // GET
@@ -33,13 +35,18 @@ describe('getdaytrends.com', async() => {
             completed: true
           },
           {
-            name: '#TambahLokalTambahBangga',
+            name: 'Test 1',
             tweetVolume: 'Under 10K tweets',
             completed: true
           },
           {
-            name: 'Dirgahayu Republik Indonesia',
+            name: '#Test2',
             tweetVolume: '53.9K tweets',
+            completed: true
+          },
+          {
+            name: 'Test 3',
+            tweetVolume: '54.5K tweets',
             completed: true
           },
         ]
@@ -67,7 +74,7 @@ describe('getdaytrends.com', async() => {
     assert.isUndefined(btnSubmit.attributes().disabled)
 
     // textarea hasil: test getdaytrends.com
-    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, #TambahLokalTambahBangga, Dirgahayu Republik Indonesia')
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
     // button: btnCopy diaktifkan
     assert.isUndefined(btnCopy.attributes().disabled)
   })
