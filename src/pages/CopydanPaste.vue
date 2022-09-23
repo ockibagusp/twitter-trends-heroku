@@ -202,7 +202,7 @@ export default {
 
       if (event.target.checked) {
         if (this.hasil === 'Tidak ada hasil') {
-          this.hasil =  `Tags: ${name}`
+          this.hasil =  TAGS + name
           // pilih hasil, button copy dan button tweet: true
           this.selectHasil = true
           this.selectCopy = true
