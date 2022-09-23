@@ -79,8 +79,10 @@ describe('getdaytrends.com', async() => {
     assert.isUndefined(btnCopy.attributes().disabled)
   })
 
-  // array untuk trends
+  // array dan checkbox untuk trends
   const arrayTrends = wrapper.findAll('[data-test="array-trends"]')
+  const checkboxTrends = wrapper.findAll('[data-test="trends-checkbox"]')
+
 
   it('kotak centang untuk trends di getdaytrends.com: baru', async => {
     for (let i = 0; i < arrayTrends.length; i++) {
@@ -88,8 +90,52 @@ describe('getdaytrends.com', async() => {
     }
   })
 
-  it('kotak centang untuk trends di getdaytrends.com: tidak dicentang', async => {
+  it('kotak centang untuk trends di getdaytrends.com: tidak dicentang', async() => {
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
 
+    // test cases
+    const testCases = [
+      {
+        name: '#TimnasIndonesia',
+        index: 0,
+        listBool: [false, true, true, true],
+        hasil: 'Tags: Test 1, #Test2, Test 3',
+      },
+      {
+        name: 'Test 1',
+        index: 1,
+        listBool: [false, false, true, true],
+        hasil: 'Tags: #Test2, Test 3',
+      },
+      {
+        name: '#Test2',
+        index: 2,
+        listBool: [false, false, false, true],
+        hasil: 'Tags: Test 3',
+      },
+      {
+        name: 'Test 3',
+        index: 3,
+        listBool: [false, false, false, false],
+        hasil: 'Tidak ada hasil',
+      },
+    ]
+
+    for (let test of testCases) {
+      console.debug('unchecked ke-', test.name)
+      await checkboxTrends.at(test.index).setValue(false)
+      
+      for (let i = 0; i < test.listBool.length; i++) {
+        if (test.listBool[i]) {
+          expect(arrayTrends.at(i).classes()).toContain('completed')
+        } else {
+          // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+          expect(arrayTrends.at(i).classes()).to.deep.equal([])
+        }
+      }
+
+      assert.equal(hasil.element.value, test.hasil)
+    }
   })
 
   it('kotak centang untuk trends di getdaytrends.com: dicentang', async => {
