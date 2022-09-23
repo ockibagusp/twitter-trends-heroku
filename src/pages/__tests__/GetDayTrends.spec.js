@@ -66,7 +66,9 @@ describe('getdaytrends.com', async() => {
   
   // textarea: hasil
   const hasil = wrapper.find('[data-test="hasil"]')
-
+  
+  // button: btnTweet
+  const btnTweet = wrapper.find('[data-test="btn-tweet"]')
   // button: btnCopy
   const btnCopy = wrapper.find('[data-test="btn-copy"]')
 
@@ -86,7 +88,6 @@ describe('getdaytrends.com', async() => {
   // array dan checkbox untuk trends
   const arrayTrends = wrapper.findAll('[data-test="array-trends"]')
   const checkboxTrends = wrapper.findAll('[data-test="trends-checkbox"]')
-
 
   it('kotak centang untuk trends di getdaytrends.com: baru', async => {
     for (let i = 0; i < arrayTrends.length; i++) {
