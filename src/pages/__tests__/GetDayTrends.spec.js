@@ -138,7 +138,53 @@ describe('getdaytrends.com', async() => {
     }
   })
 
-  it('kotak centang untuk trends di getdaytrends.com: dicentang', async => {
+  it('kotak centang untuk trends di getdaytrends.com: dicentang', async() => {
+    console.debug('-----')
+    
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
 
+    // test cases
+    const testCases = [   
+      {
+        name: 'Test 1',
+        index: 1,
+        listBool: [false, true, false, false],
+        hasil: 'Tags: Test 1',
+      },
+      {
+        name: 'Test 3',
+        index: 3,
+        listBool: [false, true, false, true],
+        hasil: 'Tags: Test 1, Test 3',
+      },
+      {
+        name: '#TimnasIndonesia',
+        index: 0,
+        listBool: [true, true, false, true],
+        hasil: 'Tags: #TimnasIndonesia, Test 1, Test 3',
+      },
+      {
+        name: '#Test2',
+        index: 2,
+        listBool: [true, true, true, true],
+        hasil: 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3',
+      }  
+    ]
+
+    for (let test of testCases) {
+      console.debug('checked ke-', test.name)
+      await checkboxTrends.at(test.index).setValue(true)
+      
+      for (let i = 0; i < test.listBool.length; i++) {
+        if (test.listBool[i]) {
+          expect(arrayTrends.at(i).classes()).toContain('completed')
+        } else {
+          // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+          expect(arrayTrends.at(i).classes()).to.deep.equal([])
+        }
+      }
+
+      assert.equal(hasil.element.value, test.hasil)
+    }
   })
 })
