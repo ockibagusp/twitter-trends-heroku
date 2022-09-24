@@ -118,8 +118,11 @@ export default {
               .replace(/&quot;/g, "\"")
               .replace(/&#39;/g, "'")
 
+            // replace
+            let encodedUrl = unescapeHtml.replace('#', "%23")
             this.arraytrends[i] = {
               name: unescapeHtml,
+              url: 'https://twitter.com/search?q=' + encodedUrl,
               tweetVolume: '',
               completed: true
             }
@@ -300,6 +303,7 @@ export default {
   <br>
 
   <h4>Tren Sekarang</h4>
+  📌
   <div
     v-for="(trends, index) in arraytrends"
     :key="trends.name"
@@ -312,7 +316,7 @@ export default {
       v-model="trends.completed"
       data-test="trends-checkbox"
     />
-    {{ trends.name }}
+    <a :href="trends.url" target="_blank">{{ trends.name }}</a>
     <small class="tweetVolume-class">{{ trends.tweetVolume !== 0 ? `(${trends.tweetVolume})` : '' }}</small>
   </div>
 </template>
