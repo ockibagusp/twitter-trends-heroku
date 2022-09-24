@@ -27,7 +27,7 @@ export default {
       selectTweet: false,
 
       // pindah: test, CORS dan GitHub Pages
-      pindah: PINDAH[2]
+      pindah: PINDAH[0]
     }
   },
   computed: {
@@ -61,13 +61,18 @@ export default {
   methods: {
     // dibuat: dari textarea getdaytrends ini
     async dibuat() {
+      this.arraytrends = []
+
       // textarea hasil: loading...
       this.hasil = 'Loading...'
 
       try {
         // TODO: getdaytrends.com test, CORS dan GitHub-Pages
         if (this.pindah == PINDAH[0]) {
-          this.getdaytrends = '<td class="main"><a href="/indonesia/bekasi/trend/%23TimnasIndonesia/">#TimnasIndonesia</a><div class="desc"><span class="small text-muted">22.1K tweets</span></div></td>'
+          this.getdaytrends = '<td class="main"><a href="/indonesia/bekasi/trend/%23TimnasIndonesia/">#TimnasIndonesia</a><div class="desc"><span class="small text-muted">22.1K tweets</span></div></td>' +
+            '<td class="main"><a href="/indonesia/bekasi/trend/Test%201/">Test 1</a><div class="desc"><span class="small text-muted">Under 10K tweets</span></div></td>' +
+            '<td class="main"><a class="string" href="/indonesia/bekasi/trend/%23Test2/">#Test2</a><div class="desc"><span class="small text-muted">53.9K tweets</span></div></td>' +
+            '<td class="main"><a class="string" href="/indonesia/bekasi/trend/Test%203/">Test 3</a><div class="desc"><span class="small text-muted">54.5K tweets</span></div></td>'
         } else if (this.pindah == PINDAH[1]) {
           const res = await axios.get('https://getdaytrends.com/indonesia/bekasi/')
           this.getdaytrends = res.data
@@ -302,8 +307,9 @@ export default {
   <button @click="btnTweet" data-test="btn-tweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length < 280">+</small> {{count}}</button>
   <br>
 
-  <h4>Tren Sekarang</h4>
-  📌
+  <h4 v-if="arraytrends.length > 0">Tren Sekarang</h4>
+  
+  {{ arraytrends.length > 0 ? '📌' : '' }}
   <div
     v-for="(trends, index) in arraytrends"
     :key="trends.name"
