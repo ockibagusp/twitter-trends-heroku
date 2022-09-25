@@ -311,15 +311,15 @@ export default {
 </script>
 
 <template>
-  <div>Pindah:</div>
+  <div style="margin-top: -10px; margin-bottom: 5px;">Pindah:</div>
 
-  <input type="radio" value=0 v-model="pindah" />
+  <input style="margin-top: -10px; margin-bottom: 5px;" type="radio" value=0 v-model="pindah" />
   <label for="test">Test</label> | 
 
-  <input type="radio" value=1 v-model="pindah" />
+  <input style="margin-top: -10px; margin-bottom: 5px;" type="radio" value=1 v-model="pindah" />
   <label for="cors">CORS</label> |
 
-  <input type="radio" value=2 v-model="pindah" />
+  <input style="margin-top: -10px; margin-bottom: 5px;" type="radio" value=2 v-model="pindah" />
   <label for="GitHub-Pages">GitHub-Pages</label>
 
   <p v-if="pindah == 0">&gt;&gt;&gt; Test getdaytrends.com</p>
@@ -335,15 +335,14 @@ export default {
     &gt;&gt;&gt; localhost: bisa | ockibagusp.github.io/twitter-trends: tidak bisa
   </div>
 
-  <p>--------------------------------------------------------</p>
-  <p>(beta) GetDayTrends.com!</p>
-  <p> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
+  <p style="margin-top: -5px; margin-bottom: 5px;">--------------------------------------------------------</p>
+  <p style="margin-top: 0px; margin-bottom: 0px;">(beta) GetDayTrends.com!</p>
+  <p style="margin-top: 0px; margin-bottom: 10px;"> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
 
   <button @click="btnSubmit" data-test="btn-submit" :disabled="isSubmit">Submit</button>
   <br>
   
-  <h3>... dan Paste (ctrl + v)!</h3>
-  
+  <h3 style="margin-top: 10px; margin-bottom: 5px;">... dan Paste (ctrl + v)!</h3>
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
@@ -351,9 +350,8 @@ export default {
   <button @click="btnTweet" data-test="btn-tweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length < 280">+</small> {{count}}</button>
   <br>
 
-  <h4 v-if="arraytrends.length > 0">Tren Sekarang</h4>
-
-  <h4 v-if="arraytrends.length > 0">Kotak Centang: 
+  <h4 style="margin-top: 15px; margin-bottom: 5px;" v-if="arraytrends.length > 0">Tren Sekarang</h4>
+  <h4 style="margin-top: -3px; margin-bottom: 5px;" v-if="arraytrends.length > 0">Kotak Centang: 
     <button @click="btnCheckBoxAll()" data-test="btn-checkbox-all">
       {{ !isCheckBoxAll ? 'diaktifkan': 'tidak diaktifkan' }}
     </button>    
