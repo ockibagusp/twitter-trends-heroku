@@ -140,6 +140,7 @@ export default {
 
       this.count = 280
     },
+    // sama GetDayTrends:btnCopy()
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
         return
@@ -151,6 +152,7 @@ export default {
     
       navigator.clipboard.writeText(this.hasil);
     },
+    // sama GetDayTrends:btnTweet()
     btnTweet() {
       if (this.hasil.length > 280) {
         this.selectTweet = false
@@ -159,8 +161,10 @@ export default {
       const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     },
+    // sama GetDayTrends:btnCheckBoxAll()
+    
     // button `semua kotak centang`
-    btnCheckBoxAll(event) {
+    btnCheckBoxAll() {
       if (this.selectCheckBoxAll === true) {
         let newArrayTrendsName = ''
         this.allCheckboxesEnabled = 0
@@ -195,6 +199,8 @@ export default {
         this.selectCheckBoxAll = true
       }
     },
+
+    // sama GetDayTrends:trendsChanged(event, index)
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
@@ -257,6 +263,8 @@ export default {
       }
     },
 
+    // sama GetDayTrends:isCountTweet()
+
     // adalah textarea hitungan dan tombol tweet
     isCountTweet() {
       if (this.hasil === '' || this.hasil === 'Tidak ada hasil' 
@@ -296,7 +304,7 @@ Motor
   <br>
   
   <h4 v-if="arraytrends.length > 0">Kotak Centang: 
-    <button @click="btnCheckBoxAll($event)" data-test="btnCheckBoxAll">
+    <button @click="btnCheckBoxAll()" data-test="btnCheckBoxAll">
       {{ !isCheckBoxAll ? 'diaktifkan': 'tidak diaktifkan' }}
     </button>    
   </h4>

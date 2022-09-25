@@ -198,6 +198,7 @@ export default {
 
       this.memuat()
     },
+    // sama CopydanPaste:btnCopy()
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
         return
@@ -209,6 +210,7 @@ export default {
     
       navigator.clipboard.writeText(this.hasil);
     },
+    // sama CopydanPaste:btnTweet()
     btnTweet() {
       if (this.hasil.length > 280) {
         this.selectTweet = false
@@ -217,6 +219,8 @@ export default {
       const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     },
+    // sama CopydanPaste:btnCheckBoxAll()
+
     // button `semua kotak centang`
     btnCheckBoxAll() {
       if (this.selectCheckBoxAll === true) {
@@ -253,6 +257,8 @@ export default {
         this.selectCheckBoxAll = true
       }
     },
+
+    // sama CopydanPaste:trendsChanged(event, index)
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
@@ -305,6 +311,8 @@ export default {
         this.isCountTweet()
       }
     },
+
+    // sama CopydanPaste:isCountTweet()
 
     // adalah textarea hitungan dan tombol tweet
     isCountTweet() {
