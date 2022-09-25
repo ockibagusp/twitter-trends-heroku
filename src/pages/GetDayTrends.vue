@@ -27,7 +27,7 @@ export default {
       selectTweet: false,
 
       // pindah: test, CORS dan GitHub Pages
-      pindah: PINDAH[2],
+      pindah: PINDAH[0],
 
       // pilih `semua kotak centang`: true atau false
       selectCheckBoxAll: false,
@@ -326,7 +326,7 @@ export default {
   <input style="margin-top: -10px; margin-bottom: 5px;" type="radio" value=2 v-model="pindah" />
   <label for="GitHub-Pages">GitHub-Pages</label>
 
-  <p v-if="pindah == 0">&gt;&gt;&gt; Test getdaytrends.com</p>
+  <p style="margin-top: 0px; margin-bottom: 0px;" v-if="pindah == 0">&gt;&gt;&gt; Test getdaytrends.com</p>
   <div v-if="pindah == 1">
     <li>&gt;&gt;&gt; AxiosError: Network Error</li>
     The CORS Header 'Access-Control-Allow-Origin' is missing.
