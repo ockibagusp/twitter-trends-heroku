@@ -70,10 +70,12 @@ export default {
     // dibuat: dari textarea getdaytrends ini
     async dibuat() {
       this.arraytrends = []
+      this.selectSubmit = false
       this.selectCopy = false
       this.selectTweet = false
       this.count = 280
 
+      this.selectHasil = false
       // textarea hasil: loading...
       this.hasil = 'Loading...'
 

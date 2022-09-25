@@ -57,6 +57,18 @@ describe('getdaytrends.com', async() => {
     }
   })
 
+  // async dibuat() {
+  //    this.arraytrends = []
+  //    this.selectSubmit = false
+  //    this.selectCopy = false
+  //    this.selectTweet = false
+  //    this.count = 280
+  //    this.selectHasil = false
+  //    // textarea hasil: loading...
+  //    this.hasil = 'Loading...'
+  //    ....
+  // }
+
   expect(axios.get).toHaveBeenCalledTimes(1)
   expect(axios.get).toHaveBeenCalledWith('/twitter-trends/url')
 
