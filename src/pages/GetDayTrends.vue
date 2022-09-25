@@ -27,7 +27,10 @@ export default {
       selectTweet: false,
 
       // pindah: test, CORS dan GitHub Pages
-      pindah: PINDAH[2]
+      pindah: PINDAH[2],
+
+      // pilih `semua kotak centang`: true atau false
+      selectCheckBoxAll: false,
     }
   },
   computed: {
@@ -43,6 +46,11 @@ export default {
     },
     isTweet: function() {
       return !this.selectTweet
+    },
+
+    // adalah button `semua kotak centang`: true atau false
+    isCheckBoxAll: function() {
+      return !this.selectCheckBoxAll
     },
   },
   created() {
@@ -203,6 +211,42 @@ export default {
       const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     },
+    // button `semua kotak centang`
+    btnCheckBoxAll() {
+      if (this.selectCheckBoxAll === true) {
+        let newArrayTrendsName = ''
+        this.allCheckboxesEnabled = 0
+
+        for (let i = 0; i < this.arraytrends.length; i++) {
+          this.arraytrends[i].completed = true
+          newArrayTrendsName += `${this.arraytrends[i].name}, `
+          this.allCheckboxesEnabled++
+        }
+        this.selectHasil = true
+        this.selectCopy = true
+        this.selectTweet = true
+
+        this.selectCheckBoxAll = false
+
+        this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
+        this.count = 280 - this.hasil.length
+        this.isCountTweet()
+      } else {
+        this.arraytrends.forEach((val, index) => {
+          this.arraytrends[index].completed = false
+        })
+
+        this.count = 280
+        this.hasil = 'Tidak ada hasil'
+        this.isCountTweet()
+        this.allCheckboxesEnabled = 0
+
+        this.selectHasil = false
+        this.selectCopy = false
+        this.selectTweet = false        
+        this.selectCheckBoxAll = true
+      }
+    },
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
@@ -308,6 +352,12 @@ export default {
   <br>
 
   <h4 v-if="arraytrends.length > 0">Tren Sekarang</h4>
+
+  <h4 v-if="arraytrends.length > 0">Kotak Centang: 
+    <button @click="btnCheckBoxAll()" data-test="btn-checkbox-all">
+      {{ !isCheckBoxAll ? 'diaktifkan': 'tidak diaktifkan' }}
+    </button>    
+  </h4>
   
   {{ arraytrends.length > 0 ? '📌' : '' }}
   <div
