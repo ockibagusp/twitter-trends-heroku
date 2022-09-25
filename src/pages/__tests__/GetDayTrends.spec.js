@@ -199,6 +199,25 @@ describe('getdaytrends.com', async() => {
   })
 
   it('button `semua kotak centang` di array untuk trends: tidak diaktifkan', async() => {
-    
+    assert.equal(btnCheckBoxAll.text(), 'tidak diaktifkan')
+
+    let listBool = [true, true, true, true]
+    for (let i = 0; i < listBool.length; i++) {
+      expect(arrayTrends.at(i).classes()).toContain('completed')
+    }
+
+    await btnCheckBoxAll.trigger('click')
+    assert.equal(btnCheckBoxAll.text(), 'diaktifkan')
+    assert.equal(hasil.element.value, 'Tidak ada hasil')
+
+    listBool = [false, false, false, false]
+    for (let i = 0; i < listBool.length; i++) {
+      // same: assert.deepEqual(arrayTrends.at(...).classes(), [])
+      expect(arrayTrends.at(i).classes()).to.deep.equal([])
+    }
+
+    await btnCheckBoxAll.trigger('click')
+    assert.equal(btnCheckBoxAll.text(), 'tidak diaktifkan')
+    assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
   })
 })

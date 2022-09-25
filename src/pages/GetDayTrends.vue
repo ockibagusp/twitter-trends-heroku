@@ -27,7 +27,7 @@ export default {
       selectTweet: false,
 
       // pindah: test, CORS dan GitHub Pages
-      pindah: PINDAH[0]
+      pindah: PINDAH[2]
     }
   },
   computed: {
