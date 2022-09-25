@@ -81,8 +81,11 @@ describe('getdaytrends.com', async() => {
 
     // textarea hasil: test getdaytrends.com
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
-    // button: btnCopy diaktifkan
+    // button: btnCopy dan btnTweet diaktifkan
     assert.isUndefined(btnCopy.attributes().disabled)
+    assert.isUndefined(btnTweet.attributes().disabled)
+    
+    assert.equal(btnTweet.text(), 'Tweet is: + 234')
   })
 
   // array dan checkbox untuk trends

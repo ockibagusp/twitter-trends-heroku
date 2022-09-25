@@ -70,6 +70,9 @@ export default {
     // dibuat: dari textarea getdaytrends ini
     async dibuat() {
       this.arraytrends = []
+      this.selectCopy = false
+      this.selectTweet = false
+      this.count = 280
 
       // textarea hasil: loading...
       this.hasil = 'Loading...'
@@ -98,6 +101,7 @@ export default {
         this.selectHasil = false
         this.selectSubmit = false
         this.selectCopy = false
+        this.selectTweet = false
         alert(error)
       }
     },
