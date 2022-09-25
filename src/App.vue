@@ -5,7 +5,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <nav>
     <RouterLink to="/">Twitter Trends</RouterLink> |
-    <RouterLink to="/getdaytrends">(beta) GetDayTrends.com</RouterLink>
+    <RouterLink to="/getdaytrends">GetDayTrends.com</RouterLink>
   </nav>
   
   <main>

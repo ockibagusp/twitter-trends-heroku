@@ -336,7 +336,7 @@ export default {
   </div>
 
   <p style="margin-top: -5px; margin-bottom: 5px;">--------------------------------------------------------</p>
-  <p style="margin-top: 0px; margin-bottom: 0px;">(beta) GetDayTrends.com!</p>
+  <p style="margin-top: 0px; margin-bottom: 0px;">GetDayTrends.com!</p>
   <p style="margin-top: 0px; margin-bottom: 10px;"> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
 
   <button @click="btnSubmit" data-test="btn-submit" :disabled="isSubmit">Submit</button>
