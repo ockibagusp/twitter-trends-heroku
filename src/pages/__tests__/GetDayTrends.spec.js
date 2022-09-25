@@ -50,7 +50,9 @@ describe('getdaytrends.com', async() => {
             tweetVolume: '54.5K tweets',
             completed: true
           },
-        ]
+        ], 
+        // pindah: test GitHub Pages
+        pindah: 2,
       }
     }
   })
