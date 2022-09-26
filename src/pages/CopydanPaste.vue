@@ -82,6 +82,7 @@ export default {
             this.arraytrends.push({
               trendingTopics: match,
               name: '',
+              url: '',
               tweetVolume: 0,
               completed: true
             })
@@ -91,6 +92,12 @@ export default {
           if (groupIndex === 7) {
             this.arraytrends[i].name = match
 
+            // replace
+            let encodedUrl = match
+              .replace('#', "%23")
+              .replace('%', "%25")
+            this.arraytrends[i].url = 'https://twitter.com/search?q=' + encodedUrl
+            
             trends += `${match}, `
           }
 
@@ -140,6 +147,7 @@ export default {
 
       this.count = 280
     },
+    // sama GetDayTrends:btnCopy()
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
         return
@@ -151,6 +159,7 @@ export default {
     
       navigator.clipboard.writeText(this.hasil);
     },
+    // sama GetDayTrends:btnTweet()
     btnTweet() {
       if (this.hasil.length > 280) {
         this.selectTweet = false
@@ -159,8 +168,10 @@ export default {
       const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     },
+    // sama GetDayTrends:btnCheckBoxAll()
+    
     // button `semua kotak centang`
-    btnCheckBoxAll(event) {
+    btnCheckBoxAll() {
       if (this.selectCheckBoxAll === true) {
         let newArrayTrendsName = ''
         this.allCheckboxesEnabled = 0
@@ -196,13 +207,15 @@ export default {
       }
     },
 
+    // sama GetDayTrends:trendsChanged(event, index)
+
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
       const name = this.arraytrends[index].name
 
       if (event.target.checked) {
         if (this.hasil === 'Tidak ada hasil') {
-          this.hasil =  `Tags: ${name}`
+          this.hasil =  TAGS + name
           // pilih hasil, button copy dan button tweet: true
           this.selectHasil = true
           this.selectCopy = true
@@ -257,6 +270,8 @@ export default {
       }
     },
 
+    // sama GetDayTrends:isCountTweet()
+
     // adalah textarea hitungan dan tombol tweet
     isCountTweet() {
       if (this.hasil === '' || this.hasil === 'Tidak ada hasil' 
@@ -296,7 +311,7 @@ Motor
   <br>
   
   <h4 v-if="arraytrends.length > 0">Kotak Centang: 
-    <button @click="btnCheckBoxAll($event)" data-test="btnCheckBoxAll">
+    <button @click="btnCheckBoxAll()" data-test="btnCheckBoxAll">
       {{ !isCheckBoxAll ? 'diaktifkan': 'tidak diaktifkan' }}
     </button>    
   </h4>
@@ -317,7 +332,7 @@ Motor
       v-model="trends.completed"
       data-test="trends-checkbox"
     />
-    {{ trends.name }}
+    <a :href="trends.url" target="_blank">{{ trends.name }}</a>
     <small class="tweetVolume-class">{{ trends.tweetVolume !== 0 ? `(${trends.tweetVolume})` : '' }}</small>
     -
     <small class="trendingTopics-class">{{ trends.trendingTopics }}</small>

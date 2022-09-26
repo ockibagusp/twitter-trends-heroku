@@ -4,6 +4,8 @@ import axios from 'axios'
 // PINDAH: test, CORS dan GitHub-Pages
 const PINDAH = [0, 1, 2]
 
+const TAGS = 'Tags: '
+
 export default {
   data() {
     return {
@@ -12,13 +14,23 @@ export default {
       // textarea: hasil
       hasil: '',
 
-      // pilih hasil, button submit dan button copy: true atau false
+      // array untuk trends
+      arraytrends: [],
+
+      // tweet dihasil maks. 280 karakter
+      count: 280,
+
+      // pilih hasil, button submit, button copy dan button tweet: true atau false
       selectSubmit: false,
       selectHasil: false,
       selectCopy: false,
+      selectTweet: false,
 
       // pindah: test, CORS dan GitHub Pages
-      pindah: PINDAH[2]
+      pindah: PINDAH[0],
+
+      // pilih `semua kotak centang`: true atau false
+      selectCheckBoxAll: false,
     }
   },
   computed: {
@@ -31,7 +43,15 @@ export default {
     },
     isCopy: function() {
       return !this.selectCopy
-    }
+    },
+    isTweet: function() {
+      return !this.selectTweet
+    },
+
+    // adalah button `semua kotak centang`: true atau false
+    isCheckBoxAll: function() {
+      return !this.selectCheckBoxAll
+    },
   },
   created() {
     this.dibuat()
@@ -49,13 +69,23 @@ export default {
   methods: {
     // dibuat: dari textarea getdaytrends ini
     async dibuat() {
+      this.arraytrends = []
+      this.selectSubmit = false
+      this.selectCopy = false
+      this.selectTweet = false
+      this.count = 280
+
+      this.selectHasil = false
       // textarea hasil: loading...
       this.hasil = 'Loading...'
 
       try {
         // TODO: getdaytrends.com test, CORS dan GitHub-Pages
         if (this.pindah == PINDAH[0]) {
-          this.getdaytrends = '<td class="main"><a href="/indonesia/bekasi/trend/%23TimnasIndonesia/">#TimnasIndonesia</a><div class="desc"><span class="small text-muted">22.1K tweets</span></div></td>'
+          this.getdaytrends = '<td class="main"><a href="/indonesia/bekasi/trend/%23TimnasIndonesia/">#TimnasIndonesia</a><div class="desc"><span class="small text-muted">22.1K tweets</span></div></td>' +
+            '<td class="main"><a href="/indonesia/bekasi/trend/Test%201/">Test 1</a><div class="desc"><span class="small text-muted">Under 10K tweets</span></div></td>' +
+            '<td class="main"><a class="string" href="/indonesia/bekasi/trend/%23Test2/">#Test2</a><div class="desc"><span class="small text-muted">53.9K tweets</span></div></td>' +
+            '<td class="main"><a class="string" href="/indonesia/bekasi/trend/Test%203/">Test 3</a><div class="desc"><span class="small text-muted">54.5K tweets</span></div></td>'
         } else if (this.pindah == PINDAH[1]) {
           const res = await axios.get('https://getdaytrends.com/indonesia/bekasi/')
           this.getdaytrends = res.data
@@ -73,6 +103,7 @@ export default {
         this.selectHasil = false
         this.selectSubmit = false
         this.selectCopy = false
+        this.selectTweet = false
         alert(error)
       }
     },
@@ -82,7 +113,7 @@ export default {
 
       // TODO: regex without "
       // regex101.com
-      const regex = /<td class="main"><a (class="string" )?href="[^"]+">([^"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+|\d+\.\d*|\d+)K tweets<\/span><\/div><\/td>/gm
+      const regex = /<td class="main"><a (class="string" )?href="[^"]+">([^'"]+)<\/a><div class="desc"><span class="small text-muted">(Under )?(\d*\.\d+K tweets|\d+\.\d*K tweets|\d+K tweets)<\/span><\/div><\/td>/gm
       
       const str = this.getdaytrends
       
@@ -106,13 +137,27 @@ export default {
               .replace(/&quot;/g, "\"")
               .replace(/&#39;/g, "'")
 
+            // replace
+            let encodedUrl = unescapeHtml.replace('#', "%23")
+            this.arraytrends[i] = {
+              name: unescapeHtml,
+              url: 'https://twitter.com/search?q=' + encodedUrl,
+              tweetVolume: '',
+              completed: true
+            }
+
             trends += `${unescapeHtml}, `
           }
 
-          // // Misalnya: 20K
-          // if (groupIndex === 4) {
-          //   console.log(match)
-          // }
+          if (groupIndex === 3) {
+            if (match !== undefined)
+              this.arraytrends[i].tweetVolume = `${match}`
+          }
+
+          // Misalnya: 20K
+          if (groupIndex === 4) {
+            this.arraytrends[i].tweetVolume += match
+          }
         })
         
         i++
@@ -124,16 +169,23 @@ export default {
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (trends != '') {
-        trends = 'Tags: ' + trends.substring(0, trends.length-2)
+        trends = TAGS + trends.substring(0, trends.length-2)
         this.selectHasil = true
         this.selectCopy = true
+        this.selectTweet = true
+
+        this.count = 280 - trends.length
       } if (str != '' && trends == '') {
         trends = 'Tidak ada hasil'
         this.selectHasil = false
         this.selectCopy = false
+        this.selectTweet = false
+
+        this.count = 280
       }
       
       this.hasil = trends
+      this.isCountTweet()
     },
 
     // button: submit dan copy
@@ -146,6 +198,7 @@ export default {
 
       this.memuat()
     },
+    // sama CopydanPaste:btnCopy()
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
         return
@@ -156,24 +209,134 @@ export default {
       this.$refs.hasil.setSelectionRange(0, 99999);
     
       navigator.clipboard.writeText(this.hasil);
+    },
+    // sama CopydanPaste:btnTweet()
+    btnTweet() {
+      if (this.hasil.length > 280) {
+        this.selectTweet = false
+        return
+      }
+      const UTF8_hash = this.hasil.replaceAll("#", "%23")
+      window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
+    },
+    // sama CopydanPaste:btnCheckBoxAll()
+
+    // button `semua kotak centang`
+    btnCheckBoxAll() {
+      if (this.selectCheckBoxAll === true) {
+        let newArrayTrendsName = ''
+        this.allCheckboxesEnabled = 0
+
+        for (let i = 0; i < this.arraytrends.length; i++) {
+          this.arraytrends[i].completed = true
+          newArrayTrendsName += `${this.arraytrends[i].name}, `
+          this.allCheckboxesEnabled++
+        }
+        this.selectHasil = true
+        this.selectCopy = true
+        this.selectTweet = true
+
+        this.selectCheckBoxAll = false
+
+        this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
+        this.count = 280 - this.hasil.length
+        this.isCountTweet()
+      } else {
+        this.arraytrends.forEach((val, index) => {
+          this.arraytrends[index].completed = false
+        })
+
+        this.count = 280
+        this.hasil = 'Tidak ada hasil'
+        this.isCountTweet()
+        this.allCheckboxesEnabled = 0
+
+        this.selectHasil = false
+        this.selectCopy = false
+        this.selectTweet = false        
+        this.selectCheckBoxAll = true
+      }
+    },
+
+    // sama CopydanPaste:trendsChanged(event, index)
+
+    // berubah dalam array untuk trends
+    trendsChanged(event, index) {
+      const name = this.arraytrends[index].name
+
+      if (event.target.checked) {
+        if (this.hasil === 'Tidak ada hasil') {
+          this.hasil =  TAGS + name
+          // pilih hasil, button copy dan button tweet: true
+          this.selectHasil = true
+          this.selectCopy = true
+        } else {
+          let newArrayTrendsName = ''
+          for (let i = 0; i < this.arraytrends.length; i++) {
+            if (this.arraytrends[i].completed !== false) {
+              newArrayTrendsName += `${this.arraytrends[i].name}, `
+            }
+          }
+
+          this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
+          this.isCountTweet()
+        }
+
+        this.count = 280 - this.hasil.length
+      } else {
+        const kananKoma = `${name}, `
+        const kiriKoma = `, ${name}`
+        const keduanyaKoma = `, ${name}, `
+
+        let melepas = ''
+        if (this.hasil.includes(kananKoma)) {
+          melepas = kananKoma
+        } else if (this.hasil.includes(kiriKoma)) {
+          melepas = kiriKoma
+        } else if (this.hasil.includes(keduanyaKoma)) {
+          melepas = keduanyaKoma
+        } else {
+          // melepas = text 
+          this.hasil = 'Tidak ada hasil'
+          // pilih hasil, button copy dan button tweet: false
+          this.selectHasil = false
+          this.selectCopy = false
+          this.selectTweet = false
+          this.count = 280
+
+          return
+        }
+        this.hasil = this.hasil.replace(melepas, '')
+        this.count = 280 - this.hasil.length
+        this.isCountTweet()
+      }
+    },
+
+    // sama CopydanPaste:isCountTweet()
+
+    // adalah textarea hitungan dan tombol tweet
+    isCountTweet() {
+      if (this.hasil === '' || this.hasil === 'Tidak ada hasil' 
+        || this.hasil.length > 280) this.selectTweet = false
+      else this.selectTweet = true
     }
   }
 }
 </script>
 
 <template>
-  <div>Pindah:</div>
+  <div style="margin-top: -10px; margin-bottom: 5px;">Pindah:</div>
 
-  <input type="radio" value=0 v-model="pindah" />
+  <input style="margin-top: -10px; margin-bottom: 5px;" type="radio" value=0 v-model="pindah" />
   <label for="test">Test</label> | 
 
-  <input type="radio" value=1 v-model="pindah" />
+  <input style="margin-top: -10px; margin-bottom: 5px;" type="radio" value=1 v-model="pindah" />
   <label for="cors">CORS</label> |
 
-  <input type="radio" value=2 v-model="pindah" />
+  <input style="margin-top: -10px; margin-bottom: 5px;" type="radio" value=2 v-model="pindah" />
   <label for="GitHub-Pages">GitHub-Pages</label>
 
-  <p v-if="pindah == 0">&gt;&gt;&gt; Test getdaytrends.com</p>
+  <p style="margin-top: 0px; margin-bottom: 0px;" v-if="pindah == 0">&gt;&gt;&gt; Test getdaytrends.com</p>
   <div v-if="pindah == 1">
     <li>&gt;&gt;&gt; AxiosError: Network Error</li>
     The CORS Header 'Access-Control-Allow-Origin' is missing.
@@ -186,21 +349,43 @@ export default {
     &gt;&gt;&gt; localhost: bisa | ockibagusp.github.io/twitter-trends: tidak bisa
   </div>
 
-  <p>--------------------------------------------------------</p>
-  <p>(beta) GetDayTrends.com!</p>
-  <p> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
+  <p style="margin-top: -5px; margin-bottom: 5px;">--------------------------------------------------------</p>
+  <p style="margin-top: 0px; margin-bottom: 0px;">GetDayTrends.com!</p>
+  <p style="margin-top: 0px; margin-bottom: 10px;"> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
 
-  <button @click="btnSubmit" data-test="btnSubmit" :disabled="isSubmit">Submit</button>
+  <button @click="btnSubmit" data-test="btn-submit" :disabled="isSubmit">Submit</button>
   <br>
   
-  <h3>... dan Paste (ctrl + v)!</h3>
-  
+  <h3 style="margin-top: 10px; margin-bottom: 5px;">... dan Paste (ctrl + v)!</h3>
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
-  <button @click="btnCopy" data-test="btnCopy" :disabled="isCopy">Copy</button>
+  <button @click="btnCopy" data-test="btn-copy" :disabled="isCopy">Copy</button>
+  <button @click="btnTweet" data-test="btn-tweet" :disabled="isTweet">Tweet is: <small v-if="hasil.length < 280">+</small> {{count}}</button>
   <br>
 
-  <!-- Trending Now -->
+  <h4 style="margin-top: 15px; margin-bottom: 5px;" v-if="arraytrends.length > 0">Tren Sekarang</h4>
+  <h4 style="margin-top: -3px; margin-bottom: 5px;" v-if="arraytrends.length > 0">Kotak Centang: 
+    <button @click="btnCheckBoxAll()" data-test="btn-checkbox-all">
+      {{ !isCheckBoxAll ? 'diaktifkan': 'tidak diaktifkan' }}
+    </button>    
+  </h4>
+  
+  {{ arraytrends.length > 0 ? '📌' : '' }}
+  <div
+    v-for="(trends, index) in arraytrends"
+    :key="trends.name"
+    data-test="array-trends"
+    :class="[trends.completed ? 'completed' : '']"
+    @change="trendsChanged($event, index)"
+  >
+    <input
+      type="checkbox"
+      v-model="trends.completed"
+      data-test="trends-checkbox"
+    />
+    <a :href="trends.url" target="_blank">{{ trends.name }}</a>
+    <small class="tweetVolume-class">{{ trends.tweetVolume !== 0 ? `(${trends.tweetVolume})` : '' }}</small>
+  </div>
 </template>
 
