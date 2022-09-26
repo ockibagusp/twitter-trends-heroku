@@ -94,8 +94,8 @@ export default {
 
             // replace
             let encodedUrl = match
-              .replace('#', "%23")
               .replace('%', "%25")
+              .replace('#', "%23")
             this.arraytrends[i].url = 'https://twitter.com/search?q=' + encodedUrl
             
             trends += `${match}, `
