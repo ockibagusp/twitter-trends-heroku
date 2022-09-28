@@ -109,6 +109,7 @@ export default {
     },
     // memuat: dari textarea getdaytrends ini
     memuat() {
+      this.arraytrends = []
       let trends = ''
 
       // TODO: regex without "
@@ -138,7 +139,9 @@ export default {
               .replace(/&#39;/g, "'")
 
             // replace
-            let encodedUrl = unescapeHtml.replace('#', "%23")
+            let encodedUrl = unescapeHtml.replaceAll('#', "%23")
+              // // replace all '%'' to '%25'
+              // .replaceAll('%', "%25")
             this.arraytrends[i] = {
               name: unescapeHtml,
               url: 'https://twitter.com/search?q=' + encodedUrl,

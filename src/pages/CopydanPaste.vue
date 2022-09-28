@@ -57,6 +57,7 @@ export default {
     // memuat: dari textarea copydanpaste ini
     memuat() {
       this.arraytrends = []
+      this.allCheckboxesEnabled = 0
 
       let trends = ''
 
@@ -94,8 +95,10 @@ export default {
 
             // replace
             let encodedUrl = match
-              .replace('#', "%23")
-              .replace('%', "%25")
+              .replaceAll('#', "%23")
+              // // replace all '%'' to '%25'
+              // .replaceAll('%', "%25")
+
             this.arraytrends[i].url = 'https://twitter.com/search?q=' + encodedUrl
             
             trends += `${match}, `
@@ -131,7 +134,7 @@ export default {
       
       this.hasil = trends
 
-      this.isCountTweet()
+      this.isCopyAndCountTweet()
     },
     
     // button: reset, copy dan `semua kotak centang`
@@ -189,7 +192,7 @@ export default {
 
         this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
         this.count = 280 - this.hasil.length
-        this.isCountTweet()
+        this.isCopyAndCountTweet()
       } else {
         this.arraytrends.forEach((val, index) => {
           this.arraytrends[index].completed = false
@@ -197,7 +200,7 @@ export default {
 
         this.count = 280
         this.hasil = 'Tidak ada hasil'
-        this.isCountTweet()
+        this.isCopyAndCountTweet()
         this.allCheckboxesEnabled = 0
 
         this.selectHasil = false
@@ -231,7 +234,7 @@ export default {
           }
 
           this.hasil = TAGS + newArrayTrendsName.substring(0, newArrayTrendsName.length-2)
-          this.isCountTweet()
+          this.isCopyAndCountTweet()
 
           this.allCheckboxesEnabled++
         }
@@ -264,7 +267,7 @@ export default {
         this.hasil = this.hasil.replace(melepas, '')
 
         this.count = 280 - this.hasil.length
-        this.isCountTweet()
+        this.isCopyAndCountTweet()
 
         this.allCheckboxesEnabled--
       }
@@ -273,10 +276,15 @@ export default {
     // sama GetDayTrends:isCountTweet()
 
     // adalah textarea hitungan dan tombol tweet
-    isCountTweet() {
+    isCopyAndCountTweet() {
       if (this.hasil === '' || this.hasil === 'Tidak ada hasil' 
-        || this.hasil.length > 280) this.selectTweet = false
-      else this.selectTweet = true
+        || this.hasil.length > 280) { 
+        this.selectCopy = false
+        this.selectTweet = false
+      } else {
+        this.selectCopy = true
+        this.selectTweet = true
+      }
     }
   }
 }
@@ -320,6 +328,7 @@ Motor
     diaktifkan: {{ allCheckboxesEnabled }}
   </p>
   
+  {{ arraytrends.length > 0 ? '📌' : '' }}
   <div
     v-for="(trends, index) in arraytrends"
     :key="trends.name"

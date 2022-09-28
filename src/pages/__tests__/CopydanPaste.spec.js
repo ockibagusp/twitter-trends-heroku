@@ -101,6 +101,16 @@ Entertainment · Trending
         assert.equal(btnTweet.attributes().disabled, '')
       }
     }
+
+    // // ?
+    // copydanpaste.setValue('')
+    // await copydanpaste.trigger('change')
+    // assert.equal(
+    //   hasil.element.value,
+    //   ''
+    // )
+    // assert.equal(btnCopy.attributes().disabled, '')
+    // assert.equal(btnTweet.attributes().disabled, '')
   })
 
   it('button reset', async() => {
