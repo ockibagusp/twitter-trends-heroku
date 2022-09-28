@@ -89,6 +89,8 @@ describe('getdaytrends.com', async() => {
   // button: btnCheckBoxAll diaktifkan atau tidak diaktifkan semua kotak centang
   const btnCheckBoxAll = wrapper.find('[data-test="btn-checkbox-all"]') 
 
+  // `semua kotak centang` diaktifkan
+  const allCheckboxesEnabled = wrapper.find('[data-test="all-checkboxes-enabled"]')
   it('init', async() => {
     // button: btnSubmit diaktifkan
     assert.isUndefined(btnSubmit.attributes().disabled)
@@ -114,6 +116,7 @@ describe('getdaytrends.com', async() => {
 
   it('kotak centang untuk trends di getdaytrends.com: tidak dicentang', async() => {
     assert.equal(hasil.element.value, 'Tags: #TimnasIndonesia, Test 1, #Test2, Test 3')
+    assert.equal(btnTweet.text(), 'Tweet is: + 234')
 
     // test cases
     const testCases = [
@@ -123,6 +126,8 @@ describe('getdaytrends.com', async() => {
         listBool: [false, true, true, true],
         hasil: 'Tags: Test 1, #Test2, Test 3',
         tweetIs: 'Tweet is: + 252',
+        // `semua kotak centang` diaktifkan
+        allCheckboxesEnabled: 'diaktifkan: 3'
       },
       {
         name: 'Test 1',
@@ -130,6 +135,7 @@ describe('getdaytrends.com', async() => {
         listBool: [false, false, true, true],
         hasil: 'Tags: #Test2, Test 3',
         tweetIs: 'Tweet is: + 260',
+        allCheckboxesEnabled: 'diaktifkan: 2'
       },
       {
         name: '#Test2',
@@ -137,6 +143,7 @@ describe('getdaytrends.com', async() => {
         listBool: [false, false, false, true],
         hasil: 'Tags: Test 3',
         tweetIs: 'Tweet is: + 268',
+        allCheckboxesEnabled: 'diaktifkan: 1'
       },
       {
         name: 'Test 3',
@@ -144,6 +151,7 @@ describe('getdaytrends.com', async() => {
         listBool: [false, false, false, false],
         hasil: 'Tidak ada hasil',
         tweetIs: 'Tweet is: + 280',
+        allCheckboxesEnabled: 'diaktifkan: 0'
       },
     ]
 
@@ -162,6 +170,8 @@ describe('getdaytrends.com', async() => {
 
       assert.equal(hasil.element.value, test.hasil)
       assert.equal(btnTweet.text(), test.tweetIs)
+      // `semua kotak centang` diaktifkan
+      assert.equal(allCheckboxesEnabled.text(), test.allCheckboxesEnabled)
     }
   })
 
