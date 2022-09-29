@@ -17,6 +17,7 @@ export default defineConfig({
       '/twitter-trends/url': {
         target: 'https://getdaytrends.com/indonesia/bekasi/',
         changeOrigin: true,
+        secure: false,
         rewrite: (path) => path.replace(/^\/twitter-trends\/url/, '')
       },
     }
