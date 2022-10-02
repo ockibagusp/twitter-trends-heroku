@@ -18,7 +18,7 @@ const mockGetDayTrends = {
 vi.spyOn(axios, 'get').mockResolvedValueOnce(mockGetDayTrends)
 
 // TDD
-// ✅ ❎
+// ✅ ❌
 // 1. textarea `hasil` untuk array untuk trends ✅
 // 2. kotak centang untuk trends di getdaytrends.com ✅
 // 3. button `semua kotak centang` jika ini diaktifkan atau tidak diaktifkan ✅

@@ -6,6 +6,9 @@ const PINDAH = [0, 1, 2]
 
 const TAGS = 'Tags: '
 
+// Slots - Vue.js
+// https://vuejs.org/guide/components/slots.html#scoped-slots
+
 export default {
   data() {
     return {
@@ -330,6 +333,8 @@ export default {
       }
     },
 
+    // Slots - Vue.js
+    // https://vuejs.org/guide/components/slots.html#scoped-slots
     // sama CopydanPaste:isCountTweet()
 
     // adalah textarea hitungan dan tombol tweet
