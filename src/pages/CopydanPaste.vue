@@ -1,6 +1,9 @@
 <script>
 const TAGS = 'Tags: '
 
+// Slots - Vue.js
+// https://vuejs.org/guide/components/slots.html#scoped-slots
+
 export default {
   data() {
     return {
@@ -273,6 +276,8 @@ export default {
       }
     },
 
+    // Slots - Vue.js
+    // https://vuejs.org/guide/components/slots.html#scoped-slots
     // sama GetDayTrends:isCountTweet()
 
     // adalah textarea hitungan dan tombol tweet
