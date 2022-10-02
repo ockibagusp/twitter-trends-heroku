@@ -43,4 +43,15 @@ Test String:
 
 Most Tweeted
 
-<th scope="row" class="pos">1</th><td class="main"><a href="/indonesia/bekasi/trend/%23Voguegala2022XMileApo/">#Voguegala2022XMileApo</a></td><td class="details small text-muted text-right">2.4M tweets</td><td class="go"><span class="icon icon-go"><span class="sr-only">View details</span></span></td>
+<th scope="row" class="pos">
+  1
+</th>
+<td class="main">
+  <a href="/indonesia/bekasi/trend/%23Voguegala2022XMileApo/">#Voguegala2022XMileApo</a>
+</td>
+<td class="details small text-muted text-right">2.4M tweets</td>
+<td class="go">
+  <span class="icon icon-go">
+    <span class="sr-only">View details</span>
+  </span>
+</td>

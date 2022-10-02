@@ -293,6 +293,8 @@ export default {
 <template>
   <p>Twitter Trends</p>
   <p style="margin-top: -18px; margin-bottom: 5px;"> <a href="https://twitter.com/i/trends" target="_blank">twitter.com/i/trends</a> + Select All (ctrl + a)</p>
+  <p style="margin-top: -5px; margin-bottom: 5px; color: green;">web browser (chrome, firefox, dll) ✅</p>
+  <p style="margin-top: -5px; margin-bottom: 5px; color: red;">aplikasi Android dan iOS ❌</p>
 
   <h3>Copy (ctrl + c) sini!</h3>
     <textarea style="margin-top: -15px; margin-bottom: 5px;" v-model="copydanpaste" ref="copydanpaste" data-test="copydanpaste" rows="8" cols="50" 
