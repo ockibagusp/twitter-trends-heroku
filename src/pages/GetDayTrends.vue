@@ -378,13 +378,13 @@ export default {
   </div>
 
   <p style="margin-top: -5px; margin-bottom: 5px;">--------------------------------------------------------</p>
-  <p style="margin-top: 0px; margin-bottom: 0px;">GetDayTrends.com!</p>
+  <h2 style="margin-top: -5px; margin-bottom: -5px;">GetDayTrends.com!</h2>
   <p style="margin-top: 0px; margin-bottom: 10px;"> <a href="https://getdaytrends.com/indonesia/bekasi/" target="_blank">getdaytrends.com/indonesia/bekasi/</a> </p>
 
   <button @click="btnSubmit" data-test="btn-submit" :disabled="isSubmit">Submit</button>
   <br>
   
-  <h3 style="margin-top: 10px; margin-bottom: 5px;">... dan Paste (ctrl + v)!</h3>
+  <h3 style="margin-top: 10px; margin-bottom: 5px;">Hasil</h3>
   <textarea v-model="hasil" data-test="hasil" ref="hasil" rows="5" cols="50" 
     placeholder="Tags: Aksi Cepat Tanggap, Axelsen, Desta, Oknum, Motor, ..." :disabled="isHasil"></textarea>
   <br>
