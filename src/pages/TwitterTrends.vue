@@ -83,36 +83,6 @@ export default {
       try {
         const res = await axios.get('/api/trends')
         this.twittertrends = res.data
-        // this.twittertrends = [
-        //   {
-        //     "name": "#TimnasIndonesia",
-        //     "url": "http://twitter.com/search?q=%23TimnasIndonesia",
-        //     "promoted_content": null,
-        //     "query": "%23TimnasIndonesia",
-        //     "tweet_volume": 221000
-        //   },
-        //   {
-        //     "name": "Test 1",
-        //     "url": "http://twitter.com/search?q=Test 1",
-        //     "promoted_content": null,
-        //     "query": "Test 1",
-        //     "tweet_volume": 9000
-        //   },
-        //   {
-        //     "name": "#Test2",
-        //     "url": "http://twitter.com/search?q=%23Test2",
-        //     "promoted_content": null,
-        //     "query": "%23Test2",
-        //     "tweet_volume": 539000
-        //   },
-        //   {
-        //     "name": "Test 3",
-        //     "url": "http://twitter.com/search?q=Test 3",
-        //     "promoted_content": null,
-        //     "query": "Test 3",
-        //     "tweet_volume": 545000
-        //   },
-        // ]
 
         this.selectSubmit = true
 
