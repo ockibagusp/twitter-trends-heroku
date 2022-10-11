@@ -292,10 +292,7 @@ export default {
 </script>
 
 <template>
-  <h2>Twitter Trends (Bekasi, Indonesia)</h2>
-  <p style="margin-top: -5px; margin-bottom: 5px; color: green;">web browser (PC, Laptop, Android dan iOS: Chrome, Firefox, dll) ✅</p>
-  <p style="margin-top: -5px; margin-bottom: 5px; color: red;">aplikasi Android dan iOS ❌</p>
-
+  <h2 style="margin-top: -5px; margin-bottom: 0px;">Twitter Trends (Bekasi, Indonesia)</h2>
   <button @click="btnSubmit" data-test="btn-submit" :disabled="isSubmit">Submit</button>
   <br>
 
@@ -333,4 +330,10 @@ export default {
     <a :href="trends.url" target="_blank">{{ trends.name }}</a>
     <small class="tweet-volume-class">{{ trends.tweet_volume !== 0 ? `(${trends.tweet_volume} tweets)` : '' }}</small>
   </div>
+
+  <br>
+  <p style="margin-top: -5px; margin-bottom: 5px; color: red;">Platform Pengembang untuk Saya (Twitter API v2): tidak bisa trends/place API ❌</p>
+  <p style="margin-top: -5px; margin-bottom: 5px; color: green;">
+    Platform Pengembang untuk <a href="https://github.com/guilhermefront/Twitter-Trending" target="_blank">Github: @guilhermefront</a> (Standard v1.1): ada trends/place API  ✅
+  </p>
 </template>
