@@ -134,7 +134,9 @@ export default {
       
       let trends = ''
 
-      this.twittertrends.forEach((value, index) => {
+      for (let index = 0; index < this.twittertrends.length; index++) {
+        let value = this.twittertrends[index]
+        
         this.arraytrends.push({
           name: value.name,
           url: value.url,
@@ -143,8 +145,8 @@ export default {
         })
 
         trends += `${value.name}, `
-        this.allCheckboxesEnabled++
-      })
+        this.allCheckboxesEnabled++ 
+      }
 
       // 'Oknum, Motor, ' ke 'Oknum, Motor'
       if (trends != '') {
