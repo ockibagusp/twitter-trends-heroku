@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    // dibuat: dari textarea getdaytrends ini
+    // dibuat: dari textarea TwitterTrends ini
     async dibuat() {
       this.arraytrends = []
       this.allCheckboxesEnabled = 0
@@ -149,7 +149,7 @@ export default {
 
       this.memuat()
     },
-    // sama GetDayTrends:btnCopy()
+    // sama TwitterTrends:btnCopy()
     btnCopy() {
       if (this.hasil == '' || this.hasil == 'Tidak ada hasil') {
         return
@@ -161,7 +161,7 @@ export default {
     
       navigator.clipboard.writeText(this.hasil);
     },
-    // sama GetDayTrends:btnTweet()
+    // sama TwitterTrends:btnTweet()
     btnTweet() {
       if (this.hasil.length > 280) {
         this.selectTweet = false
@@ -170,7 +170,7 @@ export default {
       const UTF8_hash = this.hasil.replaceAll("#", "%23")
       window.open("https://twitter.com/intent/tweet?text="+UTF8_hash, "_blank")
     },
-    // sama GetDayTrends:btnCheckBoxAll()
+    // sama TwitterTrends:btnCheckBoxAll()
     
     // button `semua kotak centang`
     btnCheckBoxAll() {
@@ -209,7 +209,7 @@ export default {
       }
     },
 
-    // sama GetDayTrends:trendsChanged(event, index)
+    // sama TwitterTrends:trendsChanged(event, index)
 
     // berubah dalam array untuk trends
     trendsChanged(event, index) {
@@ -274,7 +274,7 @@ export default {
 
     // Slots - Vue.js
     // https://vuejs.org/guide/components/slots.html#scoped-slots
-    // sama GetDayTrends:isCountTweet()
+    // sama TwitterTrends:isCountTweet()
 
     // adalah textarea hitungan dan tombol tweet
     isCopyAndCountTweet() {
