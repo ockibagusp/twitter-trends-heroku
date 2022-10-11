@@ -1,8 +1,8 @@
-# twitter-trends
+# twitter-trends-heroku
 ## Browser aja. Copy dan Paste!
 
 Link:
-[ockibagusp.github.io/twitter-trends](https://ockibagusp.github.io/twitter-trends)
+[twitter-trends-heroku.herokuapp.com](https://twitter-trends-heroku.herokuapp.com)
 
 ### Twitter Trends:
 
@@ -57,23 +57,9 @@ or,
 Example:
 
 ```bash
-ls src/pages/__tests__/CopydanPaste.spec.js
+ls src/pages/__tests__/TwitterTrends.spec.js
 ```
 
 ```sh
-npm run test:unit -t CopydanPaste
-```
-
-### Comment bash: deploy.sh
-
-#### Linux or MacOS: 
-```sh
-chmod 755 deploy.sh
-```
-
-#### Use: deploy
-
-Example:
-```sh
-./deploy.sh
+npm run test:unit -t TwitterTrends
 ```
