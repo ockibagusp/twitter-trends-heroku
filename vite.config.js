@@ -14,6 +14,13 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      '/api/trends': {
+        target: 'http://twittertrendingtopics.herokuapp.com/api/trends/Indonesia',
+        // target: 'http://localhost:8080/api/trends',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api\/trends/, '')
+      },
       '/url': {
         target: 'https://getdaytrends.com/indonesia/bekasi/',
         changeOrigin: true,
