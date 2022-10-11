@@ -47,6 +47,8 @@ const mockTwitterTrends = {
 // GET
 vi.spyOn(axios, 'get').mockResolvedValueOnce(mockTwitterTrends)
 
+vi.spyOn(window, 'alert').mockReturnValue()
+
 describe('Twitter Trends', async() => {
   assert.exists(TwitterTrends)
 
@@ -93,9 +95,9 @@ describe('Twitter Trends', async() => {
   const hasil = wrapper.find('[data-test="hasil"]')
 
   // button: btnCopy 
-  const btnCopy = wrapper.find('[data-test="btnCopy"]')
+  const btnCopy = wrapper.find('[data-test="btn-copy"]')
   // button: btnTweet
-  const btnTweet = wrapper.find('[data-test="btnTweet"]')
+  const btnTweet = wrapper.find('[data-test="btn-tweet"]')
 
   // button: btnCheckBoxAll diaktifkan atau tidak diaktifkan semua kotak centang
   const btnCheckBoxAll = wrapper.find('[data-test="btn-checkbox-all"]') 
@@ -108,15 +110,15 @@ describe('Twitter Trends', async() => {
 
     // textarea hasil: test getdaytrends.com
     assert.equal(hasil.element.value, 'Loading...')
-
+ 
     window.alert = vi.fn()
     window.alert.mockClear()
 
     // button: btnCopy dan btnTweet diaktifkan
-    assert.isUndefined(btnCopy.attributes().disabled)
-    assert.isUndefined(btnTweet.attributes().disabled)
+    assert.equal(btnCopy.attributes().disabled, '')
+    assert.equal(btnTweet.attributes().disabled, '')
     
-    assert.equal(btnTweet.text(), 'Tweet is: + 234')
+    assert.equal(btnTweet.text(), 'Tweet is: + 280')
   })  
 
   // // array dan checkbox untuk trends
